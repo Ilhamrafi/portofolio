@@ -132,3 +132,25 @@
 .animate-float {
   animation: float infinite ease-in-out;
 }
+
+@keyframes beam-horizontal {
+  0% { transform: translateX(-100%); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateX(100vw); opacity: 0; }
+}
+
+@keyframes beam-vertical {
+  0% { transform: translateY(-100%); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(100vh); opacity: 0; }
+}
+
+.animate-beam-h {
+  animation: beam-horizontal 7s linear infinite;
+}
+
+.animate-beam-v {
+  animation: beam-vertical 7s linear infinite;
+}
