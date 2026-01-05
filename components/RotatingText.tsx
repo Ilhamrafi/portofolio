@@ -24,6 +24,7 @@ export default function RotatingText({
 
   return (
     <span className="inline-flex h-[1.6em] relative overflow-hidden align-top w-full md:w-auto">
+      {/* 1. ANIMASI TEXT (Absolute Position) */}
       <AnimatePresence mode="wait">
         <motion.span
           key={texts[index]}
@@ -31,18 +32,16 @@ export default function RotatingText({
           animate={{ y: "0%", opacity: 1 }}
           exit={{ y: "-100%", opacity: 0 }}
           transition={{ duration: 0.5, ease: "easeInOut" }}
-          // Class font-semibold ada di sini
           className="absolute left-0 top-0 whitespace-nowrap font-semibold text-white/90"
         >
           {texts[index]}
         </motion.span>
-        
-        {/* --- PERBAIKAN DI SINI --- */}
-        {/* Tambahkan 'font-semibold' dan 'whitespace-nowrap' agar lebarnya sama persis */}
-        <span className="invisible whitespace-nowrap font-semibold">
-          {texts[index]}
-        </span>
       </AnimatePresence>
+      
+      {/* 2. SPACER/LAYOUT (Static & Invisible) */}
+      <span className="invisible whitespace-nowrap font-semibold" aria-hidden="true">
+        {texts[index]}
+      </span>
     </span>
   );
 }
