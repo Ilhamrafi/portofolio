@@ -99,13 +99,13 @@ export default function Navbar() {
         <motion.div layout className="hidden md:flex items-center gap-8">
            {menuItems.map((item) => {
              
-             // --- LOGIKA TOMBOL 'CONTACT ME' (GLOSSY EFFECT) ---
+             // --- LOGIKA TOMBOL 'CONTACT ME' (UPDATED SHIMMER EFFECT) ---
               if (item.isButton) {
                return (
                  <Link 
                    key={item.name} 
                    href={item.href}
-                   className="relative group"
+                   className="relative group" // 'group' class penting untuk trigger hover effect
                  >
                     <motion.div
                         layout
@@ -130,22 +130,9 @@ export default function Navbar() {
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                     >
-                        {/* Shimmer / Glossy Animation Layer 
-                            Kita gunakan kilatan putih transparan (via-white/10) 
-                            agar terlihat elegan di background gelap.
-                        */}
-                        <motion.div
-                          className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent -skew-x-12"
-                          initial={{ x: "-150%" }}
-                          whileHover={{ x: "150%" }}
-                          transition={{ 
-                            duration: 1, 
-                            ease: "easeInOut", 
-                            repeat: Infinity, 
-                            repeatDelay: 0.5 
-                          }}
-                        />
-
+                        {/* === SHIMMER EFFECT === */}
+                        <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-[100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-in-out z-0" />
+                        
                         {/* Teks Tombol */}
                         <span className="relative z-10 group-hover:text-white transition-colors duration-300">
                             {item.name}
