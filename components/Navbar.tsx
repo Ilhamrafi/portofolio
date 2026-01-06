@@ -64,7 +64,11 @@ export default function Navbar() {
         
         {/* === BAGIAN KIRI: FOTO & LOGO === */}
         <motion.div layout className="flex items-center gap-3 shrink-0">
-            <Link href="/" className="group flex items-center gap-3">
+            <Link 
+              href="/" 
+              className="group flex items-center gap-3 focus:outline-none"
+              aria-label="Home - Ilhamrafi Portfolio"
+            >
                 {/* Foto Profile: Mengecil saat scroll */}
                 <motion.div 
                   layout
@@ -99,46 +103,64 @@ export default function Navbar() {
         <motion.div layout className="hidden md:flex items-center gap-8">
            {menuItems.map((item) => {
              
-             // --- LOGIKA TOMBOL 'CONTACT ME' (UPDATED SHIMMER EFFECT) ---
+             // --- LOGIKA TOMBOL 'CONNECT ON' (BEAM EFFECT) ---
               if (item.isButton) {
                return (
-                 <Link 
-                   key={item.name} 
-                   href={item.href}
-                   className="relative group" // 'group' class penting untuk trigger hover effect
-                 >
-                    <motion.div
-                        layout
-                        className={`
-                            relative overflow-hidden 
-                            bg-[#1a1a1a] /* Background Gelap */
-                            text-white   /* Teks Putih */
-                            border border-white/10 /* Border tipis halus */
-                            font-medium rounded-full flex items-center justify-center
-                            
-                            /* Hover States: Border jadi lebih terang & Background sedikit abu */
-                            group-hover:border-white/30 
-                            group-hover:bg-[#222]
-                            
-                            shadow-[0_0_10px_rgba(0,0,0,0.5)]
-                            transition-all duration-300
-                        `}
-                        animate={{
-                            padding: isScrolled ? "0.5rem 1.25rem" : "0.6rem 1.5rem",
-                            fontSize: isScrolled ? "0.75rem" : "0.875rem"
-                        }}
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                    >
-                        {/* === SHIMMER EFFECT === */}
-                        <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-[100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-in-out z-0" />
-                        
-                        {/* Teks Tombol */}
-                        <span className="relative z-10 group-hover:text-white transition-colors duration-300">
-                            {item.name}
-                        </span>
-                    </motion.div>
-                 </Link>
+                 <div key={item.name} className="relative group">
+                   {/* Animated border beam - always visible */}
+                   <div className="absolute -inset-[3px] rounded-full overflow-hidden">
+                     <div className="absolute w-[200%] h-[200%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-spin" style={{ animationDuration: '3s' }}>
+                       <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent" style={{
+                         width: '50%',
+                         height: '4px',
+                         top: '50%',
+                         left: '50%',
+                         transformOrigin: '0 0',
+                         filter: 'blur(3px)',
+                         boxShadow: '0 0 30px 8px rgba(255, 255, 255, 0.9), 0 0 50px 15px rgba(255, 255, 255, 0.5)'
+                       }}></div>
+                     </div>
+                   </div>
+                   
+                   <Link 
+                     href={item.href}
+                     className="relative focus:outline-none focus:ring-2 focus:ring-[#F1FFB2] focus:ring-offset-2 focus:ring-offset-transparent rounded-full block" 
+                     aria-label="Connect on LinkedIn"
+                   >
+                      <motion.div
+                          layout
+                          className={`
+                              relative overflow-hidden 
+                              bg-[#1a1a1a] /* Background Gelap */
+                              text-white   /* Teks Putih */
+                              border border-white/10 /* Border tipis halus */
+                              font-medium rounded-full flex items-center justify-center
+                              
+                              /* Hover States: Border jadi lebih terang & Background sedikit abu */
+                              group-hover:border-white/30 
+                              group-hover:bg-[#222]
+                              
+                              shadow-[0_0_10px_rgba(0,0,0,0.5)]
+                              transition-all duration-300
+                          `}
+                          animate={{
+                              padding: isScrolled ? "0.5rem 1.25rem" : "0.6rem 1.5rem",
+                              fontSize: isScrolled ? "0.75rem" : "0.875rem"
+                          }}
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                      >
+                          {/* === SHIMMER EFFECT === */}
+                          <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-[100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-in-out z-0" />
+                          
+                          {/* Teks Tombol */}
+                          <span className="relative z-10 group-hover:text-white transition-colors duration-300 flex items-center gap-1.5">
+                              Connect on
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                          </span>
+                      </motion.div>
+                   </Link>
+                 </div>
                );
              }
 
@@ -147,7 +169,8 @@ export default function Navbar() {
                <Link 
                  key={item.name} 
                  href={item.href}
-                 className="relative"
+                 className="relative focus:outline-none"
+                 aria-label={`Navigate to ${item.name}`}
                >
                  <motion.span 
                     layout

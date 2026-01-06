@@ -49,6 +49,21 @@
   --radius-4xl: calc(var(--radius) + 16px);
 }
 
+/* Smooth scroll behavior for entire document */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Beam animation that travels around button borders */
+@keyframes border-beam {
+  0% {
+    offset-distance: 0%;
+  }
+  100% {
+    offset-distance: 100%;
+  }
+}
+
 :root {
   --radius: 0.625rem;
   --background: oklch(1 0 0);
