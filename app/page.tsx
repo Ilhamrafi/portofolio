@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 // Import Components
 import Navbar from '@/components/Navbar';
@@ -8,13 +9,20 @@ import RotatingText from '@/components/RotatingText';
 import GridBeams from '@/components/GridBeams';
 import Lanyard from '@/components/Lanyard';
 import TechMarquee from '@/components/TechMarquee';
+import ChatWidget from '@/components/ChatWidget';
 
 export default function Home() {
+  const [isChatOpen, setIsChatOpen] = useState(false);
+  
   const scrollToContact = () => {
     const contactSection = document.getElementById('contact');
     if (contactSection) {
       contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
+  };
+
+  const openChat = () => {
+    setIsChatOpen(true);
   };
 
   return (
@@ -63,7 +71,7 @@ export default function Home() {
                 </div>
 
                 {/* === 2. ROTATING INTRODUCTION === */}
-                <div className="flex items-center gap-2 -mb-2 text-lg md:text-xl font-light text-white/90 h-[1.6em]">
+                <div className="flex items-center gap-2 text-lg md:text-xl font-light text-white/90 h-[1.6em] -mb-1">
                    <RotatingText 
                       texts={[
                         "Hi, I'm Ilhamrafi 👋",
@@ -105,10 +113,10 @@ export default function Home() {
                 {/* 5. Tombol & Social Media */}
                 <div className="flex flex-col gap-6 mt-2">
                   <button 
-                    onClick={scrollToContact}
-                    onKeyDown={(e) => e.key === 'Enter' && scrollToContact()}
+                    onClick={openChat}
+                    onKeyDown={(e) => e.key === 'Enter' && openChat()}
                     className="group relative flex items-center gap-3 pl-6 pr-2 py-2 bg-[#1a1a1a] text-white text-lg font-medium rounded-full border border-white/10 transition-all duration-300 active:scale-95 cursor-pointer w-fit overflow-hidden hover:border-white/30 focus:outline-none"
-                    aria-label="Contact me - scroll to contact section"
+                    aria-label="Open chat with AI assistant"
                   >
                     <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-[100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-in-out z-0"></div>
                     <span className="relative z-10">Let&apos;s Talk</span>
@@ -246,6 +254,13 @@ export default function Home() {
           </div>
         </div>
       </footer>
+
+      {/* Chat Widget */}
+      <ChatWidget 
+        isOpen={isChatOpen} 
+        onClose={() => setIsChatOpen(false)} 
+        onOpen={() => setIsChatOpen(true)}
+      />
 
     </main>
   );

@@ -22,7 +22,7 @@ export default function Navbar() {
     { name: 'Resume', href: '/resume' },
     { name: 'Showcase', href: '#projects' },
     { name: 'Blog', href: '/blog' },
-    { name: 'Contact Me', href: '#contact', isButton: true },
+    { name: 'Connect on', href: 'https://www.linkedin.com/in/ilhamrafi/', isButton: true },
   ];
 
   return (
@@ -124,6 +124,8 @@ export default function Navbar() {
                    
                    <Link 
                      href={item.href}
+                     target="_blank"
+                     rel="noopener noreferrer"
                      className="relative focus:outline-none focus:ring-2 focus:ring-[#F1FFB2] focus:ring-offset-2 focus:ring-offset-transparent rounded-full block" 
                      aria-label="Connect on LinkedIn"
                    >
