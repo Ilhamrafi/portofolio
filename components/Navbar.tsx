@@ -3,10 +3,12 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState } from 'react';
-import { motion, useScroll, useMotionValueEvent } from 'framer-motion';
+import { motion, useScroll, useMotionValueEvent, AnimatePresence } from 'framer-motion';
+import { Menu, X } from 'lucide-react';
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { scrollY } = useScroll();
 
   // Listener scroll yang efisien dengan Framer Motion
@@ -99,7 +101,18 @@ export default function Navbar() {
             </Link>
         </motion.div>
 
-        {/* === BAGIAN KANAN: MENU ITEMS === */}
+        {/* === HAMBURGER BUTTON (Mobile Only) === */}
+        <motion.button
+          layout
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          className="md:hidden p-2 text-white hover:text-[#F1FFB2] transition-colors focus:outline-none focus:ring-2 focus:ring-[#F1FFB2] rounded-lg"
+          aria-label="Toggle mobile menu"
+          aria-expanded={isMobileMenuOpen}
+        >
+          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        </motion.button>
+
+        {/* === BAGIAN KANAN: MENU ITEMS (Desktop) === */}
         <motion.div layout className="hidden md:flex items-center gap-8">
            {menuItems.map((item) => {
              
@@ -187,6 +200,49 @@ export default function Navbar() {
         </motion.div>
 
       </motion.nav>
+
+      {/* === MOBILE MENU DROPDOWN === */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.2 }}
+            className="md:hidden fixed top-[80px] left-0 right-0 bg-[#0a0a0a]/95 backdrop-blur-xl border-b border-white/10 pointer-events-auto"
+          >
+            <div className="flex flex-col p-6 gap-4 items-center">
+              {menuItems.map((item) => {
+                if (item.isButton) {
+                  return (
+                    <Link
+                      key={item.name}
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="w-full py-3 px-6 bg-[#1a1a1a] text-white font-medium rounded-xl border border-white/10 hover:border-white/30 transition-all duration-300 text-center flex items-center justify-center gap-2"
+                    >
+                      {item.name}
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                    </Link>
+                  );
+                }
+                return (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="py-3 px-6 text-gray-400 hover:text-[#F1FFB2] font-medium transition-colors duration-200 rounded-xl hover:bg-white/5 text-center"
+                  >
+                    {item.name}
+                  </Link>
+                );
+              })}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

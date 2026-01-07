@@ -23,7 +23,7 @@ export default function RotatingText({
   }, [texts.length, rotationInterval]);
 
   return (
-    <span className="inline-flex h-[1.6em] relative overflow-hidden align-top w-full md:w-auto">
+    <span className="inline-flex h-[1.6em] relative overflow-hidden align-top w-full md:w-auto justify-center md:justify-start">
       {/* 1. ANIMASI TEXT (Absolute Position) */}
       <AnimatePresence mode="wait">
         <motion.span
@@ -32,7 +32,7 @@ export default function RotatingText({
           animate={{ y: "0%", opacity: 1 }}
           exit={{ y: "-100%", opacity: 0 }}
           transition={{ duration: 0.5, ease: "easeInOut" }}
-          className="absolute left-0 top-0 whitespace-nowrap font-semibold text-white/90"
+          className="absolute left-1/2 md:left-0 top-0 -translate-x-1/2 md:translate-x-0 whitespace-nowrap font-semibold text-white/90"
         >
           {texts[index]}
         </motion.span>

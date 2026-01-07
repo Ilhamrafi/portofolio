@@ -53,14 +53,14 @@ export default function Home() {
         {/* KONTEN HERO */}
         <div className="w-full max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-2 h-full pt-20 z-10">
           
-          <div className="flex flex-col justify-center h-full relative pointer-events-auto">
+          <div className="flex flex-col justify-center max-md:items-center h-full relative pointer-events-auto max-md:text-center">
               {/* Garis Vertikal Dekoratif */}
               <div className="absolute -left-6 top-1/4 bottom-1/4 w-[1px] bg-gradient-to-b from-transparent via-white/20 to-transparent hidden md:block"></div>
 
-              <div className="space-y-6 md:space-y-6">
+              <div className="space-y-6 md:space-y-6 w-full">
                 
                 {/* 1. Badge Status */}
-                <div className="inline-flex items-center gap-2 px-3 py-1 border border-white/10 rounded-full bg-white/5 backdrop-blur-md w-fit">
+                <div className="inline-flex items-center gap-2 px-3 py-1 border border-white/10 rounded-full bg-white/5 backdrop-blur-md w-fit max-md:mx-auto">
                   <span className="relative flex h-2 w-2">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#F1FFB2] opacity-75"></span>
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-[#C6F10E]"></span>
@@ -71,11 +71,11 @@ export default function Home() {
                 </div>
 
                 {/* === 2. ROTATING INTRODUCTION === */}
-                <div className="flex items-center gap-2 text-lg md:text-xl font-light text-white/90 h-[1.6em] -mb-1">
+                <div className="flex items-center max-md:justify-center gap-2 text-lg md:text-xl font-light text-white/90 h-[1.6em] -mb-1">
                    <RotatingText 
                       texts={[
                         "Hi, I'm Ilhamrafi 👋",
-                        "AI Engineer 🤖",
+                        "AI Engineer",
                         "Jakarta, Indonesia"
                       ]}
                       rotationInterval={4000} 
@@ -96,22 +96,23 @@ export default function Home() {
                    </span>
                 </h1>
                 
-                {/* 4. Deskripsi */}
+                {/* 4. Deskripsi (UPDATED) */}
                 <div className="text-gray-400 text-base md:text-lg max-w-2xl leading-relaxed border-l-2 border-white/10 pl-4">
-                  A passionate <span className="text-white font-semibold">AI Engineer</span> crafting intelligent systems and helping companies implement AI
+                  An <span className="text-white font-semibold">AI Engineer</span> transforming complex challenges into intelligent solutions designed
                   {" "}
                   <RotatingText 
                     texts={[
-                      "to drive scalable growth.",
-                      "to automate complex workflows.",
-                      "to make data-driven decisions.",
-                      "to drive real business value."
-                    ]} 
+                      "to maximize efficiency.",
+                      "to scale business growth.",
+                      "to automate manual workflows.",
+                      "to drive data-driven impact."
+                    ]}
+                    rotationInterval={4000}
                   />
                 </div>
                 
                 {/* 5. Tombol & Social Media */}
-                <div className="flex flex-col gap-6 mt-2">
+                <div className="flex flex-col max-md:items-center gap-6 mt-2">
                   <button 
                     onClick={openChat}
                     onKeyDown={(e) => e.key === 'Enter' && openChat()}
@@ -124,35 +125,28 @@ export default function Home() {
                        <ArrowRight className="w-5 h-5 group-hover:-rotate-45 transition-transform duration-300" />
                     </div>
                   </button>
-                  <Socials />
+                  <div className="w-full flex max-md:justify-center">
+                    <Socials />
+                  </div>
                 </div>
               </div>
           </div>
 
-          {/* BAGIAN KANAN: LANYARD / FOTO */}
-          <div className="relative w-full h-full mt-8 md:mt-0">
-              {/* Mobile: smaller centered version */}
-              <div className="md:hidden flex justify-center items-center h-[300px]">
-                <div className="relative w-[250px] h-[300px]">
-                  <Lanyard position={[0, 0, 8]} gravity={[0, -30, 0]} />
-                </div>
-              </div>
-              {/* Desktop: full version */}
-              <div className="hidden md:block relative w-full h-full">
-                <Lanyard position={[1, 0, 10]} gravity={[0, -40, 0]} />
-              </div>
+          {/* BAGIAN KANAN: LANYARD / FOTO (Desktop Only) */}
+          <div className="hidden md:block relative w-full h-full">
+            <Lanyard position={[1, 0, 10]} gravity={[0, -40, 0]} />
           </div>
 
         </div>
       </section>
 
       {/* 3. TECH STACK SEPARATOR */}
-      <div className="relative z-20 bg-[#0a0a0a] py-16 overflow-hidden">
+      <div className="relative z-20 bg-[#0a0a0a] py-12 overflow-hidden">
           <TechMarquee />
       </div>
 
       {/* 4. CONTENT SECTION (Showcase / Projects) */}
-      <section id="projects" className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12 py-16">
+      <section id="projects" className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12 py-8 md:py-12">
          <div className="flex flex-col gap-12">
             <div>
               <h2 className="text-4xl md:text-6xl font-bold mb-6 tracking-tighter">
