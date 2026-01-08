@@ -22,7 +22,7 @@ export default function Navbar() {
 
   const menuItems = [
     { name: 'Resume', href: '/resume' },
-    { name: 'Showcase', href: '#projects' },
+    { name: 'Showcase', href: '/showcase' },
     { name: 'Blog', href: '/blog' },
     { name: 'Connect on', href: 'https://www.linkedin.com/in/ilhamrafi/', isButton: true },
   ];

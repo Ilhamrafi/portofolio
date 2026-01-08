@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from 'react';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, ExternalLink, Github } from 'lucide-react';
 // Import Components
 import Navbar from '@/components/Navbar';
 import Socials from '@/components/Socials';
@@ -13,6 +13,47 @@ import ChatWidget from '@/components/ChatWidget';
 
 export default function Home() {
   const [isChatOpen, setIsChatOpen] = useState(false);
+  
+  const featuredProjects = [
+    {
+      id: 1,
+      title: "Kora Pet Shop",
+      category: "Web Design",
+      description: "Modern pet shop website dengan interface yang user-friendly untuk memudahkan pelanggan mencari dan membeli produk perawatan hewan peliharaan.",
+      tags: ["Next.js", "Tailwind CSS", "TypeScript"],
+      link: "#",
+      github: "#"
+    },
+    {
+      id: 2,
+      title: "AI Chat Assistant",
+      category: "Full Stack",
+      description: "Chatbot berbasis AI yang dapat memahami konteks dan memberikan respons yang relevan untuk berbagai pertanyaan pengguna.",
+      tags: ["React", "Node.js", "OpenAI API"],
+      link: "#",
+      github: "#"
+    },
+    {
+      id: 3,
+      title: "Dashboard Analytics",
+      category: "Frontend",
+      description: "Dashboard interaktif untuk visualisasi data dan analytics real-time dengan performa tinggi dan responsif.",
+      tags: ["React", "Chart.js", "Tailwind CSS"],
+      link: "#",
+      github: "#"
+    },
+    {
+      id: 4,
+      title: "E-Commerce Platform",
+      category: "Full Stack",
+      description: "Platform e-commerce lengkap dengan fitur payment gateway, inventory management, dan customer dashboard.",
+      tags: ["Next.js", "PostgreSQL", "Stripe"],
+      link: "#",
+      github: "#"
+    }
+  ];
+  
+  const [hoveredId, setHoveredId] = useState<number | null>(null);
   
   const scrollToContact = () => {
     const contactSection = document.getElementById('contact');
@@ -148,30 +189,103 @@ export default function Home() {
       {/* 4. CONTENT SECTION (Showcase / Projects) */}
       <section id="projects" className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12 py-8 md:py-12">
          <div className="flex flex-col gap-12">
-            <div>
-              <h2 className="text-4xl md:text-6xl font-bold mb-6 tracking-tighter">
-                Selected Showcase
-              </h2>
-              <p className="text-gray-400 text-lg max-w-2xl leading-relaxed">
-                Here are some of the projects I&apos;ve worked on, spanning client work, team collaborations, and personal experiments.
-              </p>
+            <div className="flex flex-col md:flex-row justify-between md:items-end gap-6">
+              <div>
+                <h2 className="text-4xl md:text-6xl font-bold mb-6 tracking-tighter">
+                  <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-[#F1FFB2]">
+                    Selected Showcase
+                  </span>
+                </h2>
+                <p className="text-gray-400 text-lg max-w-2xl leading-relaxed">
+                  Here are some of the projects I&apos;ve worked on, spanning client work, team collaborations, and personal experiments.
+                </p>
+              </div>
+              <a
+                href="/showcase"
+                className="group relative inline-flex items-center gap-2 px-6 py-3 bg-white/5 hover:bg-white/10 border border-white/20 hover:border-[#F1FFB2]/50 rounded-full transition-all duration-300 text-white font-medium whitespace-nowrap"
+                aria-label="View all projects"
+              >
+                View All Projects
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+              </a>
             </div>
             
-            <div className="flex flex-col gap-6">
-               {[1, 2, 3, 4].map((item) => (
-                  <div 
-                    key={item} 
-                    className="group relative h-[280px] rounded-3xl bg-white/5 border border-white/10 overflow-hidden hover:border-[#F1FFB2]/50 transition-all duration-500 cursor-pointer focus-within:ring-2 focus-within:ring-[#F1FFB2] focus-within:ring-offset-2 focus-within:ring-offset-[#0a0a0a]"
-                    tabIndex={0}
-                    role="article"
-                    aria-label={`Project ${item} - Coming Soon`}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+               {featuredProjects.map((project) => (
+                  <div
+                    key={project.id}
+                    onMouseEnter={() => setHoveredId(project.id)}
+                    onMouseLeave={() => setHoveredId(null)}
+                    className="group relative rounded-2xl overflow-hidden bg-white/5 border border-white/10 hover:border-[#F1FFB2]/50 transition-all duration-500 cursor-pointer"
                   >
-                     <div className="absolute inset-0 flex items-center justify-center">
-                        <span className="text-gray-600 font-mono text-sm group-hover:text-[#F1FFB2] transition-colors">
-                          Project {item} <br/> (Coming Soon)
+                    {/* IMAGE CONTAINER */}
+                    <div className="relative h-64 md:h-72 overflow-hidden bg-gradient-to-br from-white/5 to-transparent">
+                      <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-black flex items-center justify-center">
+                        <div className="text-center">
+                          <div className="text-6xl mb-2">📁</div>
+                          <span className="text-gray-500 text-sm">{project.category}</span>
+                        </div>
+                      </div>
+                      
+                      {/* OVERLAY GRADIENT */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    </div>
+
+                    {/* CONTENT */}
+                    <div className="p-6 space-y-4">
+                      {/* CATEGORY BADGE */}
+                      <div className="inline-flex items-center px-3 py-1 rounded-full bg-white/10 border border-white/20">
+                        <span className="text-xs font-medium text-white/70 uppercase tracking-widest">
+                          {project.category}
                         </span>
-                     </div>
-                     <div className="absolute inset-0 opacity-0 group-hover:opacity-100 bg-gradient-to-t from-black/80 via-transparent to-transparent transition-opacity duration-500" />
+                      </div>
+
+                      {/* TITLE */}
+                      <h3 className="text-xl md:text-2xl font-bold group-hover:text-[#F1FFB2] transition-colors duration-300">
+                        {project.title}
+                      </h3>
+
+                      {/* DESCRIPTION */}
+                      <p className="text-gray-400 text-sm md:text-base leading-relaxed line-clamp-2">
+                        {project.description}
+                      </p>
+
+                      {/* TAGS */}
+                      <div className="flex flex-wrap gap-2 pt-2">
+                        {project.tags.map((tag, idx) => (
+                          <span
+                            key={idx}
+                            className="text-xs px-2 py-1 rounded-md bg-white/5 border border-white/10 text-gray-300"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+
+                      {/* BUTTONS */}
+                      <div className="flex gap-3 pt-4">
+                        {project.link && (
+                          <a
+                            href={project.link}
+                            className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 border border-white/20 rounded-lg transition-all duration-300 text-sm font-medium"
+                            aria-label={`Visit ${project.title}`}
+                          >
+                            <ExternalLink size={16} />
+                            Visit
+                          </a>
+                        )}
+                        {project.github && (
+                          <a
+                            href={project.github}
+                            className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-[#F1FFB2]/10 hover:bg-[#F1FFB2]/20 border border-[#F1FFB2]/30 rounded-lg transition-all duration-300 text-sm font-medium text-[#F1FFB2]"
+                            aria-label={`GitHub repository for ${project.title}`}
+                          >
+                            <Github size={16} />
+                            Code
+                          </a>
+                        )}
+                      </div>
+                    </div>
                   </div>
                ))}
             </div>
@@ -228,11 +342,6 @@ export default function Home() {
               </a>
             </div>
           </div>
-
-          {/* Location */}
-          <p className="text-sm text-gray-500">
-            Based in Jakarta, Indonesia 🇮🇩
-          </p>
 
         </div>
       </section>

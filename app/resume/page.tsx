@@ -7,10 +7,11 @@ import Navbar from '@/components/Navbar';
 import ChatWidget from '@/components/ChatWidget';
 import CountUp from '@/components/CountUp';
 import Socials from '@/components/Socials';
-import { MapPin, ArrowRight } from 'lucide-react';
+import { MapPin, ArrowRight, Download, Brain, Database, Rocket } from 'lucide-react';
 
 export default function ResumePage() {
   const [isChatOpen, setIsChatOpen] = useState(false);
+  const [isFlipped, setIsFlipped] = useState(false);
 
   const openChat = () => {
     setIsChatOpen(true);
@@ -43,8 +44,10 @@ export default function ResumePage() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="mb-12"
           >
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter text-white">
-              MY SUMMARY
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-[#F1FFB2]">
+                MY SUMMARY
+              </span>
             </h1>
           </motion.div>
 
@@ -66,9 +69,8 @@ export default function ResumePage() {
                   Hi, I&apos;m Ilhamrafi 👋
                 </h3>
                 <p className="text-gray-400 text-base md:text-lg leading-relaxed">
-                  I&apos;m an AI Engineer from Jakarta, Indonesia. Building intelligent systems, 
-                  solving complex problems with machine learning, and creating impactful AI solutions 
-                  are my priorities.
+                  I was born and raised in Balikpapan. I'm currently working as an AI Engineer in Jakarta, Indonesia, focusing on building 
+                  intelligent systems, solving complex problems with AI models, and creating impactful AI solutions.
                 </p>
               </motion.div>
 
@@ -107,23 +109,73 @@ export default function ResumePage() {
               </div>
             </div>
 
-            {/* GROUP 2: RIGHT COLUMN (Profile Image) */}
+            {/* GROUP 2: RIGHT COLUMN (Profile Image with Flip) */}
             {/* Image spans vertically to match the height of Intro + Stats */}
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: 0.3 }}
-              className="lg:col-span-4 relative min-h-[500px] lg:min-h-full rounded-[2rem] overflow-hidden border border-white/10 bg-[#111] transition-all duration-200"
+              className="lg:col-span-4 relative min-h-[500px] lg:min-h-full rounded-[2rem] overflow-hidden border border-white/10 bg-[#111] transition-all duration-200 group cursor-pointer"
+              onClick={() => setIsFlipped(!isFlipped)}
             >
-              <Image
-                src="/assets/Ilhamrafi.png"
-                alt="Ilham Rafiedhia"
-                fill
-                className="object-cover object-top"
-                priority
-              />
-              {/* Overlay gradient */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+              {/* Front - First Image (Blur & Fade Out) */}
+              <motion.div
+                animate={{ 
+                  opacity: isFlipped ? 0 : 1,
+                  scale: isFlipped ? 0.95 : 1
+                }}
+                transition={{ duration: 0.6, ease: "easeInOut" }}
+                className="absolute inset-0"
+                style={{
+                  filter: isFlipped ? "blur(8px)" : "blur(0px)"
+                }}
+              >
+                <Image
+                  src="/assets/ilham-bg.jpg"
+                  alt="Ilham Rafiedhia - Front"
+                  fill
+                  className="object-cover object-top"
+                  priority
+                />
+                {/* Overlay gradient */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+              </motion.div>
+
+              {/* Back - Second Image (Cross Fade In) */}
+              <motion.div
+                animate={{ 
+                  opacity: isFlipped ? 1 : 0,
+                  scale: isFlipped ? 1 : 1.05
+                }}
+                transition={{ duration: 0.6, ease: "easeInOut" }}
+                className="absolute inset-0"
+                style={{
+                  filter: isFlipped ? "blur(0px)" : "blur(8px)"
+                }}
+              >
+                <Image
+                  src="/assets/Ilham-badmin.jpg"
+                  alt="Ilham Rafiedhia - Back"
+                  fill
+                  className="object-cover object-top"
+                  priority
+                />
+                {/* Overlay gradient */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+              </motion.div>
+              
+              {/* Download CV Button - Always visible with subtle glow animation */}
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent p-6 flex items-center justify-center">
+                <a 
+                  href="https://drive.google.com/file/d/196fQ86NBS9vBEDPMbDzmqFqCtiKbSiNh/view?usp=sharing" 
+                  download 
+                  onClick={(e) => e.stopPropagation()}
+                  className="relative flex items-center gap-2 px-6 py-3 bg-[#F1FFB2]/70 text-black font-semibold rounded-full hover:bg-[#F1FFB2] transition-all duration-300 transform hover:scale-105 shadow-lg shadow-[#F1FFB2]/30 animate-pulse"
+                >
+                  <Download className="w-5 h-5" />
+                  Download CV
+                </a>
+              </div>
             </motion.div>
 
             {/* GROUP 3: BOTTOM ROW */}
@@ -138,8 +190,8 @@ export default function ResumePage() {
             >
               <p className="text-gray-300 text-base md:text-lg leading-relaxed">
                 Helping Startups, Corporations, and small businesses with AI solutions 
-                that include machine learning models, intelligent automation systems, 
-                data analysis pipelines, and AI-powered products.
+                that include AI models, intelligent automation systems, 
+                data pipelines, and AI-powered products.
               </p>
             </motion.div>
 
@@ -150,13 +202,13 @@ export default function ResumePage() {
               transition={{ duration: 0.5, delay: 0.7 }}
               className="lg:col-span-4 bg-[#111] border border-white/10 rounded-[2rem] p-8 md:p-10 flex flex-col justify-between min-h-[200px] transition-all duration-200"
             >
-               <div>
-                  <h4 className="text-xl font-semibold mb-1 text-white">Based in</h4>
-                  <p className="text-gray-300 text-lg">Jakarta, Indonesia</p>
-                  <p className="text-gray-500 font-mono text-sm mt-1">GMT +7</p>
-               </div>
-               <div className="mt-6 flex justify-end">
-                  <MapPin className="w-10 h-10 text-white" />
+               <div className="flex items-start justify-between">
+                  <div>
+                     <h4 className="text-xl font-semibold mb-1 text-white">Based in</h4>
+                     <p className="text-gray-300 text-lg">Jakarta, Indonesia</p>
+                     <p className="text-gray-300 text-base mt-1.5">GMT +7</p>
+                  </div>
+                  <MapPin className="w-8 h-8 text-[#F1FFB2] flex-shrink-0 mt-1" />
                </div>
             </motion.div>
 
@@ -190,14 +242,15 @@ export default function ResumePage() {
             >
               <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
                 <div>
-                  <h3 className="text-xl md:text-2xl font-semibold mb-2">AI Engineer</h3>
-                  <p className="text-[#F1FFB2] font-medium">Tech Company / Startup</p>
+                  <h3 className="text-xl md:text-2xl font-semibold mb-2">AI & Computer Vision Engineer</h3>
+                  <p className="text-[#F1FFB2] font-medium">PT Bengawan Tirta Rekayasa</p>
                 </div>
-                <span className="text-gray-400 text-sm md:text-base mt-2 md:mt-0">2023 - Present</span>
+                <span className="text-gray-400 text-sm md:text-base mt-2 md:mt-0">2024 - Present</span>
               </div>
               <p className="text-gray-400 leading-relaxed">
-                Developing and deploying AI models, building intelligent automation systems, 
-                and creating data pipelines for production environments.
+                Developed computer vision system for real-time waste detection on river surfaces, built water flow detection application 
+                (LSPIV method) for flood early warning system, and created real-time monitoring dashboard integrating waste detection, 
+                water-level, and flow-speed data to support decision-making in river management and flood risk mitigation.
               </p>
             </motion.div>
 
@@ -211,14 +264,38 @@ export default function ResumePage() {
             >
               <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
                 <div>
-                  <h3 className="text-xl md:text-2xl font-semibold mb-2">Machine Learning Developer</h3>
-                  <p className="text-[#F1FFB2] font-medium">Previous Company</p>
+                  <h3 className="text-xl md:text-2xl font-semibold mb-2">Machine Learning Cohort</h3>
+                  <p className="text-[#F1FFB2] font-medium">Bangkit Academy led by Google, Tokopedia, Gojek, & Traveloka</p>
                 </div>
-                <span className="text-gray-400 text-sm md:text-base mt-2 md:mt-0">2021 - 2022</span>
+                <span className="text-gray-400 text-sm md:text-base mt-2 md:mt-0">2024</span>
               </div>
               <p className="text-gray-400 leading-relaxed">
-                Developed predictive models and data pipelines, collaborated with cross-functional teams 
-                to integrate AI capabilities into existing products.
+                Developed Sweetify app - a sugar intake tracking application for health management, contributed to ML curriculum development 
+                through Instructor-Led Training materials, and completed multiple specializations including TensorFlow, Deep Learning, 
+                Data Science, and Google certifications.
+              </p>
+            </motion.div>
+
+            {/* Experience Item 3 */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="bg-white/5 border border-white/10 rounded-2xl p-6 md:p-8 hover:border-[#F1FFB2]/50 transition-all duration-300"
+            >
+              <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
+                <div>
+                  <h3 className="text-xl md:text-2xl font-semibold mb-2">Universitas Teknologi Yogyakarta</h3>
+                  <p className="text-[#F1FFB2] font-medium">Assistant Lecturer (part-time)</p>
+                </div>
+                <span className="text-gray-400 text-sm md:text-base mt-2 md:mt-0">2023 - 2024</span>
+              </div>
+              <p className="text-gray-400 leading-relaxed">
+                Taught courses including Coding, Machine Learning, IT Applications, Object-Oriented Programming (Python), 
+                Algorithms & Data Structures (Java), and Database Systems. Provided hands-on guidance applying theoretical knowledge 
+                to practical scenarios and collaborated with lecturers to develop learning materials, assignments, 
+                and lab exercises to strengthen student understanding.
               </p>
             </motion.div>
 
@@ -237,12 +314,12 @@ export default function ResumePage() {
             transition={{ duration: 0.6 }}
             className="mb-8"
           >
-            <h2 className="text-lg md:text-xl font-light text-white/60">Skills</h2>
+            <h2 className="text-lg md:text-xl font-light bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-[#F1FFB2]">What I Do</h2>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             
-            {/* Skill Category 1 */}
+            {/* What I Do Item 1 */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -250,16 +327,16 @@ export default function ResumePage() {
               transition={{ duration: 0.5 }}
               className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-[#F1FFB2]/50 transition-all duration-300"
             >
-              <h3 className="text-xl font-semibold mb-4">AI & ML</h3>
-              <ul className="space-y-2 text-gray-400">
-                <li>• TensorFlow & PyTorch</li>
-                <li>• Computer Vision</li>
-                <li>• NLP & LLMs</li>
-                <li>• Deep Learning</li>
-              </ul>
+              <div className="flex items-center gap-3 mb-4">
+                <Brain className="w-6 h-6 text-[#F1FFB2]" />
+                <h3 className="text-xl font-semibold text-white">AI Development</h3>
+              </div>
+              <p className="text-gray-400 leading-relaxed text-justify">
+                Designing and developing predictive models using state-of-the-art algorithms to solve complex business problems and drive meaningful impact.
+              </p>
             </motion.div>
 
-            {/* Skill Category 2 */}
+            {/* What I Do Item 2 */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -267,16 +344,16 @@ export default function ResumePage() {
               transition={{ duration: 0.5, delay: 0.1 }}
               className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-[#F1FFB2]/50 transition-all duration-300"
             >
-              <h3 className="text-xl font-semibold mb-4">Programming</h3>
-              <ul className="space-y-2 text-gray-400">
-                <li>• Python</li>
-                <li>• JavaScript/TypeScript</li>
-                <li>• SQL</li>
-                <li>• REST APIs</li>
-              </ul>
+              <div className="flex items-center gap-3 mb-4">
+                <Database className="w-6 h-6 text-[#F1FFB2]" />
+                <h3 className="text-xl font-semibold text-white">Data Engineering</h3>
+              </div>
+              <p className="text-gray-400 leading-relaxed text-justify">
+                Managing efficient and large-scale data pipelines to ensure AI models receive high-quality data input for optimal performance.
+              </p>
             </motion.div>
 
-            {/* Skill Category 3 */}
+            {/* What I Do Item 3 */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -284,13 +361,13 @@ export default function ResumePage() {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-[#F1FFB2]/50 transition-all duration-300"
             >
-              <h3 className="text-xl font-semibold mb-4">Tools & Platforms</h3>
-              <ul className="space-y-2 text-gray-400">
-                <li>• Docker & Kubernetes</li>
-                <li>• AWS / GCP / Azure</li>
-                <li>• Git & CI/CD</li>
-                <li>• MLOps & Model Deployment</li>
-              </ul>
+              <div className="flex items-center gap-3 mb-4">
+                <Rocket className="w-6 h-6 text-[#F1FFB2]" />
+                <h3 className="text-xl font-semibold text-white">MLOps & Deployment</h3>
+              </div>
+              <p className="text-gray-400 leading-relaxed text-justify">
+                Integrating AI models into production environments, ensuring stable performance, and conducting regular model monitoring for reliability.
+              </p>
             </motion.div>
 
           </div>
