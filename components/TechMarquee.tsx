@@ -19,6 +19,7 @@ const techStack = [
   { name: "Redis", src: "/assets/logo/Redis.png" },
   { name: "Celery", src: "/assets/logo/Celery.png" },
   { name: "Keras", src: "/assets/logo/Keras.jpg" },
+  { name: "Streamlit", src: "/assets/logo/Streamlit.png" },
   { name: "Git", src: "/assets/logo/Git.png" },
   { name: "GitHub", src: "/assets/logo/github.png" },
 ];

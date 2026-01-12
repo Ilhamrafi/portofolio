@@ -34,15 +34,6 @@ export default function Home() {
       github: "#"
     },
     {
-      id: 3,
-      title: "Dashboard Analytics",
-      category: "Frontend",
-      description: "Dashboard interaktif untuk visualisasi data dan analytics real-time dengan performa tinggi dan responsif.",
-      tags: ["React", "Chart.js", "Tailwind CSS"],
-      link: "#",
-      github: "#"
-    },
-    {
       id: 4,
       title: "E-Commerce Platform",
       category: "Full Stack",
@@ -187,43 +178,43 @@ export default function Home() {
       </div>
 
       {/* 4. CONTENT SECTION (Showcase / Projects) */}
-      <section id="projects" className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12 py-8 md:py-12">
-         <div className="flex flex-col gap-12">
-            <div className="flex flex-col md:flex-row justify-between md:items-end gap-6">
-              <div>
-                <h2 className="text-4xl md:text-6xl font-bold mb-6 tracking-tighter">
+      <section id="projects" className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-12 py-8 md:py-16">
+         <div className="flex flex-col gap-8 md:gap-12">
+            <div className="flex flex-col md:flex-row justify-between md:items-end gap-4 md:gap-6">
+              <div className="flex-1">
+                <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold mb-3 md:mb-6 tracking-tighter">
                   <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-[#F1FFB2]">
                     Selected Showcase
                   </span>
                 </h2>
-                <p className="text-gray-400 text-lg max-w-2xl leading-relaxed">
+                <p className="text-gray-400 text-sm sm:text-base md:text-lg max-w-2xl leading-relaxed">
                   Here are some of the projects I&apos;ve worked on, spanning client work, team collaborations, and personal experiments.
                 </p>
               </div>
               <a
                 href="/showcase"
-                className="group relative inline-flex items-center gap-2 px-6 py-3 bg-white/5 hover:bg-white/10 border border-white/20 hover:border-[#F1FFB2]/50 rounded-full transition-all duration-300 text-white font-medium whitespace-nowrap"
-                aria-label="View all projects"
+                className="group relative inline-flex items-center justify-center sm:justify-start gap-2 w-full sm:w-auto px-6 py-3 bg-white/5 hover:bg-white/10 border border-white/20 hover:border-[#F1FFB2]/50 rounded-full transition-all duration-300 text-white font-medium text-sm md:text-base whitespace-nowrap"
+                aria-label="View All projects"
               >
                 View All Projects
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+                <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform duration-300" />
               </a>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                {featuredProjects.map((project) => (
                   <div
                     key={project.id}
                     onMouseEnter={() => setHoveredId(project.id)}
                     onMouseLeave={() => setHoveredId(null)}
-                    className="group relative rounded-2xl overflow-hidden bg-white/5 border border-white/10 hover:border-[#F1FFB2]/50 transition-all duration-500 cursor-pointer"
+                    className="group relative rounded-xl sm:rounded-2xl overflow-hidden bg-white/5 border border-white/10 hover:border-[#F1FFB2]/50 transition-all duration-500 cursor-pointer flex flex-col"
                   >
                     {/* IMAGE CONTAINER */}
-                    <div className="relative h-64 md:h-72 overflow-hidden bg-gradient-to-br from-white/5 to-transparent">
+                    <div className="relative h-48 sm:h-56 md:h-72 overflow-hidden bg-gradient-to-br from-white/5 to-transparent flex-shrink-0">
                       <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-black flex items-center justify-center">
                         <div className="text-center">
-                          <div className="text-6xl mb-2">📁</div>
-                          <span className="text-gray-500 text-sm">{project.category}</span>
+                          <div className="text-5xl sm:text-6xl mb-2">📁</div>
+                          <span className="text-gray-500 text-xs sm:text-sm">{project.category}</span>
                         </div>
                       </div>
                       
@@ -232,26 +223,26 @@ export default function Home() {
                     </div>
 
                     {/* CONTENT */}
-                    <div className="p-6 space-y-4">
+                    <div className="p-4 sm:p-6 space-y-3 sm:space-y-4 flex-1 flex flex-col">
                       {/* CATEGORY BADGE */}
-                      <div className="inline-flex items-center px-3 py-1 rounded-full bg-white/10 border border-white/20">
+                      <div className="inline-flex items-center px-3 py-1 rounded-full bg-white/10 border border-white/20 w-fit">
                         <span className="text-xs font-medium text-white/70 uppercase tracking-widest">
                           {project.category}
                         </span>
                       </div>
 
                       {/* TITLE */}
-                      <h3 className="text-xl md:text-2xl font-bold group-hover:text-[#F1FFB2] transition-colors duration-300">
+                      <h3 className="text-lg sm:text-xl md:text-2xl font-bold group-hover:text-[#F1FFB2] transition-colors duration-300">
                         {project.title}
                       </h3>
 
                       {/* DESCRIPTION */}
-                      <p className="text-gray-400 text-sm md:text-base leading-relaxed line-clamp-2">
+                      <p className="text-gray-400 text-xs sm:text-sm md:text-base leading-relaxed line-clamp-3 md:line-clamp-2 flex-1">
                         {project.description}
                       </p>
 
                       {/* TAGS */}
-                      <div className="flex flex-wrap gap-2 pt-2">
+                      <div className="flex flex-wrap gap-2 pt-1 md:pt-2">
                         {project.tags.map((tag, idx) => (
                           <span
                             key={idx}
@@ -263,24 +254,26 @@ export default function Home() {
                       </div>
 
                       {/* BUTTONS */}
-                      <div className="flex gap-3 pt-4">
+                      <div className="flex gap-2 sm:gap-3 pt-3 md:pt-4">
                         {project.link && (
                           <a
                             href={project.link}
-                            className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 border border-white/20 rounded-lg transition-all duration-300 text-sm font-medium"
+                            className="flex-1 flex items-center justify-center gap-2 px-3 sm:px-4 py-2 bg-white/10 hover:bg-white/20 border border-white/20 rounded-lg transition-all duration-300 text-xs sm:text-sm font-medium"
                             aria-label={`Visit ${project.title}`}
                           >
-                            <ExternalLink size={16} />
+                            <ExternalLink size={14} className="hidden sm:block" />
+                            <ExternalLink size={12} className="sm:hidden" />
                             Visit
                           </a>
                         )}
                         {project.github && (
                           <a
                             href={project.github}
-                            className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-[#F1FFB2]/10 hover:bg-[#F1FFB2]/20 border border-[#F1FFB2]/30 rounded-lg transition-all duration-300 text-sm font-medium text-[#F1FFB2]"
+                            className="flex-1 flex items-center justify-center gap-2 px-3 sm:px-4 py-2 bg-[#F1FFB2]/10 hover:bg-[#F1FFB2]/20 border border-[#F1FFB2]/30 rounded-lg transition-all duration-300 text-xs sm:text-sm font-medium text-[#F1FFB2]"
                             aria-label={`GitHub repository for ${project.title}`}
                           >
-                            <Github size={16} />
+                            <Github size={14} className="hidden sm:block" />
+                            <Github size={12} className="sm:hidden" />
                             Code
                           </a>
                         )}

@@ -11,7 +11,7 @@ import { MapPin, ArrowRight, Download, Brain, Database, Rocket } from 'lucide-re
 
 export default function ResumePage() {
   const [isChatOpen, setIsChatOpen] = useState(false);
-  const [isFlipped, setIsFlipped] = useState(false);
+  const [isImageHovered, setIsImageHovered] = useState(false);
 
   const openChat = () => {
     setIsChatOpen(true);
@@ -85,7 +85,7 @@ export default function ResumePage() {
                   className="bg-[#111] border border-white/10 rounded-[2rem] p-8 flex flex-col justify-center min-h-[200px] transition-all duration-200"
                 >
                   <div className="text-5xl md:text-6xl font-bold mb-2 text-white">
-                    <CountUp to={20} duration={0.5} className="inline-block" />+
+                    <CountUp to={10} duration={0.5} className="inline-block" />+
                   </div>
                   <div className="text-gray-400 text-lg leading-tight">
                     Completed<br />Projects
@@ -109,67 +109,39 @@ export default function ResumePage() {
               </div>
             </div>
 
-            {/* GROUP 2: RIGHT COLUMN (Profile Image with Flip) */}
+            {/* GROUP 2: RIGHT COLUMN (Profile Image) */}
             {/* Image spans vertically to match the height of Intro + Stats */}
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: 0.3 }}
-              className="lg:col-span-4 relative min-h-[500px] lg:min-h-full rounded-[2rem] overflow-hidden border border-white/10 bg-[#111] transition-all duration-200 group cursor-pointer"
-              onClick={() => setIsFlipped(!isFlipped)}
+              className="lg:col-span-4 relative min-h-[500px] lg:min-h-full rounded-[2rem] overflow-hidden border border-white/10 bg-[#111] transition-all duration-200 cursor-pointer"
+              onMouseEnter={() => setIsImageHovered(true)}
+              onMouseLeave={() => setIsImageHovered(false)}
             >
-              {/* Front - First Image (Blur & Fade Out) */}
-              <motion.div
-                animate={{ 
-                  opacity: isFlipped ? 0 : 1,
-                  scale: isFlipped ? 0.95 : 1
-                }}
-                transition={{ duration: 0.6, ease: "easeInOut" }}
-                className="absolute inset-0"
+              {/* Profile Image with Grayscale Hover */}
+              <div 
+                className="relative w-full h-full transition-all duration-300"
                 style={{
-                  filter: isFlipped ? "blur(8px)" : "blur(0px)"
+                  filter: isImageHovered ? "grayscale(0%)" : "grayscale(100%)"
                 }}
               >
                 <Image
                   src="/assets/ilham-bg.jpg"
-                  alt="Ilham Rafiedhia - Front"
+                  alt="Ilham Rafiedhia"
                   fill
                   className="object-cover object-top"
                   priority
                 />
-                {/* Overlay gradient */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-              </motion.div>
-
-              {/* Back - Second Image (Cross Fade In) */}
-              <motion.div
-                animate={{ 
-                  opacity: isFlipped ? 1 : 0,
-                  scale: isFlipped ? 1 : 1.05
-                }}
-                transition={{ duration: 0.6, ease: "easeInOut" }}
-                className="absolute inset-0"
-                style={{
-                  filter: isFlipped ? "blur(0px)" : "blur(8px)"
-                }}
-              >
-                <Image
-                  src="/assets/Ilham-badmin.jpg"
-                  alt="Ilham Rafiedhia - Back"
-                  fill
-                  className="object-cover object-top"
-                  priority
-                />
-                {/* Overlay gradient */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-              </motion.div>
+              </div>
+              {/* Overlay gradient */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
               
               {/* Download CV Button - Always visible with subtle glow animation */}
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent p-6 flex items-center justify-center">
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent p-6 flex items-center justify-center pointer-events-auto">
                 <a 
                   href="https://drive.google.com/file/d/196fQ86NBS9vBEDPMbDzmqFqCtiKbSiNh/view?usp=sharing" 
                   download 
-                  onClick={(e) => e.stopPropagation()}
                   className="relative flex items-center gap-2 px-6 py-3 bg-[#F1FFB2]/70 text-black font-semibold rounded-full hover:bg-[#F1FFB2] transition-all duration-300 transform hover:scale-105 shadow-lg shadow-[#F1FFB2]/30 animate-pulse"
                 >
                   <Download className="w-5 h-5" />
@@ -327,11 +299,11 @@ export default function ResumePage() {
               transition={{ duration: 0.5 }}
               className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-[#F1FFB2]/50 transition-all duration-300"
             >
-              <div className="flex items-center gap-3 mb-4">
+              <div className="flex flex-col items-center gap-3 mb-4">
                 <Brain className="w-6 h-6 text-[#F1FFB2]" />
-                <h3 className="text-xl font-semibold text-white">AI Development</h3>
+                <h3 className="text-xl font-semibold text-white text-center">AI Development</h3>
               </div>
-              <p className="text-gray-400 leading-relaxed text-justify">
+              <p className="text-gray-400 leading-relaxed text-center">
                 Designing and developing predictive models using state-of-the-art algorithms to solve complex business problems and drive meaningful impact.
               </p>
             </motion.div>
@@ -344,11 +316,11 @@ export default function ResumePage() {
               transition={{ duration: 0.5, delay: 0.1 }}
               className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-[#F1FFB2]/50 transition-all duration-300"
             >
-              <div className="flex items-center gap-3 mb-4">
+              <div className="flex flex-col items-center gap-3 mb-4">
                 <Database className="w-6 h-6 text-[#F1FFB2]" />
-                <h3 className="text-xl font-semibold text-white">Data Engineering</h3>
+                <h3 className="text-xl font-semibold text-white text-center">Data Engineering</h3>
               </div>
-              <p className="text-gray-400 leading-relaxed text-justify">
+              <p className="text-gray-400 leading-relaxed text-center">
                 Managing efficient and large-scale data pipelines to ensure AI models receive high-quality data input for optimal performance.
               </p>
             </motion.div>
@@ -361,11 +333,11 @@ export default function ResumePage() {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-[#F1FFB2]/50 transition-all duration-300"
             >
-              <div className="flex items-center gap-3 mb-4">
+              <div className="flex flex-col items-center gap-3 mb-4">
                 <Rocket className="w-6 h-6 text-[#F1FFB2]" />
-                <h3 className="text-xl font-semibold text-white">MLOps & Deployment</h3>
+                <h3 className="text-xl font-semibold text-white text-center">MLOps & Deployment</h3>
               </div>
-              <p className="text-gray-400 leading-relaxed text-justify">
+              <p className="text-gray-400 leading-relaxed text-center">
                 Integrating AI models into production environments, ensuring stable performance, and conducting regular model monitoring for reliability.
               </p>
             </motion.div>

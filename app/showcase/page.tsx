@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from 'react';
-import { ExternalLink, Github } from 'lucide-react';
+import { ExternalLink, Github, ArrowRight, ChevronLeft, ChevronRight, Search } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Socials from '@/components/Socials';
+import ChatWidget from '@/components/ChatWidget';
 
 interface Project {
   id: number;
@@ -38,16 +39,6 @@ const projects: Project[] = [
     github: "#"
   },
   {
-    id: 3,
-    title: "Dashboard Analytics",
-    category: "Frontend",
-    description: "Dashboard interaktif untuk visualisasi data dan analytics real-time dengan performa tinggi dan responsif.",
-    image: "/api/placeholder/400/300",
-    tags: ["React", "Chart.js", "Tailwind CSS"],
-    link: "#",
-    github: "#"
-  },
-  {
     id: 4,
     title: "E-Commerce Platform",
     category: "Full Stack",
@@ -77,10 +68,99 @@ const projects: Project[] = [
     link: "#",
     github: "#"
   },
+  {
+    id: 7,
+    title: "Real Estate Platform",
+    category: "Web Design",
+    description: "Platform properti modern dengan fitur pencarian advanced, virtual tour, dan sistem booking appointment untuk agen real estate.",
+    image: "/api/placeholder/400/300",
+    tags: ["Next.js", "React", "Google Maps API"],
+    link: "#",
+    github: "#"
+  },
+  {
+    id: 8,
+    title: "Health & Fitness Tracker",
+    category: "Mobile",
+    description: "Aplikasi kesehatan komprehensif dengan tracking aktivitas, kalori, detak jantung, dan integrasi dengan wearable devices.",
+    image: "/api/placeholder/400/300",
+    tags: ["React Native", "Python", "Firebase"],
+    link: "#",
+    github: "#"
+  },
+  {
+    id: 9,
+    title: "Content Management System",
+    category: "Full Stack",
+    description: "CMS headless yang powerful untuk mengelola konten multi-channel dengan API-first architecture dan real-time collaboration.",
+    image: "/api/placeholder/400/300",
+    tags: ["TypeScript", "Node.js", "MongoDB", "GraphQL"],
+    link: "#",
+    github: "#"
+  },
+  {
+    id: 10,
+    title: "AI Image Recognition Tool",
+    category: "AI/ML",
+    description: "Aplikasi berbasis AI yang dapat mengenali dan mengklasifikasi objek dalam gambar dengan accuracy tinggi menggunakan deep learning.",
+    image: "/api/placeholder/400/300",
+    tags: ["Python", "TensorFlow", "FastAPI", "React"],
+    link: "#",
+    github: "#"
+  },
 ];
 
 export default function ShowcasePage() {
   const [hoveredId, setHoveredId] = useState<number | null>(null);
+  const [isChatOpen, setIsChatOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('All');
+
+  // Get unique categories
+  const categories = ['All', ...new Set(projects.map(project => project.category))];
+
+  // Filter projects based on search query and category
+  const filteredProjects = projects.filter(project => {
+    const matchesCategory = selectedCategory === 'All' || project.category === selectedCategory;
+    const searchLower = searchQuery.toLowerCase();
+    const matchesSearch = (
+      project.title.toLowerCase().includes(searchLower) ||
+      project.description.toLowerCase().includes(searchLower) ||
+      project.category.toLowerCase().includes(searchLower) ||
+      project.tags.some(tag => tag.toLowerCase().includes(searchLower))
+    );
+    return matchesCategory && matchesSearch;
+  });
+
+  const ITEMS_PER_PAGE = 6;
+  const totalPages = Math.ceil(filteredProjects.length / ITEMS_PER_PAGE);
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+  const endIndex = startIndex + ITEMS_PER_PAGE;
+  const paginatedProjects = filteredProjects.slice(startIndex, endIndex);
+
+  const openChat = () => {
+    setIsChatOpen(true);
+  };
+
+  const handlePrevPage = () => {
+    setCurrentPage((prev) => Math.max(prev - 1, 1));
+  };
+
+  const handleNextPage = () => {
+    setCurrentPage((prev) => Math.min(prev + 1, totalPages));
+  };
+
+  // Reset to page 1 when search query changes
+  const handleSearchChange = (value: string) => {
+    setSearchQuery(value);
+    setCurrentPage(1);
+  };
+
+  const handleCategoryChange = (category: string) => {
+    setSelectedCategory(category);
+    setCurrentPage(1);
+  };
 
   return (
     <main className="flex flex-col min-h-screen w-full bg-[#0a0a0a] overflow-x-hidden text-white font-sans selection:bg-white/20">
@@ -114,9 +194,39 @@ export default function ShowcasePage() {
             </div>
           </div>
 
+          {/* SEARCH BAR */}
+          <div className="mb-12 relative">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+            <input
+              type="text"
+              placeholder="Search projects by title, category, or technology..."
+              value={searchQuery}
+              onChange={(e) => handleSearchChange(e.target.value)}
+              className="w-full pl-12 pr-4 py-3 bg-white/5 border border-white/10 rounded-full text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-[#F1FFB2] focus:border-transparent transition-all"
+            />
+          </div>
+
+          {/* CATEGORY FILTER */}
+          <div className="mb-12 flex flex-wrap gap-2">
+            {categories.map((category) => (
+              <button
+                key={category}
+                onClick={() => handleCategoryChange(category)}
+                className={`px-4 py-2 rounded-full transition-all duration-300 text-sm font-medium ${
+                  selectedCategory === category
+                    ? 'bg-[#F1FFB2] text-black'
+                    : 'bg-white/5 text-white border border-white/10 hover:border-white/30 hover:bg-white/10'
+                }`}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+
           {/* PROJECTS GRID */}
+          {paginatedProjects.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
-            {projects.map((project) => (
+            {paginatedProjects.map((project) => (
               <div
                 key={project.id}
                 onMouseEnter={() => setHoveredId(project.id)}
@@ -194,14 +304,69 @@ export default function ShowcasePage() {
               </div>
             ))}
           </div>
+          ) : (
+            <div className="text-center py-12">
+              <p className="text-gray-400 text-lg">No projects found matching your search.</p>
+            </div>
+          )}
+
+          {/* PAGINATION */}
+          {paginatedProjects.length > 0 && (
+          <div className="flex items-center justify-center gap-4 mt-12">
+            <button
+              onClick={handlePrevPage}
+              disabled={currentPage === 1}
+              className="flex items-center gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 disabled:opacity-50 disabled:cursor-not-allowed border border-white/10 rounded-full transition-all duration-300 text-sm font-medium"
+              aria-label="Previous page"
+            >
+              <ChevronLeft size={18} />
+              Previous
+            </button>
+
+            <div className="flex items-center gap-2">
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                <button
+                  key={page}
+                  onClick={() => setCurrentPage(page)}
+                  className={`w-10 h-10 rounded-full font-medium transition-all duration-300 ${
+                    currentPage === page
+                      ? 'bg-[#F1FFB2] text-black'
+                      : 'bg-white/5 hover:bg-white/10 border border-white/10 text-white'
+                  }`}
+                  aria-label={`Go to page ${page}`}
+                  aria-current={currentPage === page ? 'page' : undefined}
+                >
+                  {page}
+                </button>
+              ))}
+            </div>
+
+            <button
+              onClick={handleNextPage}
+              disabled={currentPage === totalPages}
+              className="flex items-center gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 disabled:opacity-50 disabled:cursor-not-allowed border border-white/10 rounded-full transition-all duration-300 text-sm font-medium"
+              aria-label="Next page"
+            >
+              Next
+              <ChevronRight size={18} />
+            </button>
+          </div>
+          )}
+
+          {/* PAGE INFO */}
+          {paginatedProjects.length > 0 && (
+          <p className="text-center text-gray-400 text-sm mt-4">
+            Showing {paginatedProjects.length} of {filteredProjects.length} projects
+          </p>
+          )}
         </div>
       </section>
 
       {/* CTA SECTION */}
       <section className="relative z-10 w-full bg-gradient-to-b from-[#0a0a0a] to-black py-24">
-        <div className="max-w-5xl mx-auto px-6 md:px-12 text-center">
-          <div className="space-y-6">
-            <h2 className="text-4xl md:text-6xl font-bold tracking-tighter">
+        <div className="max-w-4xl mx-auto px-6 md:px-12 text-center">
+          <div className="bg-gradient-to-br from-white/10 to-white/5 border border-white/20 rounded-3xl p-12 md:p-16 transition-all duration-200 space-y-6">
+            <h2 className="text-3xl md:text-5xl font-bold">
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-[#F1FFB2]">
                 Interested in collaborating?
               </span>
@@ -209,18 +374,18 @@ export default function ShowcasePage() {
             <p className="text-gray-400 text-lg max-w-2xl mx-auto leading-relaxed">
               Let's work together to bring your ideas to life. Feel free to reach out!
             </p>
-            <div className="pt-6">
-              <a
-                href="https://www.linkedin.com/in/ilhamrafi/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-8 py-4 bg-[#1a1a1a] text-white font-semibold rounded-full border border-white/10 hover:border-[#F1FFB2]/50 hover:text-[#F1FFB2] transition-all duration-300 active:scale-95"
-                aria-label="Connect on LinkedIn"
-              >
-                Get in Touch
-                <ExternalLink size={20} />
-              </a>
-            </div>
+            <button
+              onClick={openChat}
+              onKeyDown={(e) => e.key === 'Enter' && openChat()}
+              className="group relative inline-flex items-center gap-3 pl-6 pr-2 py-2 bg-[#1a1a1a] text-white text-lg font-medium rounded-full border border-white/10 transition-all duration-300 active:scale-95 cursor-pointer overflow-hidden hover:border-white/30 focus:outline-none"
+              aria-label="Open chat with AI assistant"
+            >
+              <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-[100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-in-out z-0"></div>
+              <span className="relative z-10">Let's Talk</span>
+              <div className="relative z-10 p-3 bg-white/10 rounded-full group-hover:bg-white/20 transition-colors">
+                <ArrowRight className="w-5 h-5 group-hover:-rotate-45 transition-transform duration-300" />
+              </div>
+            </button>
           </div>
         </div>
       </section>
@@ -236,6 +401,13 @@ export default function ShowcasePage() {
           </div>
         </div>
       </footer>
+
+      {/* Chat Widget */}
+      <ChatWidget 
+        isOpen={isChatOpen} 
+        onClose={() => setIsChatOpen(false)} 
+        onOpen={() => setIsChatOpen(true)}
+      />
 
     </main>
   );
