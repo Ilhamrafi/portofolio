@@ -5,11 +5,12 @@ import { ExternalLink, Github, ArrowRight, ChevronLeft, ChevronRight, Search } f
 import Navbar from '@/components/Navbar';
 import Socials from '@/components/Socials';
 import ChatWidget from '@/components/ChatWidget';
+import { link } from 'fs/promises';
 
 interface Project {
   id: number;
   title: string;
-  category: string;
+  categories: string[];
   description: string;
   image: string;
   tags: string[];
@@ -20,91 +21,91 @@ interface Project {
 const projects: Project[] = [
   {
     id: 1,
-    title: "Kora Pet Shop",
-    category: "Web Design",
-    description: "Modern pet shop website dengan interface yang user-friendly untuk memudahkan pelanggan mencari dan membeli produk perawatan hewan peliharaan.",
-    image: "/api/placeholder/400/300",
-    tags: ["Next.js", "Tailwind CSS", "TypeScript"],
+    title: "SmartRiver",
+    categories: ["Web App", "AI/ML"],
+    description: "Smart river monitoring system dengan interface yang intuitif untuk real-time tracking dan analysis air sungai menggunakan IoT sensors.",
+    image: "/assets/showcase/smartriver.png",
+    tags: ["React.js", "Computer Vision", "AWS Cloud"],
     link: "#",
     github: "#"
   },
   {
     id: 2,
-    title: "AI Chat Assistant",
-    category: "Full Stack",
-    description: "Chatbot berbasis AI yang dapat memahami konteks dan memberikan respons yang relevan untuk berbagai pertanyaan pengguna.",
-    image: "/api/placeholder/400/300",
-    tags: ["React", "Node.js", "OpenAI API"],
+    title: "Sweetify",
+    categories: ["Mobile App", "AI/ML"],
+    description: "Aplikasi mobile untuk menemukan dan memesan dessert favorit dengan antarmuka yang menarik dan seamless ordering experience.",
+    image: "/assets/showcase/sweetify.png",
+    tags: ["Kotlin", "Firebase", "Computer Vision", "Google Cloud Platform"],
+    link: "#",
+    github: "#"
+  },
+  {
+    id: 3,
+    title: "PLATVISION",
+    categories: ["AI/ML"],
+    description: "Platform computer vision untuk analisis visual dan object detection dengan akurasi tinggi menggunakan teknologi deep learning terkini.",
+    image: "/assets/showcase/platvision.png",
+    tags: ["TensorFlow", "OpenCV"],
     link: "#",
     github: "#"
   },
   {
     id: 4,
-    title: "E-Commerce Platform",
-    category: "Full Stack",
-    description: "Platform e-commerce lengkap dengan fitur payment gateway, inventory management, dan customer dashboard.",
-    image: "/api/placeholder/400/300",
-    tags: ["Next.js", "PostgreSQL", "Stripe"],
+    title: "SITEPAT",
+    categories: ["Web App", "AI/ML"],
+    description: "Platform manajemen site construction dengan fitur monitoring progress, resource allocation, dan real-time collaboration tools.",
+    image: "/assets/showcase/Sitepat.jpg",
+    tags: ["IoT", "Bootstrap", "WebSocket", "Computer Vision"],
     link: "#",
     github: "#"
   },
   {
     id: 5,
-    title: "Social Media App",
-    category: "Mobile",
-    description: "Aplikasi media sosial dengan fitur posting, komentar, like, dan real-time notifications untuk user engagement.",
-    image: "/api/placeholder/400/300",
-    tags: ["React Native", "Firebase", "Redux"],
+    title: "Exavator Detection",
+    categories: ["AI/ML"],
+    description: "Sistem deteksi dan tracking excavator real-time menggunakan computer vision untuk optimasi pekerjaan konstruksi dan monitoring equipment.",
+    image: "/assets/showcase/Exavator.png",
+    tags: ["Vision Transformer", "OpenCV"],
     link: "#",
     github: "#"
   },
   {
     id: 6,
-    title: "Task Management System",
-    category: "Full Stack",
-    description: "Sistem manajemen tugas yang membantu tim berkolaborasi dengan fitur tracking, scheduling, dan progress monitoring.",
-    image: "/api/placeholder/400/300",
-    tags: ["Vue.js", "Django", "PostgreSQL"],
+    title: "Mushroom Classification",
+    categories: ["AI/ML"],
+    description: "Model machine learning untuk klasifikasi jenis jamur berdasarkan karakteristik fisik dengan akurasi tinggi menggunakan deep learning.",
+    image: "/assets/showcase/Klasifikasi Jamur.png",
+    tags: ["TensorFlow", "Keras", "Computer Vision"],
     link: "#",
     github: "#"
   },
   {
     id: 7,
-    title: "Real Estate Platform",
-    category: "Web Design",
-    description: "Platform properti modern dengan fitur pencarian advanced, virtual tour, dan sistem booking appointment untuk agen real estate.",
-    image: "/api/placeholder/400/300",
-    tags: ["Next.js", "React", "Google Maps API"],
+    title: "Food Commodity Production Forecasting",
+    categories: ["AI/ML"],
+    description: "Sistem prediksi produksi komoditas pangan di Sumatera menggunakan time series forecasting dan machine learning untuk mendukung perencanaan pertanian.",
+    image: "/assets/showcase/forcasting sumatra.png",
+    tags: ["LSTM", "TensorFlow"],
     link: "#",
     github: "#"
   },
   {
     id: 8,
-    title: "Health & Fitness Tracker",
-    category: "Mobile",
-    description: "Aplikasi kesehatan komprehensif dengan tracking aktivitas, kalori, detak jantung, dan integrasi dengan wearable devices.",
-    image: "/api/placeholder/400/300",
-    tags: ["React Native", "Python", "Firebase"],
+    title: "Rockpaperscissors Classification",
+    categories: ["AI/ML"],
+    description: "Model CNN untuk mengenali gesture tangan rock, paper, scissors secara real-time menggunakan computer vision dan neural network.",
+    image: "/assets/showcase/rockpaperscissors.png",
+    tags: ["TensorFlow", "OpenCV"],
     link: "#",
     github: "#"
   },
   {
     id: 9,
-    title: "Content Management System",
-    category: "Full Stack",
-    description: "CMS headless yang powerful untuk mengelola konten multi-channel dengan API-first architecture dan real-time collaboration.",
-    image: "/api/placeholder/400/300",
-    tags: ["TypeScript", "Node.js", "MongoDB", "GraphQL"],
-    link: "#",
-    github: "#"
-  },
-  {
-    id: 10,
-    title: "AI Image Recognition Tool",
-    category: "AI/ML",
-    description: "Aplikasi berbasis AI yang dapat mengenali dan mengklasifikasi objek dalam gambar dengan accuracy tinggi menggunakan deep learning.",
-    image: "/api/placeholder/400/300",
-    tags: ["Python", "TensorFlow", "FastAPI", "React"],
+    title: "Portofolio Web",
+    categories: ["Web App"],
+    description: "Website portofolio personal yang showcase project, skills, dan expertise dengan design modern dan responsive interface.",
+    image: "/assets/showcase/portofolio.png",
+    tags: ["Next.js", "Reactbits", "Tailwind CSS"],
     link: "#",
     github: "#"
   },
@@ -118,16 +119,16 @@ export default function ShowcasePage() {
   const [selectedCategory, setSelectedCategory] = useState('All');
 
   // Get unique categories
-  const categories = ['All', ...new Set(projects.map(project => project.category))];
+  const categories = ['All', ...new Set(projects.flatMap(project => project.categories))];
 
   // Filter projects based on search query and category
   const filteredProjects = projects.filter(project => {
-    const matchesCategory = selectedCategory === 'All' || project.category === selectedCategory;
+    const matchesCategory = selectedCategory === 'All' || project.categories.includes(selectedCategory);
     const searchLower = searchQuery.toLowerCase();
     const matchesSearch = (
       project.title.toLowerCase().includes(searchLower) ||
       project.description.toLowerCase().includes(searchLower) ||
-      project.category.toLowerCase().includes(searchLower) ||
+      project.categories.some(cat => cat.toLowerCase().includes(searchLower)) ||
       project.tags.some(tag => tag.toLowerCase().includes(searchLower))
     );
     return matchesCategory && matchesSearch;
@@ -189,7 +190,8 @@ export default function ShowcasePage() {
                 </span>
               </h1>
               <p className="text-gray-400 text-lg max-w-2xl leading-relaxed">
-                Explore the complete collection of projects I've created, spanning web design, full-stack development, mobile apps, and innovative AI solutions.
+                Explore the complete collection of projects I've created, spanning web apps, 
+                mobile apps, and innovative AI solutions.
               </p>
             </div>
           </div>
@@ -235,12 +237,20 @@ export default function ShowcasePage() {
               >
                 {/* IMAGE CONTAINER */}
                 <div className="relative h-64 md:h-72 overflow-hidden bg-gradient-to-br from-white/5 to-transparent">
-                  <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-black flex items-center justify-center">
-                    <div className="text-center">
-                      <div className="text-6xl mb-2">📁</div>
-                      <span className="text-gray-500 text-sm">{project.category}</span>
+                  {project.image && !project.image.includes('/api/placeholder') ? (
+                    <img 
+                      src={project.image} 
+                      alt={project.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                  ) : (
+                    <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-black flex items-center justify-center">
+                      <div className="text-center">
+                        <div className="text-6xl mb-2">📁</div>
+                        <span className="text-gray-500 text-sm">{project.categories[0]}</span>
+                      </div>
                     </div>
-                  </div>
+                  )}
                   
                   {/* OVERLAY GRADIENT */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -248,11 +258,15 @@ export default function ShowcasePage() {
 
                 {/* CONTENT */}
                 <div className="p-6 space-y-4">
-                  {/* CATEGORY BADGE */}
-                  <div className="inline-flex items-center px-3 py-1 rounded-full bg-white/10 border border-white/20">
-                    <span className="text-xs font-medium text-white/70 uppercase tracking-widest">
-                      {project.category}
-                    </span>
+                  {/* CATEGORY BADGES */}
+                  <div className="flex flex-wrap gap-2">
+                    {project.categories.map((cat, idx) => (
+                      <span key={idx} className="inline-flex items-center px-3 py-1 rounded-full bg-white/10 border border-white/20">
+                        <span className="text-xs font-medium text-white/70 uppercase tracking-widest">
+                          {cat}
+                        </span>
+                      </span>
+                    ))}
                   </div>
 
                   {/* TITLE */}
@@ -260,45 +274,24 @@ export default function ShowcasePage() {
                     {project.title}
                   </h3>
 
-                  {/* DESCRIPTION */}
-                  <p className="text-gray-400 text-sm md:text-base leading-relaxed line-clamp-3">
-                    {project.description}
-                  </p>
-
-                  {/* TAGS */}
-                  <div className="flex flex-wrap gap-2 pt-2">
-                    {project.tags.map((tag, idx) => (
-                      <span
-                        key={idx}
-                        className="text-xs px-2 py-1 rounded-md bg-white/5 border border-white/10 text-gray-300"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-
-                  {/* BUTTONS */}
-                  <div className="flex gap-3 pt-4">
-                    {project.link && (
-                      <a
-                        href={project.link}
-                        className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 border border-white/20 rounded-lg transition-all duration-300 text-sm font-medium"
-                        aria-label={`Visit ${project.title}`}
-                      >
-                        <ExternalLink size={16} />
-                        Visit
-                      </a>
-                    )}
-                    {project.github && (
-                      <a
-                        href={project.github}
-                        className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-[#F1FFB2]/10 hover:bg-[#F1FFB2]/20 border border-[#F1FFB2]/30 rounded-lg transition-all duration-300 text-sm font-medium text-[#F1FFB2]"
-                        aria-label={`GitHub repository for ${project.title}`}
-                      >
-                        <Github size={16} />
-                        Code
-                      </a>
-                    )}
+                  {/* TAGS & ARROW */}
+                  <div className="flex items-end justify-between flex-1 pt-4">
+                    <div className="flex flex-wrap gap-2">
+                      {project.tags.map((tag, idx) => (
+                        <span
+                          key={idx}
+                          className="text-xs px-2 py-1 rounded-md bg-white/5 border border-white/10 text-gray-300"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                    <a
+                      href={project.link || project.github || "#"}
+                      aria-label={`View ${project.title}`}
+                    >
+                      <ArrowRight size={24} className="-rotate-45 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300 text-white/70 group-hover:text-white" />
+                    </a>
                   </div>
                 </div>
               </div>

@@ -17,28 +17,41 @@ export default function Home() {
   const featuredProjects = [
     {
       id: 1,
-      title: "Kora Pet Shop",
-      category: "Web Design",
-      description: "Modern pet shop website dengan interface yang user-friendly untuk memudahkan pelanggan mencari dan membeli produk perawatan hewan peliharaan.",
-      tags: ["Next.js", "Tailwind CSS", "TypeScript"],
+      title: "SmartRiver",
+      categories: ["Web App", "AI/ML"],
+      description: "Smart river monitoring system dengan interface yang intuitif untuk real-time tracking dan analysis air sungai menggunakan IoT sensors.",
+      tags: ["React.js", "Computer Vision", "AWS Cloud"],
+      image: "/assets/showcase/smartriver.png",
       link: "#",
       github: "#"
     },
     {
       id: 2,
-      title: "AI Chat Assistant",
-      category: "Full Stack",
-      description: "Chatbot berbasis AI yang dapat memahami konteks dan memberikan respons yang relevan untuk berbagai pertanyaan pengguna.",
-      tags: ["React", "Node.js", "OpenAI API"],
+      title: "SWEETIFY",
+      categories: ["Mobile App", "AI/ML"],
+      description: "Aplikasi mobile untuk menemukan dan memesan dessert favorit dengan antarmuka yang menarik dan seamless ordering experience.",
+      tags: ["Kotlin", "Firebase", "Computer Vision", "Google Cloud Platform"],
+      image: "/assets/showcase/sweetify.png",
+      link: "#",
+      github: "#"
+    },
+    {
+      id: 3,
+      title: "PLATVISION",
+      categories: ["AI/ML"],
+      description: "Platform computer vision untuk analisis visual dan object detection dengan akurasi tinggi menggunakan teknologi deep learning terkini.",
+      tags: ["TensorFlow", "OpenCV"],
+      image: "/assets/showcase/platvision.png",
       link: "#",
       github: "#"
     },
     {
       id: 4,
-      title: "E-Commerce Platform",
-      category: "Full Stack",
-      description: "Platform e-commerce lengkap dengan fitur payment gateway, inventory management, dan customer dashboard.",
-      tags: ["Next.js", "PostgreSQL", "Stripe"],
+      title: "SITEPAT",
+      categories: ["Web App", "AI/ML"],
+      description: "Platform manajemen site construction dengan fitur monitoring progress, resource allocation, dan real-time collaboration tools.",
+      tags: ["IoT", "Bootstrap", "WebSocket", "Computer Vision"],
+      image: "/assets/showcase/Sitepat.jpg",
       link: "#",
       github: "#"
     }
@@ -211,12 +224,20 @@ export default function Home() {
                   >
                     {/* IMAGE CONTAINER */}
                     <div className="relative h-48 sm:h-56 md:h-72 overflow-hidden bg-gradient-to-br from-white/5 to-transparent flex-shrink-0">
-                      <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-black flex items-center justify-center">
-                        <div className="text-center">
-                          <div className="text-5xl sm:text-6xl mb-2">📁</div>
-                          <span className="text-gray-500 text-xs sm:text-sm">{project.category}</span>
+                      {project.image ? (
+                        <img 
+                          src={project.image} 
+                          alt={project.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                      ) : (
+                        <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-black flex items-center justify-center">
+                          <div className="text-center">
+                            <div className="text-5xl sm:text-6xl mb-2">📁</div>
+                            <span className="text-gray-500 text-xs sm:text-sm">{project.categories[0]}</span>
+                          </div>
                         </div>
-                      </div>
+                      )}
                       
                       {/* OVERLAY GRADIENT */}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -224,11 +245,15 @@ export default function Home() {
 
                     {/* CONTENT */}
                     <div className="p-4 sm:p-6 space-y-3 sm:space-y-4 flex-1 flex flex-col">
-                      {/* CATEGORY BADGE */}
-                      <div className="inline-flex items-center px-3 py-1 rounded-full bg-white/10 border border-white/20 w-fit">
-                        <span className="text-xs font-medium text-white/70 uppercase tracking-widest">
-                          {project.category}
-                        </span>
+                      {/* CATEGORY BADGES */}
+                      <div className="flex flex-wrap gap-2">
+                        {project.categories.map((cat, idx) => (
+                          <span key={idx} className="inline-flex items-center px-3 py-1 rounded-full bg-white/10 border border-white/20">
+                            <span className="text-xs font-medium text-white/70 uppercase tracking-widest">
+                              {cat}
+                            </span>
+                          </span>
+                        ))}
                       </div>
 
                       {/* TITLE */}
@@ -236,47 +261,24 @@ export default function Home() {
                         {project.title}
                       </h3>
 
-                      {/* DESCRIPTION */}
-                      <p className="text-gray-400 text-xs sm:text-sm md:text-base leading-relaxed line-clamp-3 md:line-clamp-2 flex-1">
-                        {project.description}
-                      </p>
-
-                      {/* TAGS */}
-                      <div className="flex flex-wrap gap-2 pt-1 md:pt-2">
-                        {project.tags.map((tag, idx) => (
-                          <span
-                            key={idx}
-                            className="text-xs px-2 py-1 rounded-md bg-white/5 border border-white/10 text-gray-300"
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-
-                      {/* BUTTONS */}
-                      <div className="flex gap-2 sm:gap-3 pt-3 md:pt-4">
-                        {project.link && (
-                          <a
-                            href={project.link}
-                            className="flex-1 flex items-center justify-center gap-2 px-3 sm:px-4 py-2 bg-white/10 hover:bg-white/20 border border-white/20 rounded-lg transition-all duration-300 text-xs sm:text-sm font-medium"
-                            aria-label={`Visit ${project.title}`}
-                          >
-                            <ExternalLink size={14} className="hidden sm:block" />
-                            <ExternalLink size={12} className="sm:hidden" />
-                            Visit
-                          </a>
-                        )}
-                        {project.github && (
-                          <a
-                            href={project.github}
-                            className="flex-1 flex items-center justify-center gap-2 px-3 sm:px-4 py-2 bg-[#F1FFB2]/10 hover:bg-[#F1FFB2]/20 border border-[#F1FFB2]/30 rounded-lg transition-all duration-300 text-xs sm:text-sm font-medium text-[#F1FFB2]"
-                            aria-label={`GitHub repository for ${project.title}`}
-                          >
-                            <Github size={14} className="hidden sm:block" />
-                            <Github size={12} className="sm:hidden" />
-                            Code
-                          </a>
-                        )}
+                      {/* ARROW BUTTON */}
+                      <div className="flex items-end justify-between flex-1 pt-4">
+                        <div className="flex flex-wrap gap-2">
+                          {project.tags.map((tag, idx) => (
+                            <span
+                              key={idx}
+                              className="text-xs px-2 py-1 rounded-md bg-white/5 border border-white/10 text-gray-300"
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                        <a
+                          href={project.link || project.github || "#"}
+                          aria-label={`View ${project.title}`}
+                        >
+                          <ArrowRight size={24} className="-rotate-45 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300 text-white/70 group-hover:text-white" />
+                        </a>
                       </div>
                     </div>
                   </div>

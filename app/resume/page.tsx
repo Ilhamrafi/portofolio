@@ -55,59 +55,21 @@ export default function ResumePage() {
           {/* Grid Container Utama */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
             
-            {/* GROUP 1: LEFT COLUMN (Intro + Stats) */}
-            <div className="lg:col-span-8 flex flex-col gap-6">
-              
-              {/* 1. INTRO CARD */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-                className="bg-[#111] border border-white/10 rounded-[2rem] p-8 md:p-10 flex flex-col justify-center h-full min-h-[250px] transition-all duration-200"
-              >
-                <h3 className="text-2xl md:text-3xl font-semibold mb-4 text-white">
-                  Hi, I&apos;m Ilhamrafi 👋
-                </h3>
-                <p className="text-gray-400 text-base md:text-lg leading-relaxed">
-                  I was born and raised in Balikpapan. I'm currently working as an AI Engineer in Jakarta, Indonesia, focusing on building 
-                  intelligent systems, solving complex problems with AI models, and creating impactful AI solutions.
-                </p>
-              </motion.div>
-
-              {/* STATS ROW (Nested Grid) */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                
-                {/* 2. STATS: PROJECTS */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.4 }}
-                  className="bg-[#111] border border-white/10 rounded-[2rem] p-8 flex flex-col justify-center min-h-[200px] transition-all duration-200"
-                >
-                  <div className="text-5xl md:text-6xl font-bold mb-2 text-white">
-                    <CountUp to={10} duration={0.5} className="inline-block" />+
-                  </div>
-                  <div className="text-gray-400 text-lg leading-tight">
-                    Completed<br />Projects
-                  </div>
-                </motion.div>
-
-                {/* 3. STATS: YEARS */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.5 }}
-                  className="bg-[#111] border border-white/10 rounded-[2rem] p-8 flex flex-col justify-center min-h-[200px] transition-all duration-200"
-                >
-                  <div className="text-5xl md:text-6xl font-bold mb-2 text-white">
-                    <CountUp to={2} duration={0.5} className="inline-block" />+
-                  </div>
-                  <div className="text-gray-400 text-lg leading-tight">
-                    Years as<br />AI Engineer
-                  </div>
-                </motion.div>
-              </div>
-            </div>
+            {/* 1. INTRO CARD */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="lg:col-span-8 order-1 bg-[#111] border border-white/10 rounded-[2rem] p-8 md:p-10 flex flex-col justify-center h-full min-h-[250px] transition-all duration-200"
+            >
+              <h3 className="text-2xl md:text-3xl font-semibold mb-4 text-white">
+                Hi, I&apos;m Ilhamrafi 👋
+              </h3>
+              <p className="text-gray-400 text-base md:text-lg leading-relaxed">
+                I was born and raised in Balikpapan. I'm currently working as an AI Engineer in Jakarta, Indonesia, focusing on building 
+                intelligent systems, solving complex problems with AI models, and creating impactful AI solutions.
+              </p>
+            </motion.div>
 
             {/* GROUP 2: RIGHT COLUMN (Profile Image) */}
             {/* Image spans vertically to match the height of Intro + Stats */}
@@ -115,7 +77,7 @@ export default function ResumePage() {
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: 0.3 }}
-              className="lg:col-span-4 relative min-h-[500px] lg:min-h-full rounded-[2rem] overflow-hidden border border-white/10 bg-[#111] transition-all duration-200 cursor-pointer"
+              className="lg:col-span-4 lg:row-span-2 order-2 relative min-h-[500px] lg:min-h-full rounded-[2rem] overflow-hidden border border-white/10 bg-[#111] transition-all duration-200 cursor-pointer"
               onMouseEnter={() => setIsImageHovered(true)}
               onMouseLeave={() => setIsImageHovered(false)}
             >
@@ -150,6 +112,36 @@ export default function ResumePage() {
               </div>
             </motion.div>
 
+            {/* 2. STATS: PROJECTS */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+              className="lg:col-span-4 order-3 bg-[#111] border border-white/10 rounded-[2rem] p-8 flex flex-col justify-center min-h-[200px] transition-all duration-200"
+            >
+              <div className="text-5xl md:text-6xl font-bold mb-2 text-white">
+                <CountUp to={10} duration={0.5} className="inline-block" />+
+              </div>
+              <div className="text-gray-400 text-lg leading-tight">
+                Completed<br />Projects
+              </div>
+            </motion.div>
+
+            {/* 3. STATS: YEARS */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.5 }}
+              className="lg:col-span-4 order-4 bg-[#111] border border-white/10 rounded-[2rem] p-8 flex flex-col justify-center min-h-[200px] transition-all duration-200"
+            >
+              <div className="text-5xl md:text-6xl font-bold mb-2 text-white">
+                <CountUp to={2} duration={0.5} className="inline-block" />+
+              </div>
+              <div className="text-gray-400 text-lg leading-tight">
+                Years as<br />AI Engineer
+              </div>
+            </motion.div>
+
             {/* GROUP 3: BOTTOM ROW */}
             {/* This group remains in the main grid but sits below groups 1 & 2 */}
 
@@ -158,7 +150,7 @@ export default function ResumePage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.6 }}
-              className="lg:col-span-8 bg-[#111] border border-white/10 rounded-[2rem] p-8 md:p-10 flex items-center min-h-[200px] transition-all duration-200"
+              className="lg:col-span-8 order-5 bg-[#111] border border-white/10 rounded-[2rem] p-8 md:p-10 flex items-center min-h-[200px] transition-all duration-200"
             >
               <p className="text-gray-300 text-base md:text-lg leading-relaxed">
                 Helping Startups, Corporations, and small businesses with AI solutions 
@@ -172,7 +164,7 @@ export default function ResumePage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.7 }}
-              className="lg:col-span-4 bg-[#111] border border-white/10 rounded-[2rem] p-8 md:p-10 flex flex-col justify-between min-h-[200px] transition-all duration-200"
+              className="lg:col-span-4 order-6 bg-[#111] border border-white/10 rounded-[2rem] p-8 md:p-10 flex flex-col justify-between min-h-[200px] transition-all duration-200"
             >
                <div className="flex items-start justify-between">
                   <div>
@@ -204,7 +196,30 @@ export default function ResumePage() {
 
           <div className="space-y-6">
             
-            {/* Experience Item 1 */}
+            {/* Experience Item 1 - Freelance */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="bg-white/5 border border-white/10 rounded-2xl p-6 md:p-8 hover:border-[#F1FFB2]/50 transition-all duration-300"
+            >
+              <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
+                <div>
+                  <h3 className="text-xl md:text-2xl font-semibold mb-2">Freelance AI/ML Engineer</h3>
+                  <p className="text-[#F1FFB2] font-medium">Independent Contractor</p>
+                </div>
+                <span className="text-gray-400 text-sm md:text-base mt-2 md:mt-0">Present</span>
+              </div>
+              <p className="text-gray-400 leading-relaxed">
+                Delivered custom AI/ML solutions for diverse clients across multiple industries, including computer vision systems for object detection and tracking, 
+                predictive analytics models for business forecasting, and natural language processing applications. Specialized in end-to-end project delivery 
+                from requirement gathering and model development to deployment and optimization, ensuring scalable and production-ready AI solutions that drive 
+                measurable business impact.
+              </p>
+            </motion.div>
+
+            {/* Experience Item 2 */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
