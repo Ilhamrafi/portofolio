@@ -10,54 +10,23 @@ import GridBeams from '@/components/GridBeams';
 import Lanyard from '@/components/Lanyard';
 import TechMarquee from '@/components/TechMarquee';
 import ChatWidget from '@/components/ChatWidget';
+import ProjectModal, { ProjectDetail } from '@/components/ProjectModal';
+import { projectsData } from '@/lib/projectsData';
 
 export default function Home() {
   const [isChatOpen, setIsChatOpen] = useState(false);
+  const [selectedProject, setSelectedProject] = useState<ProjectDetail | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   
-  const featuredProjects = [
-    {
-      id: 1,
-      title: "SmartRiver",
-      categories: ["Web App", "AI/ML"],
-      description: "Smart river monitoring system dengan interface yang intuitif untuk real-time tracking dan analysis air sungai menggunakan IoT sensors.",
-      tags: ["React.js", "Computer Vision", "AWS Cloud"],
-      image: "/assets/showcase/smartriver.png",
-      link: "#",
-      github: "#"
-    },
-    {
-      id: 2,
-      title: "SWEETIFY",
-      categories: ["Mobile App", "AI/ML"],
-      description: "Aplikasi mobile untuk menemukan dan memesan dessert favorit dengan antarmuka yang menarik dan seamless ordering experience.",
-      tags: ["Kotlin", "Firebase", "Computer Vision", "Google Cloud Platform"],
-      image: "/assets/showcase/sweetify.png",
-      link: "#",
-      github: "#"
-    },
-    {
-      id: 3,
-      title: "PLATVISION",
-      categories: ["AI/ML"],
-      description: "Platform computer vision untuk analisis visual dan object detection dengan akurasi tinggi menggunakan teknologi deep learning terkini.",
-      tags: ["TensorFlow", "OpenCV"],
-      image: "/assets/showcase/platvision.png",
-      link: "#",
-      github: "#"
-    },
-    {
-      id: 4,
-      title: "SITEPAT",
-      categories: ["Web App", "AI/ML"],
-      description: "Platform manajemen site construction dengan fitur monitoring progress, resource allocation, dan real-time collaboration tools.",
-      tags: ["IoT", "Bootstrap", "WebSocket", "Computer Vision"],
-      image: "/assets/showcase/Sitepat.jpg",
-      link: "#",
-      github: "#"
-    }
-  ];
+  // Get first 4 projects as featured
+  const featuredProjects = projectsData.slice(0, 4);
   
   const [hoveredId, setHoveredId] = useState<number | null>(null);
+  
+  const handleProjectClick = (project: ProjectDetail) => {
+    setSelectedProject(project);
+    setIsModalOpen(true);
+  };
   
   const scrollToContact = () => {
     const contactSection = document.getElementById('contact');
@@ -120,7 +89,6 @@ export default function Home() {
                    <RotatingText 
                       texts={[
                         "Hi, I'm Ilhamrafi 👋",
-                        "AI Engineer",
                         "Jakarta, Indonesia"
                       ]}
                       rotationInterval={4000} 
@@ -218,6 +186,7 @@ export default function Home() {
                {featuredProjects.map((project) => (
                   <div
                     key={project.id}
+                    onClick={() => handleProjectClick(project)}
                     onMouseEnter={() => setHoveredId(project.id)}
                     onMouseLeave={() => setHoveredId(null)}
                     className="group relative rounded-xl sm:rounded-2xl overflow-hidden bg-white/5 border border-white/10 hover:border-[#F1FFB2]/50 transition-all duration-500 cursor-pointer flex flex-col"
@@ -273,12 +242,9 @@ export default function Home() {
                             </span>
                           ))}
                         </div>
-                        <a
-                          href={project.link || project.github || "#"}
-                          aria-label={`View ${project.title}`}
-                        >
+                        <div aria-label={`View ${project.title}`}>
                           <ArrowRight size={24} className="-rotate-45 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300 text-white/70 group-hover:text-white" />
-                        </a>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -286,6 +252,13 @@ export default function Home() {
             </div>
          </div>
       </section>
+
+      {/* PROJECT MODAL */}
+      <ProjectModal 
+        project={selectedProject}
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
 
       {/* 5. CONTACT SECTION */}
       <section id="contact" className="relative z-10 w-full bg-gradient-to-b from-[#0a0a0a] to-black py-32">

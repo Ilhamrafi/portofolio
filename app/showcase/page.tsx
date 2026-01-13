@@ -5,111 +5,8 @@ import { ExternalLink, Github, ArrowRight, ChevronLeft, ChevronRight, Search } f
 import Navbar from '@/components/Navbar';
 import Socials from '@/components/Socials';
 import ChatWidget from '@/components/ChatWidget';
-import { link } from 'fs/promises';
-
-interface Project {
-  id: number;
-  title: string;
-  categories: string[];
-  description: string;
-  image: string;
-  tags: string[];
-  link?: string;
-  github?: string;
-}
-
-const projects: Project[] = [
-  {
-    id: 1,
-    title: "SmartRiver",
-    categories: ["Web App", "AI/ML"],
-    description: "Smart river monitoring system dengan interface yang intuitif untuk real-time tracking dan analysis air sungai menggunakan IoT sensors.",
-    image: "/assets/showcase/smartriver.png",
-    tags: ["React.js", "Computer Vision", "AWS Cloud"],
-    link: "#",
-    github: "#"
-  },
-  {
-    id: 2,
-    title: "Sweetify",
-    categories: ["Mobile App", "AI/ML"],
-    description: "Aplikasi mobile untuk menemukan dan memesan dessert favorit dengan antarmuka yang menarik dan seamless ordering experience.",
-    image: "/assets/showcase/sweetify.png",
-    tags: ["Kotlin", "Firebase", "Computer Vision", "Google Cloud Platform"],
-    link: "#",
-    github: "#"
-  },
-  {
-    id: 3,
-    title: "PLATVISION",
-    categories: ["AI/ML"],
-    description: "Platform computer vision untuk analisis visual dan object detection dengan akurasi tinggi menggunakan teknologi deep learning terkini.",
-    image: "/assets/showcase/platvision.png",
-    tags: ["TensorFlow", "OpenCV"],
-    link: "#",
-    github: "#"
-  },
-  {
-    id: 4,
-    title: "SITEPAT",
-    categories: ["Web App", "AI/ML"],
-    description: "Platform manajemen site construction dengan fitur monitoring progress, resource allocation, dan real-time collaboration tools.",
-    image: "/assets/showcase/Sitepat.jpg",
-    tags: ["IoT", "Bootstrap", "WebSocket", "Computer Vision"],
-    link: "#",
-    github: "#"
-  },
-  {
-    id: 5,
-    title: "Exavator Detection",
-    categories: ["AI/ML"],
-    description: "Sistem deteksi dan tracking excavator real-time menggunakan computer vision untuk optimasi pekerjaan konstruksi dan monitoring equipment.",
-    image: "/assets/showcase/Exavator.png",
-    tags: ["Vision Transformer", "OpenCV"],
-    link: "#",
-    github: "#"
-  },
-  {
-    id: 6,
-    title: "Mushroom Classification",
-    categories: ["AI/ML"],
-    description: "Model machine learning untuk klasifikasi jenis jamur berdasarkan karakteristik fisik dengan akurasi tinggi menggunakan deep learning.",
-    image: "/assets/showcase/Klasifikasi Jamur.png",
-    tags: ["TensorFlow", "Keras", "Computer Vision"],
-    link: "#",
-    github: "#"
-  },
-  {
-    id: 7,
-    title: "Food Commodity Production Forecasting",
-    categories: ["AI/ML"],
-    description: "Sistem prediksi produksi komoditas pangan di Sumatera menggunakan time series forecasting dan machine learning untuk mendukung perencanaan pertanian.",
-    image: "/assets/showcase/forcasting sumatra.png",
-    tags: ["LSTM", "TensorFlow"],
-    link: "#",
-    github: "#"
-  },
-  {
-    id: 8,
-    title: "Rockpaperscissors Classification",
-    categories: ["AI/ML"],
-    description: "Model CNN untuk mengenali gesture tangan rock, paper, scissors secara real-time menggunakan computer vision dan neural network.",
-    image: "/assets/showcase/rockpaperscissors.png",
-    tags: ["TensorFlow", "OpenCV"],
-    link: "#",
-    github: "#"
-  },
-  {
-    id: 9,
-    title: "Portofolio Web",
-    categories: ["Web App"],
-    description: "Website portofolio personal yang showcase project, skills, dan expertise dengan design modern dan responsive interface.",
-    image: "/assets/showcase/portofolio.png",
-    tags: ["Next.js", "Reactbits", "Tailwind CSS"],
-    link: "#",
-    github: "#"
-  },
-];
+import ProjectModal, { ProjectDetail } from '@/components/ProjectModal';
+import { projectsData } from '@/lib/projectsData';
 
 export default function ShowcasePage() {
   const [hoveredId, setHoveredId] = useState<number | null>(null);
@@ -117,12 +14,19 @@ export default function ShowcasePage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
+  const [selectedProject, setSelectedProject] = useState<ProjectDetail | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleProjectClick = (project: ProjectDetail) => {
+    setSelectedProject(project);
+    setIsModalOpen(true);
+  };
 
   // Get unique categories
-  const categories = ['All', ...new Set(projects.flatMap(project => project.categories))];
+  const categories = ['All', ...new Set(projectsData.flatMap(project => project.categories))];
 
   // Filter projects based on search query and category
-  const filteredProjects = projects.filter(project => {
+  const filteredProjects = projectsData.filter(project => {
     const matchesCategory = selectedCategory === 'All' || project.categories.includes(selectedCategory);
     const searchLower = searchQuery.toLowerCase();
     const matchesSearch = (
@@ -231,6 +135,7 @@ export default function ShowcasePage() {
             {paginatedProjects.map((project) => (
               <div
                 key={project.id}
+                onClick={() => handleProjectClick(project)}
                 onMouseEnter={() => setHoveredId(project.id)}
                 onMouseLeave={() => setHoveredId(null)}
                 className="group relative rounded-2xl overflow-hidden bg-white/5 border border-white/10 hover:border-[#F1FFB2]/50 transition-all duration-500 cursor-pointer"
@@ -286,12 +191,9 @@ export default function ShowcasePage() {
                         </span>
                       ))}
                     </div>
-                    <a
-                      href={project.link || project.github || "#"}
-                      aria-label={`View ${project.title}`}
-                    >
+                    <div aria-label={`View ${project.title}`}>
                       <ArrowRight size={24} className="-rotate-45 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300 text-white/70 group-hover:text-white" />
-                    </a>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -400,6 +302,13 @@ export default function ShowcasePage() {
         isOpen={isChatOpen} 
         onClose={() => setIsChatOpen(false)} 
         onOpen={() => setIsChatOpen(true)}
+      />
+
+      {/* Project Modal */}
+      <ProjectModal 
+        project={selectedProject}
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
       />
 
     </main>

@@ -273,8 +273,8 @@ export default function ResumePage() {
             >
               <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
                 <div>
-                  <h3 className="text-xl md:text-2xl font-semibold mb-2">Universitas Teknologi Yogyakarta</h3>
-                  <p className="text-[#F1FFB2] font-medium">Assistant Lecturer (part-time)</p>
+                  <h3 className="text-xl md:text-2xl font-semibold mb-2">Assistant Lecturer</h3>
+                  <p className="text-[#F1FFB2] font-medium">Universitas Teknologi Yogyakarta (part-time)</p>
                 </div>
                 <span className="text-gray-400 text-sm md:text-base mt-2 md:mt-0">2023 - 2024</span>
               </div>
