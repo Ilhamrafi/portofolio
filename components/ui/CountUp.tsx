@@ -1,4 +1,4 @@
-// components/CountUp.tsx
+// components/ui/CountUp.tsx
 "use client";
 
 import { useEffect, useRef } from "react";

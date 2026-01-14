@@ -2,11 +2,12 @@
 
 import { useState } from 'react';
 import { ExternalLink, Github, ArrowRight, ChevronLeft, ChevronRight, Search } from 'lucide-react';
-import Navbar from '@/components/Navbar';
-import Socials from '@/components/Socials';
-import ChatWidget from '@/components/ChatWidget';
-import ProjectModal, { ProjectDetail } from '@/components/ProjectModal';
-import { projectsData } from '@/lib/projectsData';
+import Navbar from '@/components/navigation/Navbar';
+import Socials from '@/components/navigation/Socials';
+import ChatWidget from '@/components/widgets/ChatWidget';
+import ProjectModal from '@/components/widgets/ProjectModal';
+import { projectsData } from '@/lib/data/projects';
+import type { ProjectDetail } from '@/lib/types';
 
 export default function ShowcasePage() {
   const [hoveredId, setHoveredId] = useState<number | null>(null);

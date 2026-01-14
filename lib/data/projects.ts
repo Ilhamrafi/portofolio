@@ -1,18 +1,5 @@
-export interface ProjectDetail {
-  id: number;
-  title: string;
-  categories: string[];
-  description: string;
-  tags: string[];
-  image: string;
-  link?: string;
-  github?: string;
-  clientBackground?: string;
-  projectOverview?: string;
-  solution?: string[];
-  result?: string;
-  screenshots?: string[];
-}
+// lib/data/projects.ts
+import { ProjectDetail } from '@/lib/types';
 
 export const projectsData: ProjectDetail[] = [
   {

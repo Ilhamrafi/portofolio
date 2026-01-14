@@ -3,15 +3,16 @@
 import { useState } from 'react';
 import { ArrowRight, ExternalLink, Github } from 'lucide-react';
 // Import Components
-import Navbar from '@/components/Navbar';
-import Socials from '@/components/Socials';
-import RotatingText from '@/components/RotatingText';
-import GridBeams from '@/components/GridBeams';
-import Lanyard from '@/components/Lanyard';
-import TechMarquee from '@/components/TechMarquee';
-import ChatWidget from '@/components/ChatWidget';
-import ProjectModal, { ProjectDetail } from '@/components/ProjectModal';
-import { projectsData } from '@/lib/projectsData';
+import Navbar from '@/components/navigation/Navbar';
+import Socials from '@/components/navigation/Socials';
+import RotatingText from '@/components/animations/RotatingText';
+import GridBeams from '@/components/animations/GridBeams';
+import Lanyard from '@/components/animations/Lanyard';
+import TechMarquee from '@/components/animations/TechMarquee';
+import ChatWidget from '@/components/widgets/ChatWidget';
+import ProjectModal from '@/components/widgets/ProjectModal';
+import { projectsData } from '@/lib/data/projects';
+import type { ProjectDetail } from '@/lib/types';
 
 export default function Home() {
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -31,7 +32,10 @@ export default function Home() {
   const scrollToContact = () => {
     const contactSection = document.getElementById('contact');
     if (contactSection) {
-      contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      // Check if user prefers reduced motion
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const scrollBehavior = prefersReducedMotion ? 'auto' : 'smooth';
+      contactSection.scrollIntoView({ behavior: scrollBehavior as ScrollBehavior, block: 'start' });
     }
   };
 
@@ -129,7 +133,7 @@ export default function Home() {
                   <button 
                     onClick={openChat}
                     onKeyDown={(e) => e.key === 'Enter' && openChat()}
-                    className="group relative flex items-center gap-3 pl-6 pr-2 py-2 bg-[#1a1a1a] text-white text-lg font-medium rounded-full border border-white/10 transition-all duration-300 active:scale-95 cursor-pointer w-fit overflow-hidden hover:border-white/30 focus:outline-none"
+                    className="group relative flex items-center gap-3 pl-6 pr-2 py-2 bg-[#1a1a1a] text-white text-lg font-medium rounded-full border border-white/10 transition-all duration-300 active:scale-95 cursor-pointer w-fit overflow-hidden hover:border-white/30 focus:outline-none focus:ring-2 focus:ring-[#F1FFB2] focus:ring-offset-2 focus:ring-offset-black"
                     aria-label="Open chat with AI assistant"
                   >
                     <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-[100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-in-out z-0"></div>
@@ -302,7 +306,7 @@ export default function Home() {
                 href="https://www.linkedin.com/in/ilhamrafi/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="relative inline-flex items-center gap-2 px-8 py-4 bg-[#1a1a1a] text-white font-semibold rounded-full border border-white/10 hover:border-white/30 transition-all duration-300 active:scale-95 text-lg focus:outline-none"
+                className="relative inline-flex items-center gap-2 px-8 py-4 bg-[#1a1a1a] text-white font-semibold rounded-full border border-white/10 hover:border-white/30 transition-all duration-300 active:scale-95 text-lg focus:outline-none focus:ring-2 focus:ring-[#F1FFB2] focus:ring-offset-2 focus:ring-offset-black"
                 aria-label="Connect with me on LinkedIn"
               >
                 Hit me on

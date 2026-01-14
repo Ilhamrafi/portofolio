@@ -4,9 +4,9 @@ import { useState } from 'react';
 import { Calendar, Clock, ArrowRight, Search, Tag } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import Navbar from '@/components/Navbar';
-import Socials from '@/components/Socials';
-import ChatWidget from '@/components/ChatWidget';
+import Navbar from '@/components/navigation/Navbar';
+import Socials from '@/components/navigation/Socials';
+import ChatWidget from '@/components/widgets/ChatWidget';
 
 interface BlogPost {
   id: number;

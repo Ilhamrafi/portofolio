@@ -3,10 +3,10 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import Navbar from '@/components/Navbar';
-import ChatWidget from '@/components/ChatWidget';
-import CountUp from '@/components/CountUp';
-import Socials from '@/components/Socials';
+import Navbar from '@/components/navigation/Navbar';
+import ChatWidget from '@/components/widgets/ChatWidget';
+import CountUp from '@/components/ui/CountUp';
+import Socials from '@/components/navigation/Socials';
 import { MapPin, ArrowRight, Download, Brain, Database, Rocket } from 'lucide-react';
 
 export default function ResumePage() {

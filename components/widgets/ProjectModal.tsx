@@ -2,22 +2,7 @@
 
 import { X, ExternalLink, Github } from 'lucide-react';
 import { useEffect } from 'react';
-
-export interface ProjectDetail {
-  id: number;
-  title: string;
-  categories: string[];
-  description: string;
-  tags: string[];
-  image: string;
-  link?: string;
-  github?: string;
-  clientBackground?: string;
-  projectOverview?: string;
-  solution?: string[];
-  result?: string;
-  screenshots?: string[];
-}
+import type { ProjectDetail } from '@/lib/types';
 
 interface ProjectModalProps {
   project: ProjectDetail | null;
