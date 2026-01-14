@@ -3,10 +3,12 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState } from 'react';
+import { usePathname } from 'next/navigation';
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 
 export default function Navbar() {
+  const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { scrollY } = useScroll();
@@ -26,6 +28,12 @@ export default function Navbar() {
     { name: 'Blog', href: '/blog' },
     { name: 'Connect on', href: 'https://www.linkedin.com/in/ilhamrafi/', isButton: true },
   ];
+
+  // Function untuk check apakah link saat ini aktif
+  const isActive = (href: string) => {
+    if (href.startsWith('http')) return false; // External links tidak pernah active
+    return pathname === href || pathname.startsWith(href + '/');
+  };
 
   return (
     <div className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-0 md:pt-4 pointer-events-none">
@@ -180,16 +188,34 @@ export default function Navbar() {
              }
 
              // --- LOGIKA MENU BIASA ---
+             const active = isActive(item.href);
              return (
                <Link 
                  key={item.name} 
                  href={item.href}
-                 className="relative rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F1FFB2] focus:ring-offset-2 focus:ring-offset-black transition-all px-2 py-1"
+                 className="relative rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F1FFB2] focus:ring-offset-2 focus:ring-offset-black transition-all px-3 py-1.5 group"
                  aria-label={`Navigate to ${item.name}`}
                >
+                 {/* Active background indicator */}
+                 {active && (
+                   <motion.div
+                     layoutId="activeNavBg"
+                     className="absolute inset-0 bg-[#F1FFB2]/10 rounded-lg -z-10 border border-[#F1FFB2]/30"
+                     transition={{
+                       type: "spring",
+                       stiffness: 380,
+                       damping: 30,
+                     }}
+                   />
+                 )}
+                 
                  <motion.span 
                     layout
-                    className="font-sans font-medium tracking-tight text-gray-400 hover:text-[#F1FFB2] transition-colors duration-200"
+                    className={`font-sans font-medium tracking-tight transition-colors duration-200 ${
+                      active 
+                        ? 'text-[#F1FFB2]' 
+                        : 'text-gray-400 group-hover:text-[#F1FFB2]'
+                    }`}
                     animate={{ fontSize: isScrolled ? "0.875rem" : "1rem" }}
                  >
                    {item.name}
@@ -228,12 +254,18 @@ export default function Navbar() {
                     </Link>
                   );
                 }
+                
+                const active = isActive(item.href);
                 return (
                   <Link
                     key={item.name}
                     href={item.href}
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="py-3 px-6 text-gray-400 hover:text-[#F1FFB2] font-medium transition-colors duration-200 rounded-xl hover:bg-white/5 text-center focus:outline-none focus:ring-2 focus:ring-[#F1FFB2] focus:ring-offset-2 focus:ring-offset-black"
+                    className={`w-full py-3 px-6 font-medium transition-all duration-200 rounded-xl text-center focus:outline-none focus:ring-2 focus:ring-[#F1FFB2] focus:ring-offset-2 focus:ring-offset-black ${
+                      active
+                        ? 'bg-[#F1FFB2]/10 text-[#F1FFB2] border border-[#F1FFB2]/30'
+                        : 'text-gray-400 hover:text-[#F1FFB2] hover:bg-white/5'
+                    }`}
                   >
                     {item.name}
                   </Link>

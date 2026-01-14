@@ -8,6 +8,7 @@ import Navbar from '@/components/navigation/Navbar';
 import Breadcrumb from '@/components/ui/Breadcrumb';
 import Socials from '@/components/navigation/Socials';
 import ChatWidget from '@/components/widgets/ChatWidget';
+import MarkdownContent from '@/components/ui/MarkdownContent';
 import { blogPosts } from '@/lib/data/blogs';
 import type { BlogPost } from '@/lib/types';
 
@@ -127,40 +128,9 @@ export default function BlogDetailPage({ params }: { params: Promise<{ slug: str
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="prose prose-invert max-w-none mb-12"
+            className="mb-12"
           >
-            <div className="text-gray-300 leading-relaxed space-y-6">
-              {post.content.split('\n\n').map((paragraph, index) => {
-                if (paragraph.startsWith('#')) {
-                  const match = paragraph.match(/^#+/);
-                  const level = match ? match[0].length : 1;
-                  const text = paragraph.replace(/^#+\s/, '');
-                  const headingClass = level === 1 ? 'text-3xl' : level === 2 ? 'text-2xl' : 'text-xl';
-                  return (
-                    <h2 key={index} className={`${headingClass} font-bold text-white mt-6 mb-4`}>
-                      {text}
-                    </h2>
-                  );
-                }
-                if (paragraph.startsWith('```')) {
-                  return (
-                    <pre key={index} className="bg-black/50 border border-white/10 rounded-lg p-4 overflow-x-auto">
-                      <code className="text-sm text-[#F1FFB2]">{paragraph.replace(/```/g, '')}</code>
-                    </pre>
-                  );
-                }
-                if (paragraph.startsWith('-')) {
-                  return (
-                    <ul key={index} className="list-disc list-inside space-y-2 pl-4">
-                      {paragraph.split('\n').map((item, i) => (
-                        <li key={i}>{item.replace(/^-\s/, '')}</li>
-                      ))}
-                    </ul>
-                  );
-                }
-                return <p key={index}>{paragraph}</p>;
-              })}
-            </div>
+            <MarkdownContent content={post.content} />
           </motion.div>
 
           {/* Tags */}
@@ -209,16 +179,54 @@ export default function BlogDetailPage({ params }: { params: Promise<{ slug: str
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.5 }}
-            className="mt-12 text-center"
+            className="mt-16"
           >
-            <h3 className="text-2xl font-bold mb-4">Want to read more?</h3>
-            <Link 
-              href="/blog"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full transition-all text-[#F1FFB2] font-medium"
-            >
-              Back to All Articles
-              <ArrowRight className="w-5 h-5" />
-            </Link>
+            <h3 className="text-3xl font-bold mb-8">Related Articles</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {blogPosts
+                .filter(p => p.slug !== slug && p.tags.some(tag => post.tags.includes(tag)))
+                .slice(0, 2)
+                .map((relatedPost, index) => (
+                  <motion.div
+                    key={relatedPost.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.6 + index * 0.1 }}
+                  >
+                    <Link href={`/blog/${relatedPost.slug}`}>
+                      <div className="group cursor-pointer h-full flex flex-col rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 hover:border-[#F1FFB2] transition-all p-6">
+                        <div className="mb-4 inline-block">
+                          <span className="px-3 py-1 rounded-full bg-[#F1FFB2]/10 text-[#F1FFB2] text-xs font-medium">
+                            {relatedPost.category}
+                          </span>
+                        </div>
+                        <h4 className="text-lg font-bold text-white mb-2 group-hover:text-[#F1FFB2] transition-colors">
+                          {relatedPost.title}
+                        </h4>
+                        <p className="text-gray-400 text-sm mb-4 flex-grow">
+                          {relatedPost.excerpt}
+                        </p>
+                        <div className="flex items-center justify-between text-xs text-gray-500">
+                          <span className="flex items-center gap-1">
+                            <Clock className="w-3 h-3" />
+                            {relatedPost.readTime} min
+                          </span>
+                          <span className="flex items-center gap-1">
+                            <Calendar className="w-3 h-3" />
+                            {new Date(relatedPost.date).toLocaleDateString('id-ID', { month: 'short', day: 'numeric' })}
+                          </span>
+                        </div>
+                      </div>
+                    </Link>
+                  </motion.div>
+                ))}
+            </div>
+
+            {blogPosts.filter(p => p.slug !== slug && p.tags.some(tag => post.tags.includes(tag))).length === 0 && (
+              <div className="text-center py-12">
+                <p className="text-gray-400 mb-6">Tidak ada artikel terkait saat ini.</p>
+              </div>
+            )}
           </motion.div>
         </div>
       </article>
