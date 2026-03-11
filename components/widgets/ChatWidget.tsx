@@ -22,28 +22,42 @@ export default function ChatWidget({ isOpen, onClose, onOpen }: ChatWidgetProps)
     }
   ]);
 
-  const handleSendMessage = (e: React.FormEvent) => {
+  const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (message.trim()) {
-      const newMessage = {
-        id: messages.length + 1,
-        sender: 'user',
-        text: message,
+    if (!message.trim()) return;
+
+    const newMessage = {
+      id: messages.length + 1,
+      sender: 'user',
+      text: message,
+      time: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
+    };
+    setMessages(prev => [...prev, newMessage]);
+    setMessage('');
+
+    try {
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message }),
+      });
+      const data = await res.json();
+
+      const aiResponse = {
+        id: messages.length + 2,
+        sender: 'ai',
+        text: data.reply || 'Sorry, something went wrong.',
         time: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
       };
-      setMessages([...messages, newMessage]);
-      setMessage('');
-      
-      // Simulate AI response
-      setTimeout(() => {
-        const aiResponse = {
-          id: messages.length + 2,
-          sender: 'ai',
-          text: 'Thanks for your message! This is a demo response. In production, this would connect to an AI assistant.',
-          time: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
-        };
-        setMessages(prev => [...prev, aiResponse]);
-      }, 1000);
+      setMessages(prev => [...prev, aiResponse]);
+    } catch {
+      const errorResponse = {
+        id: messages.length + 2,
+        sender: 'ai',
+        text: 'Sorry, I am unable to respond right now.',
+        time: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
+      };
+      setMessages(prev => [...prev, errorResponse]);
     }
   };
 
@@ -128,7 +142,7 @@ export default function ChatWidget({ isOpen, onClose, onOpen }: ChatWidgetProps)
                           : 'bg-white/10 text-white'
                       }`}
                     >
-                      <p className="text-sm sm:text-sm leading-relaxed">{msg.text}</p>
+                      <p className="text-sm sm:text-sm leading-relaxed whitespace-pre-wrap">{msg.text}</p>
                       <p className={`text-xs mt-1 opacity-60 leading-tight`}>
                         {msg.time}
                       </p>
