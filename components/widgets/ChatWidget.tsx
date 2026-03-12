@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from 'react';
-import { X, Send, Minimize2, MessageCircle, Bot } from 'lucide-react';
+import { useState, useRef, useEffect } from 'react';
+import { X, Send, Minimize2, MessageCircle, Bot, ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface ChatWidgetProps {
@@ -11,8 +11,11 @@ interface ChatWidgetProps {
 }
 
 export default function ChatWidget({ isOpen, onClose, onOpen }: ChatWidgetProps) {
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [message, setMessage] = useState('');
   const [isMinimized, setIsMinimized] = useState(false);
+  const [showScrollButton, setShowScrollButton] = useState(false);
   const [messages, setMessages] = useState([
     {
       id: 1,
@@ -21,6 +24,30 @@ export default function ChatWidget({ isOpen, onClose, onOpen }: ChatWidgetProps)
       time: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
     }
   ]);
+
+  const isAtBottom = () => {
+    const el = scrollContainerRef.current;
+    if (!el) return true;
+    return el.scrollHeight - el.scrollTop - el.clientHeight < 50;
+  };
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    setShowScrollButton(false);
+  };
+
+  const handleScroll = () => {
+    setShowScrollButton(!isAtBottom());
+  };
+
+  useEffect(() => {
+    if (isAtBottom()) {
+      scrollToBottom();
+    } else {
+      setShowScrollButton(true);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [messages]);
 
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -129,26 +156,50 @@ export default function ChatWidget({ isOpen, onClose, onOpen }: ChatWidgetProps)
           {/* Messages Container */}
           {!isMinimized && (
             <>
-              <div className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-3 sm:space-y-4 scroll-smooth">
-                {messages.map((msg) => (
-                  <div
-                    key={msg.id}
-                    className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
-                  >
+              <div className="flex-1 relative overflow-hidden">
+                <div
+                  ref={scrollContainerRef}
+                  onScroll={handleScroll}
+                  className="h-full overflow-y-auto p-3 sm:p-4 space-y-3 sm:space-y-4 scroll-smooth"
+                >
+                  {messages.map((msg) => (
                     <div
-                      className={`max-w-[85%] sm:max-w-[80%] rounded-2xl px-3 sm:px-4 py-2 break-words ${
-                        msg.sender === 'user'
-                          ? 'bg-[#F1FFB2] text-black'
-                          : 'bg-white/10 text-white'
-                      }`}
+                      key={msg.id}
+                      className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
                     >
-                      <p className="text-sm sm:text-sm leading-relaxed whitespace-pre-wrap">{msg.text}</p>
-                      <p className={`text-xs mt-1 opacity-60 leading-tight`}>
-                        {msg.time}
-                      </p>
+                      <div
+                        className={`max-w-[85%] sm:max-w-[80%] rounded-2xl px-3 sm:px-4 py-2 break-words ${
+                          msg.sender === 'user'
+                            ? 'bg-[#F1FFB2] text-black'
+                            : 'bg-white/10 text-white'
+                        }`}
+                      >
+                        <p className="text-sm sm:text-sm leading-relaxed whitespace-pre-wrap">{msg.text}</p>
+                        <p className={`text-xs mt-1 opacity-60 leading-tight`}>
+                          {msg.time}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                  <div ref={messagesEndRef} />
+                </div>
+
+                {/* Scroll to bottom button */}
+                <AnimatePresence>
+                  {showScrollButton && (
+                    <motion.button
+                      initial={{ opacity: 0, scale: 0.8, y: 8 }}
+                      animate={{ opacity: 1, scale: 1, y: 0 }}
+                      exit={{ opacity: 0, scale: 0.8, y: 8 }}
+                      transition={{ duration: 0.2 }}
+                      onClick={scrollToBottom}
+                      className="absolute bottom-3 right-4 w-8 h-8 bg-[#F1FFB2] text-black rounded-full shadow-lg flex items-center justify-center hover:bg-[#C6F10E] transition-colors z-10"
+                      aria-label="Scroll to bottom"
+                    >
+                      <ChevronDown className="w-4 h-4" />
+                    </motion.button>
+                  )}
+                </AnimatePresence>
               </div>
 
               {/* Input Form */}
