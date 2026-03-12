@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from 'react';
-import { X, Send, Minimize2, MessageCircle, Bot, ChevronDown } from 'lucide-react';
+import { X, Send, Minimize2, MessageCircle, Bot, ChevronDown, RotateCcw, RefreshCw } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface ChatWidgetProps {
@@ -10,13 +10,24 @@ interface ChatWidgetProps {
   onOpen: () => void;
 }
 
+interface Message {
+  id: number;
+  sender: 'ai' | 'user';
+  text: string;
+  time: string;
+  isError?: boolean;
+  retryQuestion?: string;
+}
+
 export default function ChatWidget({ isOpen, onClose, onOpen }: ChatWidgetProps) {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [message, setMessage] = useState('');
   const [isMinimized, setIsMinimized] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [unreadCount, setUnreadCount] = useState(0);
   const [showScrollButton, setShowScrollButton] = useState(false);
-  const [messages, setMessages] = useState([
+  const [messages, setMessages] = useState<Message[]>([
     {
       id: 1,
       sender: 'ai',
@@ -24,6 +35,14 @@ export default function ChatWidget({ isOpen, onClose, onOpen }: ChatWidgetProps)
       time: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
     }
   ]);
+
+  const suggestedQuestions = [
+    { label: "Tentang saya", value: "Tolong jelaskan siapa itu Ilhamrafi dan apa fokus utamanya." },
+    { label: "Keahlian saya", value: "Apa saja keahlian teknis dan teknologi yang dikuasai oleh Ilham?" },
+    { label: "Pengalaman Kerja", value: "Tolong ceritakan pengalaman kerja profesional Ilhamrafi sejauh ini." },
+    { label: "Status & Lokasi", value: "Apakah Ilham saat ini open to work, bersedia WFO/WFH, dan berapa lama notice period-nya?" },
+    { label: "Rate & Gaji", value: "Berapa rate project freelance atau ekspektasi gaji Ilhamrafi?" },
+  ];
 
   const isAtBottom = () => {
     const el = scrollContainerRef.current;
@@ -40,6 +59,63 @@ export default function ChatWidget({ isOpen, onClose, onOpen }: ChatWidgetProps)
     setShowScrollButton(!isAtBottom());
   };
 
+  const fetchAIResponse = async (question: string) => {
+    setIsLoading(true);
+    try {
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: question }),
+      });
+      const data = await res.json();
+      setMessages(prev => [...prev, {
+        id: Date.now(),
+        sender: 'ai',
+        text: data.reply || 'Sorry, something went wrong.',
+        time: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
+      }]);
+      setUnreadCount(prev => prev + 1);
+    } catch {
+      setMessages(prev => [...prev, {
+        id: Date.now(),
+        sender: 'ai',
+        text: 'Sorry, I am unable to respond right now.',
+        time: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }),
+        isError: true,
+        retryQuestion: question
+      }]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleRetry = (question: string) => {
+    setMessages(prev => prev.filter(m => !(m.isError && m.retryQuestion === question)));
+    fetchAIResponse(question);
+  };
+
+  const handleReset = () => {
+    setMessages([{
+      id: 1,
+      sender: 'ai',
+      text: 'Hi! I\'m Ilhamrafi\'s AI Assistant. How can I help you today?',
+      time: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
+    }]);
+    setUnreadCount(0);
+    setIsLoading(false);
+  };
+
+  const handleQuickReply = async (question: string) => {
+    if (isLoading) return;
+    setMessages(prev => [...prev, {
+      id: Date.now(),
+      sender: 'user',
+      text: question,
+      time: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
+    }]);
+    await fetchAIResponse(question);
+  };
+
   useEffect(() => {
     if (isAtBottom()) {
       scrollToBottom();
@@ -49,43 +125,27 @@ export default function ChatWidget({ isOpen, onClose, onOpen }: ChatWidgetProps)
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messages]);
 
+  useEffect(() => {
+    if (isLoading) scrollToBottom();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoading]);
+
+  useEffect(() => {
+    if (isOpen) setUnreadCount(0);
+  }, [isOpen]);
+
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!message.trim()) return;
-
-    const newMessage = {
-      id: messages.length + 1,
+    if (!message.trim() || isLoading) return;
+    const text = message;
+    setMessages(prev => [...prev, {
+      id: Date.now(),
       sender: 'user',
-      text: message,
+      text,
       time: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
-    };
-    setMessages(prev => [...prev, newMessage]);
+    }]);
     setMessage('');
-
-    try {
-      const res = await fetch('/api/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message }),
-      });
-      const data = await res.json();
-
-      const aiResponse = {
-        id: messages.length + 2,
-        sender: 'ai',
-        text: data.reply || 'Sorry, something went wrong.',
-        time: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
-      };
-      setMessages(prev => [...prev, aiResponse]);
-    } catch {
-      const errorResponse = {
-        id: messages.length + 2,
-        sender: 'ai',
-        text: 'Sorry, I am unable to respond right now.',
-        time: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
-      };
-      setMessages(prev => [...prev, errorResponse]);
-    }
+    await fetchAIResponse(text);
   };
 
   return (
@@ -103,10 +163,12 @@ export default function ChatWidget({ isOpen, onClose, onOpen }: ChatWidgetProps)
             aria-label="Open chat"
           >
             <MessageCircle className="w-6 h-6 sm:w-7 sm:h-7 group-hover:scale-110 transition-transform" />
-            {/* Notification badge (optional) */}
-            <div className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full flex items-center justify-center text-white text-xs font-bold">
-              1
-            </div>
+            {/* Unread message badge */}
+            {unreadCount > 0 && (
+              <div className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full flex items-center justify-center text-white text-xs font-bold">
+                {unreadCount > 9 ? '9+' : unreadCount}
+              </div>
+            )}
           </motion.button>
         )}
       </AnimatePresence>
@@ -136,6 +198,13 @@ export default function ChatWidget({ isOpen, onClose, onOpen }: ChatWidgetProps)
               </div>
             </div>
             <div className="flex items-center gap-1 h-full flex-shrink-0">
+              <button
+                onClick={handleReset}
+                className="w-8 h-8 sm:w-8 sm:h-8 hover:bg-white/10 rounded-lg transition-colors flex items-center justify-center active:bg-white/20"
+                aria-label="Reset chat"
+              >
+                <RotateCcw className="w-4 h-4 text-gray-400" />
+              </button>
               <button
                 onClick={() => setIsMinimized(!isMinimized)}
                 className="w-8 h-8 sm:w-8 sm:h-8 hover:bg-white/10 rounded-lg transition-colors flex items-center justify-center active:bg-white/20"
@@ -171,16 +240,42 @@ export default function ChatWidget({ isOpen, onClose, onOpen }: ChatWidgetProps)
                         className={`max-w-[85%] sm:max-w-[80%] rounded-2xl px-3 sm:px-4 py-2 break-words ${
                           msg.sender === 'user'
                             ? 'bg-[#F1FFB2] text-black'
+                            : msg.isError
+                            ? 'bg-red-500/20 border border-red-500/30 text-white'
                             : 'bg-white/10 text-white'
                         }`}
                       >
                         <p className="text-sm sm:text-sm leading-relaxed whitespace-pre-wrap">{msg.text}</p>
+                        {msg.isError && msg.retryQuestion && (
+                          <button
+                            onClick={() => handleRetry(msg.retryQuestion!)}
+                            className="mt-2 flex items-center gap-1.5 text-xs text-red-300 hover:text-white transition-colors"
+                          >
+                            <RefreshCw className="w-3 h-3" />
+                            Coba lagi
+                          </button>
+                        )}
                         <p className={`text-xs mt-1 opacity-60 leading-tight`}>
                           {msg.time}
                         </p>
                       </div>
                     </div>
                   ))}
+                  {/* Typing indicator */}
+                  {isLoading && (
+                    <div className="flex justify-start">
+                      <div className="bg-white/10 rounded-2xl px-4 py-3 flex items-center gap-1.5">
+                        {[0, 1, 2].map((i) => (
+                          <motion.div
+                            key={i}
+                            className="w-2 h-2 bg-gray-400 rounded-full"
+                            animate={{ y: [0, -5, 0] }}
+                            transition={{ duration: 0.6, repeat: Infinity, delay: i * 0.15, ease: 'easeInOut' }}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  )}
                   <div ref={messagesEndRef} />
                 </div>
 
@@ -202,6 +297,20 @@ export default function ChatWidget({ isOpen, onClose, onOpen }: ChatWidgetProps)
                 </AnimatePresence>
               </div>
 
+              {/* Quick Reply Suggestions */}
+              <div className="pt-2 pb-1 flex gap-2 border-t border-white/5 flex-shrink-0 overflow-x-auto px-3 sm:px-4 scrollbar-none [scrollbar-width:none] [-ms-overflow-style:none]">
+                {suggestedQuestions.map((q) => (
+                  <button
+                    key={q.label}
+                    onClick={() => handleQuickReply(q.value)}
+                    disabled={isLoading}
+                    className="text-xs px-3 py-1.5 rounded-full border border-[#F1FFB2]/40 text-[#F1FFB2] hover:bg-[#F1FFB2] hover:text-black transition-all duration-200 whitespace-nowrap flex-shrink-0 disabled:opacity-40 disabled:cursor-not-allowed"
+                  >
+                    {q.label}
+                  </button>
+                ))}
+              </div>
+
               {/* Input Form */}
               <form
                 onSubmit={handleSendMessage}
@@ -212,12 +321,13 @@ export default function ChatWidget({ isOpen, onClose, onOpen }: ChatWidgetProps)
                     type="text"
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
-                    placeholder="Type your message..."
-                    className="flex-1 px-3 sm:px-4 py-2.5 bg-white/5 border border-white/10 rounded-full text-white text-sm placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-[#F1FFB2] focus:border-transparent transition-all"
+                    placeholder={isLoading ? 'AI is typing...' : 'Type your message...'}
+                    disabled={isLoading}
+                    className="flex-1 px-3 sm:px-4 py-2.5 bg-white/5 border border-white/10 rounded-full text-white text-sm placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-[#F1FFB2] focus:border-transparent transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                   />
                   <button
                     type="submit"
-                    disabled={!message.trim()}
+                    disabled={!message.trim() || isLoading}
                     className="w-10 h-10 sm:w-10 sm:h-10 flex items-center justify-center bg-[#F1FFB2] text-black rounded-full hover:bg-[#C6F10E] transition-all duration-300 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0 touch-none"
                     aria-label="Send message"
                   >
