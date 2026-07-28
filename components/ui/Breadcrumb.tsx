@@ -24,7 +24,7 @@ export default function Breadcrumb({ items, currentPage }: BreadcrumbProps) {
           <li key={item.href} className="flex items-center gap-2">
             <Link
               href={item.href}
-              className="hover:text-[#F1FFB2] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#F1FFB2] focus:ring-offset-2 focus:ring-offset-black rounded px-1"
+              className="hover:text-brand transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 focus:ring-offset-black rounded px-1"
             >
               {item.label}
             </Link>

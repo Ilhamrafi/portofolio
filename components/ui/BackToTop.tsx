@@ -36,7 +36,7 @@ export default function BackToTop() {
         pointerEvents: isVisible ? 'auto' : 'none',
       }}
       transition={{ duration: 0.2 }}
-      className="fixed z-30 p-3 bg-[#F1FFB2] text-black rounded-full hover:bg-white transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-[#F1FFB2] focus:ring-offset-2 focus:ring-offset-black shadow-lg hover:shadow-xl sm:bottom-8 sm:right-8 bottom-24 right-4"
+      className="fixed z-30 p-3 bg-brand text-black rounded-full hover:bg-white transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 focus:ring-offset-black shadow-lg hover:shadow-xl sm:bottom-8 sm:right-8 bottom-24 right-4"
       aria-label="Back to top"
       title="Back to top"
     >

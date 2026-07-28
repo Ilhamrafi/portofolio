@@ -16,15 +16,15 @@ export default function MarkdownContent({ content }: MarkdownContentProps) {
           ul: (props) => <ul className="list-disc list-inside space-y-2 pl-4 my-4 text-gray-300" {...props} />,
           ol: (props) => <ol className="list-decimal list-inside space-y-2 pl-4 my-4 text-gray-300" {...props} />,
           blockquote: (props) => (
-            <blockquote className="border-l-4 border-[#F1FFB2] pl-4 italic my-6 text-gray-400" {...props} />
+            <blockquote className="border-l-4 border-brand pl-4 italic my-6 text-gray-400" {...props} />
           ),
           strong: (props) => <strong className="font-bold text-white" {...props} />,
           em: (props) => <em className="italic text-gray-200" {...props} />,
           a: (props) => (
-            <a className="text-[#F1FFB2] hover:underline" target="_blank" rel="noopener noreferrer" {...props} />
+            <a className="text-brand hover:underline" target="_blank" rel="noopener noreferrer" {...props} />
           ),
           code: (props) => (
-            <code className="bg-black/50 px-2 py-1 rounded text-[#F1FFB2] text-sm font-mono" {...props} />
+            <code className="bg-black/50 px-2 py-1 rounded text-brand text-sm font-mono" {...props} />
           ),
           pre: (props) => (
             <pre className="bg-black/50 border border-white/10 rounded-lg p-4 overflow-x-auto my-6" {...props} />

@@ -99,7 +99,7 @@ export default function Home() {
                 {/* 3. JUDUL UTAMA (DENGAN GRADIENT TEXT) */}
                 <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.1]">
                    {/* Baris 1: Gradient Putih -> Lime */}
-                   <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-[#F1FFB2]">
+                   <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-brand">
                      Solving Complexity,
                    </span>
                    <br />
@@ -128,7 +128,7 @@ export default function Home() {
                 <div className="flex flex-col max-md:items-center gap-6 mt-2">
                   <TalkButton
                     onClick={openChat}
-                    className="w-fit focus:ring-2 focus:ring-[#F1FFB2] focus:ring-offset-2 focus:ring-offset-black"
+                    className="w-fit focus:ring-2 focus:ring-brand focus:ring-offset-2 focus:ring-offset-black"
                   />
                   <div className="w-full flex max-md:justify-center">
                     <Socials />
@@ -156,7 +156,7 @@ export default function Home() {
             <div className="flex flex-col md:flex-row justify-between md:items-end gap-4 md:gap-6">
               <div className="flex-1">
                 <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold mb-3 md:mb-6 tracking-tighter">
-                  <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-[#F1FFB2]">
+                  <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-brand">
                     Selected Showcase
                   </span>
                 </h2>
@@ -166,7 +166,7 @@ export default function Home() {
               </div>
               <a
                 href="/showcase"
-                className="group relative inline-flex items-center justify-center sm:justify-start gap-2 w-full sm:w-auto px-6 py-3 bg-white/5 hover:bg-white/10 border border-white/20 hover:border-[#F1FFB2]/50 rounded-full transition-all duration-300 text-white font-medium text-sm md:text-base whitespace-nowrap"
+                className="group relative inline-flex items-center justify-center sm:justify-start gap-2 w-full sm:w-auto px-6 py-3 bg-white/5 hover:bg-white/10 border border-white/20 hover:border-brand/50 rounded-full transition-all duration-300 text-white font-medium text-sm md:text-base whitespace-nowrap"
                 aria-label="View All projects"
               >
                 View All Projects
@@ -201,7 +201,7 @@ export default function Home() {
           {/* Main Heading */}
           <div className="space-y-6 mb-12">
             <h2 className="text-5xl md:text-7xl font-bold tracking-tighter">
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-[#F1FFB2]">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-brand">
                 Let&apos;s design your vision.
               </span>
               <br />
@@ -222,7 +222,7 @@ export default function Home() {
                 href="https://www.linkedin.com/in/ilhamrafi/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="relative inline-flex items-center gap-2 px-8 py-4 bg-[#1a1a1a] text-white font-semibold rounded-full border border-white/10 hover:border-white/30 transition-all duration-300 active:scale-95 text-lg focus:outline-none focus:ring-2 focus:ring-[#F1FFB2] focus:ring-offset-2 focus:ring-offset-black"
+                className="relative inline-flex items-center gap-2 px-8 py-4 bg-[#1a1a1a] text-white font-semibold rounded-full border border-white/10 hover:border-white/30 transition-all duration-300 active:scale-95 text-lg focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 focus:ring-offset-black"
                 aria-label="Connect with me on LinkedIn"
               >
                 Hit me on

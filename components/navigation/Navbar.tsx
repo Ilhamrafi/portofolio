@@ -78,7 +78,7 @@ export default function Navbar() {
         <motion.div layout className="flex items-center gap-3 shrink-0">
             <Link 
               href="/" 
-              className="group flex items-center gap-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F1FFB2] focus:ring-offset-2 focus:ring-offset-black transition-all"
+              className="group flex items-center gap-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 focus:ring-offset-black transition-all"
               aria-label="Home - Ilhamrafi Portfolio"
             >
                 {/* Foto Profile: Mengecil saat scroll */}
@@ -105,7 +105,7 @@ export default function Navbar() {
                         className="font-sans font-medium text-white tracking-tight leading-none"
                         animate={{ fontSize: isScrolled ? "1rem" : "1.25rem" }}
                     >
-                        Ilhamrafi<span className="text-[#F1FFB2]">.</span>
+                        Ilhamrafi<span className="text-brand">.</span>
                     </motion.h1>
                 </motion.div>
             </Link>
@@ -115,7 +115,7 @@ export default function Navbar() {
         <motion.button
           layout
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="md:hidden p-2 text-white hover:text-[#F1FFB2] transition-colors focus:outline-none focus:ring-2 focus:ring-[#F1FFB2] rounded-lg"
+          className="md:hidden p-2 text-white hover:text-brand transition-colors focus:outline-none focus:ring-2 focus:ring-brand rounded-lg"
           aria-label="Toggle mobile menu"
           aria-expanded={isMobileMenuOpen}
         >
@@ -135,7 +135,7 @@ export default function Navbar() {
                      href={item.href}
                      target="_blank"
                      rel="noopener noreferrer"
-                     className="relative focus:outline-none focus:ring-2 focus:ring-[#F1FFB2] focus:ring-offset-2 focus:ring-offset-transparent rounded-full block" 
+                     className="relative focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 focus:ring-offset-transparent rounded-full block" 
                      aria-label="Connect on LinkedIn"
                    >
                       <motion.div
@@ -181,14 +181,14 @@ export default function Navbar() {
                <Link 
                  key={item.name} 
                  href={item.href}
-                 className="relative rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F1FFB2] focus:ring-offset-2 focus:ring-offset-black transition-all px-3 py-1.5 group"
+                 className="relative rounded-lg focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 focus:ring-offset-black transition-all px-3 py-1.5 group"
                  aria-label={`Navigate to ${item.name}`}
                >
                  {/* Active background indicator */}
                  {active && (
                    <motion.div
                      layoutId="activeNavBg"
-                     className="absolute inset-0 bg-[#F1FFB2]/10 rounded-lg -z-10 border border-[#F1FFB2]/30"
+                     className="absolute inset-0 bg-brand/10 rounded-lg -z-10 border border-brand/30"
                      transition={{
                        type: "spring",
                        stiffness: 380,
@@ -201,8 +201,8 @@ export default function Navbar() {
                     layout
                     className={`font-sans font-medium tracking-tight transition-colors duration-200 ${
                       active 
-                        ? 'text-[#F1FFB2]' 
-                        : 'text-gray-400 group-hover:text-[#F1FFB2]'
+                        ? 'text-brand' 
+                        : 'text-gray-400 group-hover:text-brand'
                     }`}
                     animate={{ fontSize: isScrolled ? "0.875rem" : "1rem" }}
                  >
@@ -235,7 +235,7 @@ export default function Navbar() {
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={() => setIsMobileMenuOpen(false)}
-                      className="w-full py-3 px-6 bg-[#1a1a1a] text-white font-medium rounded-xl border border-white/10 hover:border-white/30 transition-all duration-300 text-center flex items-center justify-center gap-2 focus:outline-none focus:ring-2 focus:ring-[#F1FFB2] focus:ring-offset-2 focus:ring-offset-black"
+                      className="w-full py-3 px-6 bg-[#1a1a1a] text-white font-medium rounded-xl border border-white/10 hover:border-white/30 transition-all duration-300 text-center flex items-center justify-center gap-2 focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 focus:ring-offset-black"
                     >
                       {item.name}
                       <LinkedInIcon size={16} />
@@ -249,10 +249,10 @@ export default function Navbar() {
                     key={item.name}
                     href={item.href}
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className={`w-full py-3 px-6 font-medium transition-all duration-200 rounded-xl text-center focus:outline-none focus:ring-2 focus:ring-[#F1FFB2] focus:ring-offset-2 focus:ring-offset-black ${
+                    className={`w-full py-3 px-6 font-medium transition-all duration-200 rounded-xl text-center focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 focus:ring-offset-black ${
                       active
-                        ? 'bg-[#F1FFB2]/10 text-[#F1FFB2] border border-[#F1FFB2]/30'
-                        : 'text-gray-400 hover:text-[#F1FFB2] hover:bg-white/5'
+                        ? 'bg-brand/10 text-brand border border-brand/30'
+                        : 'text-gray-400 hover:text-brand hover:bg-white/5'
                     }`}
                   >
                     {item.name}

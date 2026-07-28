@@ -45,7 +45,7 @@ export default function GridBeams() {
       {beams.map((beam) => (
         <div
           key={beam.id}
-          className="absolute bg-gradient-to-r from-transparent via-[#F1FFB2] to-transparent opacity-0 animate-beam-h"
+          className="absolute bg-gradient-to-r from-transparent via-brand to-transparent opacity-0 animate-beam-h"
           style={{
             top: `${beam.top}px`,
             left: `${beam.left}px`,

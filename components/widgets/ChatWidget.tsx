@@ -159,7 +159,7 @@ export default function ChatWidget({ isOpen, onClose, onOpen }: ChatWidgetProps)
             exit={{ scale: 0, opacity: 0 }}
             transition={{ type: 'spring', damping: 20, stiffness: 300 }}
             onClick={onOpen}
-            className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-r from-[#F1FFB2] to-[#C6F10E] text-black rounded-full shadow-2xl flex items-center justify-center z-50 hover:scale-110 transition-transform duration-300 group"
+            className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-r from-brand to-brand-dark text-black rounded-full shadow-2xl flex items-center justify-center z-50 hover:scale-110 transition-transform duration-300 group"
             aria-label="Open chat"
           >
             <MessageCircle className="w-6 h-6 sm:w-7 sm:h-7 group-hover:scale-110 transition-transform" />
@@ -187,7 +187,7 @@ export default function ChatWidget({ isOpen, onClose, onOpen }: ChatWidgetProps)
           <div className="flex items-center justify-between px-3 sm:px-4 h-14 sm:h-16 border-b border-white/10 bg-gradient-to-r from-[#1a1a1a] to-[#222] flex-shrink-0">
             <div className="flex items-center gap-2 sm:gap-3 h-full min-w-0">
               <div className="relative flex items-center justify-center h-full flex-shrink-0">
-                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-gradient-to-r from-[#F1FFB2] to-[#C6F10E] flex items-center justify-center text-black">
+                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-gradient-to-r from-brand to-brand-dark flex items-center justify-center text-black">
                   <Bot className="w-4 h-4 sm:w-5 sm:h-5" />
                 </div>
                 <div className="absolute bottom-[calc(50%-18px)] right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-[#1a1a1a]"></div>
@@ -239,7 +239,7 @@ export default function ChatWidget({ isOpen, onClose, onOpen }: ChatWidgetProps)
                       <div
                         className={`max-w-[85%] sm:max-w-[80%] rounded-2xl px-3 sm:px-4 py-2 break-words ${
                           msg.sender === 'user'
-                            ? 'bg-[#F1FFB2] text-black'
+                            ? 'bg-brand text-black'
                             : msg.isError
                             ? 'bg-red-500/20 border border-red-500/30 text-white'
                             : 'bg-white/10 text-white'
@@ -288,7 +288,7 @@ export default function ChatWidget({ isOpen, onClose, onOpen }: ChatWidgetProps)
                       exit={{ opacity: 0, scale: 0.8, y: 8 }}
                       transition={{ duration: 0.2 }}
                       onClick={scrollToBottom}
-                      className="absolute bottom-3 right-4 w-8 h-8 bg-[#F1FFB2] text-black rounded-full shadow-lg flex items-center justify-center hover:bg-[#C6F10E] transition-colors z-10"
+                      className="absolute bottom-3 right-4 w-8 h-8 bg-brand text-black rounded-full shadow-lg flex items-center justify-center hover:bg-brand-dark transition-colors z-10"
                       aria-label="Scroll to bottom"
                     >
                       <ChevronDown className="w-4 h-4" />
@@ -304,7 +304,7 @@ export default function ChatWidget({ isOpen, onClose, onOpen }: ChatWidgetProps)
                     key={q.label}
                     onClick={() => handleQuickReply(q.value)}
                     disabled={isLoading}
-                    className="text-xs px-3 py-1.5 rounded-full border border-[#F1FFB2]/40 text-[#F1FFB2] hover:bg-[#F1FFB2] hover:text-black transition-all duration-200 whitespace-nowrap flex-shrink-0 disabled:opacity-40 disabled:cursor-not-allowed"
+                    className="text-xs px-3 py-1.5 rounded-full border border-brand/40 text-brand hover:bg-brand hover:text-black transition-all duration-200 whitespace-nowrap flex-shrink-0 disabled:opacity-40 disabled:cursor-not-allowed"
                   >
                     {q.label}
                   </button>
@@ -323,12 +323,12 @@ export default function ChatWidget({ isOpen, onClose, onOpen }: ChatWidgetProps)
                     onChange={(e) => setMessage(e.target.value)}
                     placeholder={isLoading ? 'AI is typing...' : 'Type your message...'}
                     disabled={isLoading}
-                    className="flex-1 px-3 sm:px-4 py-2.5 bg-white/5 border border-white/10 rounded-full text-white text-sm placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-[#F1FFB2] focus:border-transparent transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="flex-1 px-3 sm:px-4 py-2.5 bg-white/5 border border-white/10 rounded-full text-white text-sm placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                   />
                   <button
                     type="submit"
                     disabled={!message.trim() || isLoading}
-                    className="w-10 h-10 sm:w-10 sm:h-10 flex items-center justify-center bg-[#F1FFB2] text-black rounded-full hover:bg-[#C6F10E] transition-all duration-300 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0 touch-none"
+                    className="w-10 h-10 sm:w-10 sm:h-10 flex items-center justify-center bg-brand text-black rounded-full hover:bg-brand-dark transition-all duration-300 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0 touch-none"
                     aria-label="Send message"
                   >
                     <Send className="w-4 h-4" />

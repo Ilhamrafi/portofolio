@@ -18,7 +18,7 @@ export default function ProjectCard({ project, onClick, variant = 'full' }: Proj
   return (
     <div
       onClick={onClick}
-      className={`group relative overflow-hidden bg-white/5 border border-white/10 hover:border-[#F1FFB2]/50 transition-all duration-500 cursor-pointer flex flex-col ${
+      className={`group relative overflow-hidden bg-white/5 border border-white/10 hover:border-brand/50 transition-all duration-500 cursor-pointer flex flex-col ${
         compact ? 'rounded-xl sm:rounded-2xl' : 'rounded-2xl'
       }`}
     >
@@ -60,7 +60,7 @@ export default function ProjectCard({ project, onClick, variant = 'full' }: Proj
         </div>
 
         <h3
-          className={`font-bold group-hover:text-[#F1FFB2] transition-colors duration-300 ${
+          className={`font-bold group-hover:text-brand transition-colors duration-300 ${
             compact ? 'text-lg sm:text-xl md:text-2xl' : 'text-xl md:text-2xl'
           }`}
         >

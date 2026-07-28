@@ -37,7 +37,7 @@ export default function RootLayout({
         {/* Skip to main content link for accessibility */}
         <a 
           href="#main-content"
-          className="fixed top-0 left-0 z-[100] px-4 py-2 bg-[#F1FFB2] text-black font-medium rounded-br-lg opacity-0 focus:opacity-100 transition-opacity duration-200"
+          className="fixed top-0 left-0 z-[100] px-4 py-2 bg-brand text-black font-medium rounded-br-lg opacity-0 focus:opacity-100 transition-opacity duration-200"
           aria-label="Skip to main content"
         >
           Skip to content

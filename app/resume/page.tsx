@@ -46,7 +46,7 @@ export default function ResumePage() {
             className="mb-12"
           >
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter">
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-[#F1FFB2]">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-brand">
                 MY SUMMARY
               </span>
             </h1>
@@ -61,7 +61,7 @@ export default function ResumePage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="lg:col-span-8 order-1 bg-[#111] border border-white/10 rounded-[2rem] p-8 md:p-10 flex flex-col justify-center h-full min-h-[250px] transition-all duration-200"
+              className="lg:col-span-8 order-1 bg-white/5 border border-white/10 rounded-2xl p-8 md:p-10 flex flex-col justify-center h-full min-h-[250px] transition-all duration-200"
             >
               <h3 className="text-2xl md:text-3xl font-semibold mb-4 text-white">
                 Hi, I&apos;m Ilhamrafi 👋
@@ -78,7 +78,7 @@ export default function ResumePage() {
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: 0.3 }}
-              className="lg:col-span-4 lg:row-span-2 order-2 relative min-h-[500px] lg:min-h-full rounded-[2rem] overflow-hidden border border-white/10 bg-[#111] transition-all duration-200 cursor-pointer"
+              className="lg:col-span-4 lg:row-span-2 order-2 relative min-h-[500px] lg:min-h-full rounded-2xl overflow-hidden border border-white/10 bg-white/5 transition-all duration-200 cursor-pointer"
               onMouseEnter={() => setIsImageHovered(true)}
               onMouseLeave={() => setIsImageHovered(false)}
             >
@@ -105,7 +105,7 @@ export default function ResumePage() {
                 <a 
                   href="https://drive.google.com/file/d/196fQ86NBS9vBEDPMbDzmqFqCtiKbSiNh/view?usp=sharing" 
                   download 
-                  className="relative flex items-center gap-2 px-6 py-3 bg-[#F1FFB2]/70 text-black font-semibold rounded-full hover:bg-[#F1FFB2] transition-all duration-300 transform hover:scale-105 shadow-lg shadow-[#F1FFB2]/30 animate-pulse"
+                  className="relative flex items-center gap-2 px-6 py-3 bg-brand/70 text-black font-semibold rounded-full hover:bg-brand transition-all duration-300 transform hover:scale-105 shadow-lg shadow-brand/30 animate-pulse"
                 >
                   <Download className="w-5 h-5" />
                   Download CV
@@ -118,7 +118,7 @@ export default function ResumePage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.4 }}
-              className="lg:col-span-4 order-3 bg-[#111] border border-white/10 rounded-[2rem] p-8 flex flex-col justify-center min-h-[200px] transition-all duration-200"
+              className="lg:col-span-4 order-3 bg-white/5 border border-white/10 rounded-2xl p-8 flex flex-col justify-center min-h-[200px] transition-all duration-200"
             >
               <div className="text-5xl md:text-6xl font-bold mb-2 text-white">
                 <CountUp to={10} duration={0.5} className="inline-block" />+
@@ -133,7 +133,7 @@ export default function ResumePage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.5 }}
-              className="lg:col-span-4 order-4 bg-[#111] border border-white/10 rounded-[2rem] p-8 flex flex-col justify-center min-h-[200px] transition-all duration-200"
+              className="lg:col-span-4 order-4 bg-white/5 border border-white/10 rounded-2xl p-8 flex flex-col justify-center min-h-[200px] transition-all duration-200"
             >
               <div className="text-5xl md:text-6xl font-bold mb-2 text-white">
                 <CountUp to={2} duration={0.5} className="inline-block" />+
@@ -151,7 +151,7 @@ export default function ResumePage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.6 }}
-              className="lg:col-span-8 order-5 bg-[#111] border border-white/10 rounded-[2rem] p-8 md:p-10 flex items-center min-h-[200px] transition-all duration-200"
+              className="lg:col-span-8 order-5 bg-white/5 border border-white/10 rounded-2xl p-8 md:p-10 flex items-center min-h-[200px] transition-all duration-200"
             >
               <p className="text-gray-300 text-base md:text-lg leading-relaxed">
                 Helping Startups, Corporations, and small businesses with AI solutions 
@@ -165,7 +165,7 @@ export default function ResumePage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.7 }}
-              className="lg:col-span-4 order-6 bg-[#111] border border-white/10 rounded-[2rem] p-8 md:p-10 flex flex-col justify-between min-h-[200px] transition-all duration-200"
+              className="lg:col-span-4 order-6 bg-white/5 border border-white/10 rounded-2xl p-8 md:p-10 flex flex-col justify-between min-h-[200px] transition-all duration-200"
             >
                <div className="flex items-start justify-between">
                   <div>
@@ -173,7 +173,7 @@ export default function ResumePage() {
                      <p className="text-gray-300 text-lg">Jakarta, Indonesia</p>
                      <p className="text-gray-300 text-base mt-1.5">GMT +7</p>
                   </div>
-                  <MapPin className="w-8 h-8 text-[#F1FFB2] flex-shrink-0 mt-1" />
+                  <MapPin className="w-8 h-8 text-brand flex-shrink-0 mt-1" />
                </div>
             </motion.div>
 
@@ -203,12 +203,12 @@ export default function ResumePage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
-              className="bg-white/5 border border-white/10 rounded-2xl p-6 md:p-8 hover:border-[#F1FFB2]/50 transition-all duration-300"
+              className="bg-white/5 border border-white/10 rounded-2xl p-6 md:p-8 hover:border-brand/50 transition-all duration-300"
             >
               <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
                 <div>
                   <h3 className="text-xl md:text-2xl font-semibold mb-2">Freelance AI/ML Engineer</h3>
-                  <p className="text-[#F1FFB2] font-medium">Independent Contractor</p>
+                  <p className="text-brand font-medium">Independent Contractor</p>
                 </div>
                 <span className="text-gray-400 text-sm md:text-base mt-2 md:mt-0">Present</span>
               </div>
@@ -226,12 +226,12 @@ export default function ResumePage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
-              className="bg-white/5 border border-white/10 rounded-2xl p-6 md:p-8 hover:border-[#F1FFB2]/50 transition-all duration-300"
+              className="bg-white/5 border border-white/10 rounded-2xl p-6 md:p-8 hover:border-brand/50 transition-all duration-300"
             >
               <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
                 <div>
                   <h3 className="text-xl md:text-2xl font-semibold mb-2">AI & Computer Vision Engineer</h3>
-                  <p className="text-[#F1FFB2] font-medium">PT Bengawan Tirta Rekayasa</p>
+                  <p className="text-brand font-medium">PT Bengawan Tirta Rekayasa</p>
                 </div>
                 <span className="text-gray-400 text-sm md:text-base mt-2 md:mt-0">2024 - Present</span>
               </div>
@@ -248,12 +248,12 @@ export default function ResumePage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="bg-white/5 border border-white/10 rounded-2xl p-6 md:p-8 hover:border-[#F1FFB2]/50 transition-all duration-300"
+              className="bg-white/5 border border-white/10 rounded-2xl p-6 md:p-8 hover:border-brand/50 transition-all duration-300"
             >
               <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
                 <div>
                   <h3 className="text-xl md:text-2xl font-semibold mb-2">Machine Learning Cohort</h3>
-                  <p className="text-[#F1FFB2] font-medium">Bangkit Academy led by Google, Tokopedia, Gojek, & Traveloka</p>
+                  <p className="text-brand font-medium">Bangkit Academy led by Google, Tokopedia, Gojek, & Traveloka</p>
                 </div>
                 <span className="text-gray-400 text-sm md:text-base mt-2 md:mt-0">2024</span>
               </div>
@@ -270,12 +270,12 @@ export default function ResumePage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="bg-white/5 border border-white/10 rounded-2xl p-6 md:p-8 hover:border-[#F1FFB2]/50 transition-all duration-300"
+              className="bg-white/5 border border-white/10 rounded-2xl p-6 md:p-8 hover:border-brand/50 transition-all duration-300"
             >
               <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
                 <div>
                   <h3 className="text-xl md:text-2xl font-semibold mb-2">Assistant Lecturer</h3>
-                  <p className="text-[#F1FFB2] font-medium">Universitas Teknologi Yogyakarta (part-time)</p>
+                  <p className="text-brand font-medium">Universitas Teknologi Yogyakarta (part-time)</p>
                 </div>
                 <span className="text-gray-400 text-sm md:text-base mt-2 md:mt-0">2023 - 2024</span>
               </div>
@@ -302,7 +302,7 @@ export default function ResumePage() {
             transition={{ duration: 0.6 }}
             className="mb-8"
           >
-            <h2 className="text-lg md:text-xl font-light bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-[#F1FFB2]">What I Do</h2>
+            <h2 className="text-lg md:text-xl font-light bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-brand">What I Do</h2>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -313,10 +313,10 @@ export default function ResumePage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
-              className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-[#F1FFB2]/50 transition-all duration-300"
+              className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-brand/50 transition-all duration-300"
             >
               <div className="flex flex-col items-center gap-3 mb-4">
-                <Brain className="w-6 h-6 text-[#F1FFB2]" />
+                <Brain className="w-6 h-6 text-brand" />
                 <h3 className="text-xl font-semibold text-white text-center">AI Development</h3>
               </div>
               <p className="text-gray-400 leading-relaxed text-center">
@@ -330,10 +330,10 @@ export default function ResumePage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-[#F1FFB2]/50 transition-all duration-300"
+              className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-brand/50 transition-all duration-300"
             >
               <div className="flex flex-col items-center gap-3 mb-4">
-                <Database className="w-6 h-6 text-[#F1FFB2]" />
+                <Database className="w-6 h-6 text-brand" />
                 <h3 className="text-xl font-semibold text-white text-center">Data Engineering</h3>
               </div>
               <p className="text-gray-400 leading-relaxed text-center">
@@ -347,10 +347,10 @@ export default function ResumePage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-[#F1FFB2]/50 transition-all duration-300"
+              className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-brand/50 transition-all duration-300"
             >
               <div className="flex flex-col items-center gap-3 mb-4">
-                <Rocket className="w-6 h-6 text-[#F1FFB2]" />
+                <Rocket className="w-6 h-6 text-brand" />
                 <h3 className="text-xl font-semibold text-white text-center">MLOps & Deployment</h3>
               </div>
               <p className="text-gray-400 leading-relaxed text-center">
@@ -373,7 +373,7 @@ export default function ResumePage() {
             className="bg-gradient-to-br from-white/10 to-white/5 border border-white/20 rounded-3xl p-12 md:p-16 transition-all duration-200"
           >
             <h2 className="text-3xl md:text-5xl font-bold mb-6">
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-[#F1FFB2]">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-brand">
                 Let&apos;s Work Together
               </span>
             </h2>

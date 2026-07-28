@@ -47,7 +47,7 @@ export default function TechMarquee() {
               border border-white/10 
               rounded-2xl 
               transition-all duration-300
-              hover:bg-white/10 hover:border-[#F1FFB2]/50 hover:scale-110 hover:shadow-[0_0_15px_rgba(241,255,178,0.2)]
+              hover:bg-white/10 hover:border-brand/50 hover:scale-110 hover:shadow-[0_0_15px_rgba(241,255,178,0.2)]
               cursor-pointer
               overflow-hidden
             ">

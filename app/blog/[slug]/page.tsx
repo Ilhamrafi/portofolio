@@ -45,7 +45,7 @@ export default function BlogDetailPage({ params }: { params: Promise<{ slug: str
         <div className="flex-1 flex items-center justify-center">
           <div className="text-center">
             <h1 className="text-4xl font-bold mb-4">Article Not Found</h1>
-            <Link href="/blog" className="text-[#F1FFB2] hover:underline">
+            <Link href="/blog" className="text-brand hover:underline">
               Back to Blog
             </Link>
           </div>
@@ -82,7 +82,7 @@ export default function BlogDetailPage({ params }: { params: Promise<{ slug: str
           >
             <Link 
               href="/blog"
-              className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-[#F1FFB2] focus:ring-offset-2 focus:ring-offset-black rounded px-2 py-1"
+              className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 focus:ring-offset-black rounded px-2 py-1"
             >
               <ArrowLeft className="w-4 h-4" />
               Back to Articles
@@ -98,7 +98,7 @@ export default function BlogDetailPage({ params }: { params: Promise<{ slug: str
           >
             {/* Category */}
             <div className="inline-block">
-              <span className="px-4 py-2 rounded-full bg-[#F1FFB2] text-black text-sm font-medium">
+              <span className="px-4 py-2 rounded-full bg-brand text-black text-sm font-medium">
                 {post.category}
               </span>
             </div>
@@ -159,7 +159,7 @@ export default function BlogDetailPage({ params }: { params: Promise<{ slug: str
               {post.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-sm text-gray-300 hover:border-[#F1FFB2]/50 transition-all cursor-pointer"
+                  className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-sm text-gray-300 hover:border-brand/50 transition-all cursor-pointer"
                 >
                   {tag}
                 </span>
@@ -181,12 +181,12 @@ export default function BlogDetailPage({ params }: { params: Promise<{ slug: str
                 className="p-2 hover:bg-white/10 rounded-lg transition-colors"
                 aria-label={shared ? 'Link copied' : 'Share this article'}
               >
-                {shared ? <Check className="w-5 h-5 text-[#F1FFB2]" /> : <Share2 className="w-5 h-5" />}
+                {shared ? <Check className="w-5 h-5 text-brand" /> : <Share2 className="w-5 h-5" />}
               </button>
             </div>
             <button
               onClick={openChat}
-              className="group inline-flex items-center gap-2 px-6 py-3 bg-[#F1FFB2] text-black font-semibold rounded-full hover:bg-[#C6F10E] transition-all active:scale-95"
+              className="group inline-flex items-center gap-2 px-6 py-3 bg-brand text-black font-semibold rounded-full hover:bg-brand-dark transition-all active:scale-95"
             >
               Discuss This
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -213,13 +213,13 @@ export default function BlogDetailPage({ params }: { params: Promise<{ slug: str
                     transition={{ duration: 0.6, delay: 0.6 + index * 0.1 }}
                   >
                     <Link href={`/blog/${relatedPost.slug}`}>
-                      <div className="group cursor-pointer h-full flex flex-col rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 hover:border-[#F1FFB2] transition-all p-6">
+                      <div className="group cursor-pointer h-full flex flex-col rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 hover:border-brand transition-all p-6">
                         <div className="mb-4 inline-block">
-                          <span className="px-3 py-1 rounded-full bg-[#F1FFB2]/10 text-[#F1FFB2] text-xs font-medium">
+                          <span className="px-3 py-1 rounded-full bg-brand/10 text-brand text-xs font-medium">
                             {relatedPost.category}
                           </span>
                         </div>
-                        <h4 className="text-lg font-bold text-white mb-2 group-hover:text-[#F1FFB2] transition-colors">
+                        <h4 className="text-lg font-bold text-white mb-2 group-hover:text-brand transition-colors">
                           {relatedPost.title}
                         </h4>
                         <p className="text-gray-400 text-sm mb-4 flex-grow">

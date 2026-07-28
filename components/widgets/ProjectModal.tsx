@@ -59,7 +59,7 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
         
         {/* Header with Close Button */}
         <div className="sticky top-0 z-10 flex items-center justify-between p-6 border-b border-white/10 bg-[#0f0f0f]/95 backdrop-blur-sm">
-          <h2 className="text-2xl md:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-[#F1FFB2]">
+          <h2 className="text-2xl md:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-brand">
             Project Overview
           </h2>
           <button
@@ -141,7 +141,7 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
               <ul className="space-y-2">
                 {project.solution.map((item, idx) => (
                   <li key={idx} className="flex items-start gap-3 text-gray-300">
-                    <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-[#F1FFB2] flex-shrink-0" />
+                    <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-brand flex-shrink-0" />
                     <span className="leading-relaxed">{item}</span>
                   </li>
                 ))}
@@ -181,7 +181,7 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
               {project.categories.map((category, idx) => (
                 <span 
                   key={idx}
-                  className="px-4 py-2 rounded-full bg-[#F1FFB2]/10 border border-[#F1FFB2]/30 text-sm font-medium text-[#F1FFB2]"
+                  className="px-4 py-2 rounded-full bg-brand/10 border border-brand/30 text-sm font-medium text-brand"
                 >
                   {category}
                 </span>
@@ -196,7 +196,7 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
                 href={project.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 px-6 py-3 bg-[#F1FFB2] hover:bg-[#F1FFB2]/90 text-black font-medium rounded-full transition-colors"
+                className="flex items-center gap-2 px-6 py-3 bg-brand hover:bg-brand/90 text-black font-medium rounded-full transition-colors"
               >
                 <ExternalLink className="w-4 h-4" />
                 View Live

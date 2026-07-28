@@ -84,7 +84,7 @@ export default function ShowcasePage() {
             
             <div>
               <h1 className="text-5xl md:text-7xl font-bold tracking-tighter mb-4">
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-[#F1FFB2]">
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-brand">
                   All Showcase
                 </span>
               </h1>
@@ -103,7 +103,7 @@ export default function ShowcasePage() {
               placeholder="Search projects by title, category, or technology..."
               value={searchQuery}
               onChange={(e) => handleSearchChange(e.target.value)}
-              className="w-full pl-12 pr-4 py-3 bg-white/5 border border-white/10 rounded-full text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-[#F1FFB2] focus:border-transparent transition-all"
+              className="w-full pl-12 pr-4 py-3 bg-white/5 border border-white/10 rounded-full text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent transition-all"
             />
           </div>
 
@@ -115,7 +115,7 @@ export default function ShowcasePage() {
                 onClick={() => handleCategoryChange(category)}
                 className={`px-4 py-2 rounded-full transition-all duration-300 text-sm font-medium ${
                   selectedCategory === category
-                    ? 'bg-[#F1FFB2] text-black'
+                    ? 'bg-brand text-black'
                     : 'bg-white/5 text-white border border-white/10 hover:border-white/30 hover:bg-white/10'
                 }`}
               >
@@ -161,7 +161,7 @@ export default function ShowcasePage() {
                   onClick={() => setCurrentPage(page)}
                   className={`w-10 h-10 rounded-full font-medium transition-all duration-300 ${
                     currentPage === page
-                      ? 'bg-[#F1FFB2] text-black'
+                      ? 'bg-brand text-black'
                       : 'bg-white/5 hover:bg-white/10 border border-white/10 text-white'
                   }`}
                   aria-label={`Go to page ${page}`}
@@ -198,7 +198,7 @@ export default function ShowcasePage() {
         <div className="max-w-4xl mx-auto px-6 md:px-12 text-center">
           <div className="bg-gradient-to-br from-white/10 to-white/5 border border-white/20 rounded-3xl p-12 md:p-16 transition-all duration-200 space-y-6">
             <h2 className="text-3xl md:text-5xl font-bold">
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-[#F1FFB2]">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-brand">
                 Interested in collaborating?
               </span>
             </h2>

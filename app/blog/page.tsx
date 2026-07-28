@@ -41,7 +41,7 @@ export default function BlogPage() {
               transition={{ duration: 0.6, delay: 0.1 }}
             >
               <h1 className="text-5xl md:text-7xl font-bold tracking-tighter mb-4">
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-[#F1FFB2]">
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-brand">
                   Coming Soon
                 </span>
               </h1>
@@ -59,12 +59,12 @@ export default function BlogPage() {
             className="w-full max-w-3xl mx-auto md:mx-0 bg-white/5 border border-white/10 rounded-3xl p-8 md:p-12 backdrop-blur-sm relative overflow-hidden"
           >
             {/* Background Decoration */}
-            <div className="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 bg-[#F1FFB2]/5 rounded-full blur-3xl" />
+            <div className="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 bg-brand/5 rounded-full blur-3xl" />
             <div className="absolute bottom-0 left-0 -ml-16 -mb-16 w-48 h-48 bg-purple-500/5 rounded-full blur-3xl" />
 
             <div className="relative z-10 flex flex-col md:flex-row items-center gap-8 text-center md:text-left">
               <div className="w-20 h-20 md:w-24 md:h-24 rounded-2xl bg-gradient-to-br from-white/10 to-transparent border border-white/10 flex items-center justify-center shrink-0">
-                <Coffee className="w-10 h-10 md:w-12 md:h-12 text-[#F1FFB2]" />
+                <Coffee className="w-10 h-10 md:w-12 md:h-12 text-brand" />
               </div>
 
               <div className="space-y-4">
@@ -76,15 +76,15 @@ export default function BlogPage() {
                 </p>
                 <div className="flex flex-wrap gap-3 justify-center md:justify-start pt-2">
                   <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-xs text-gray-300">
-                    <Sparkles className="w-3.5 h-3.5 text-[#F1FFB2]" />
+                    <Sparkles className="w-3.5 h-3.5 text-brand" />
                     <span>Tutorials</span>
                   </div>
                   <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-xs text-gray-300">
-                    <Sparkles className="w-3.5 h-3.5 text-[#F1FFB2]" />
+                    <Sparkles className="w-3.5 h-3.5 text-brand" />
                     <span>Insights</span>
                   </div>
                   <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-xs text-gray-300">
-                    <Sparkles className="w-3.5 h-3.5 text-[#F1FFB2]" />
+                    <Sparkles className="w-3.5 h-3.5 text-brand" />
                     <span>Career</span>
                   </div>
                 </div>
@@ -105,7 +105,7 @@ export default function BlogPage() {
             className="bg-gradient-to-br from-white/10 to-white/5 border border-white/20 rounded-3xl p-12 md:p-16 transition-all duration-200"
           >
             <h2 className="text-3xl md:text-5xl font-bold mb-6">
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-[#F1FFB2]">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-brand">
                 Want to discuss something?
               </span>
             </h2>

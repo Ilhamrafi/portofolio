@@ -42,7 +42,7 @@ export default function Socials() {
           href={social.href}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-gray-500 hover:text-[#F1FFB2] transition-colors duration-300 transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-[#F1FFB2] focus:ring-offset-2 focus:ring-offset-[#0a0a0a] rounded-full p-1"
+          className="text-gray-500 hover:text-brand transition-colors duration-300 transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 focus:ring-offset-[#0a0a0a] rounded-full p-1"
           aria-label={`Visit my ${social.name} profile`}
           title={social.name}
         >
