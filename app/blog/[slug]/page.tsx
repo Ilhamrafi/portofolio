@@ -7,21 +7,17 @@ import Link from 'next/link';
 import Navbar from '@/components/navigation/Navbar';
 import Breadcrumb from '@/components/ui/Breadcrumb';
 import Footer from '@/components/layout/Footer';
-import ChatWidget from '@/components/widgets/ChatWidget';
 import MarkdownContent from '@/components/ui/MarkdownContent';
+import { useChatWidget } from '@/components/widgets/ChatWidgetProvider';
 import { blogPosts } from '@/lib/data/blogs';
 
 // Not yet linked from /blog (list is still "Coming Soon") — wire up once real articles are ready.
 export default function BlogDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = use(params);
-  const [isChatOpen, setIsChatOpen] = useState(false);
+  const { openChat } = useChatWidget();
   const [shared, setShared] = useState(false);
 
   const post = blogPosts.find(p => p.slug === slug);
-
-  const openChat = () => {
-    setIsChatOpen(true);
-  };
 
   const handleShare = async () => {
     const url = window.location.href;
@@ -252,13 +248,6 @@ export default function BlogDetailPage({ params }: { params: Promise<{ slug: str
 
       {/* FOOTER */}
       <Footer className="mt-12" />
-
-      {/* Chat Widget */}
-      <ChatWidget 
-        isOpen={isChatOpen} 
-        onClose={() => setIsChatOpen(false)} 
-        onOpen={() => setIsChatOpen(true)}
-      />
 
     </main>
   );

@@ -9,8 +9,8 @@ import RotatingText from '@/components/animations/RotatingText';
 import GridBeams from '@/components/animations/GridBeams';
 import Lanyard from '@/components/animations/Lanyard';
 import TechMarquee from '@/components/animations/TechMarquee';
-import ChatWidget from '@/components/widgets/ChatWidget';
 import ProjectModal from '@/components/widgets/ProjectModal';
+import { useChatWidget } from '@/components/widgets/ChatWidgetProvider';
 import ProjectCard from '@/components/widgets/ProjectCard';
 import StatusBadge from '@/components/ui/StatusBadge';
 import TalkButton from '@/components/ui/TalkButton';
@@ -21,7 +21,7 @@ import { projectsData } from '@/lib/data/projects';
 import type { ProjectDetail } from '@/lib/types';
 
 export default function Home() {
-  const [isChatOpen, setIsChatOpen] = useState(false);
+  const { openChat } = useChatWidget();
   const [selectedProject, setSelectedProject] = useState<ProjectDetail | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   
@@ -41,10 +41,6 @@ export default function Home() {
       const scrollBehavior = prefersReducedMotion ? 'auto' : 'smooth';
       contactSection.scrollIntoView({ behavior: scrollBehavior as ScrollBehavior, block: 'start' });
     }
-  };
-
-  const openChat = () => {
-    setIsChatOpen(true);
   };
 
   return (
@@ -236,13 +232,6 @@ export default function Home() {
 
       {/* 6. FOOTER */}
       <Footer />
-
-      {/* Chat Widget */}
-      <ChatWidget 
-        isOpen={isChatOpen} 
-        onClose={() => setIsChatOpen(false)} 
-        onOpen={() => setIsChatOpen(true)}
-      />
 
     </main>
   );

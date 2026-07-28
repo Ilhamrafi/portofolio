@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unknown-property */
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { Canvas, extend, useThree, useFrame } from "@react-three/fiber";
+import { Canvas, extend, useThree, useFrame, type ThreeEvent } from "@react-three/fiber";
 import {
   useGLTF,
   useTexture,
@@ -15,10 +15,22 @@ import {
   RigidBody,
   useRopeJoint,
   useSphericalJoint,
-  RigidBodyProps,
+  type RigidBodyProps,
+  type RapierRigidBody,
 } from "@react-three/rapier";
 import { MeshLineGeometry, MeshLineMaterial } from "meshline";
 import * as THREE from "three";
+
+interface CardGLTFResult {
+  nodes: {
+    card: THREE.Mesh;
+    clip: THREE.Mesh;
+    clamp: THREE.Mesh;
+  };
+  materials: {
+    metal: THREE.Material;
+  };
+}
 
 // --- KONFIGURASI ASET ---
 const cardGLB = "/assets/card.glb";          
@@ -80,20 +92,19 @@ interface BandProps {
 }
 
 function Band({ maxSpeed = 50, minSpeed = 0, isMobile = false }: BandProps) {
-  const band = useRef<any>(null);
-  const fixed = useRef<any>(null);
-  const j1 = useRef<any>(null);
-  const j2 = useRef<any>(null);
-  const j3 = useRef<any>(null);
-  const card = useRef<any>(null);
+  const band = useRef<{ geometry: MeshLineGeometry } & THREE.Mesh>(null!);
+  const fixed = useRef<RapierRigidBody>(null!);
+  const j1 = useRef<RapierRigidBody & { lerped?: THREE.Vector3 }>(null!);
+  const j2 = useRef<RapierRigidBody & { lerped?: THREE.Vector3 }>(null!);
+  const j3 = useRef<RapierRigidBody>(null!);
+  const card = useRef<RapierRigidBody>(null!);
 
   const vec = new THREE.Vector3();
   const ang = new THREE.Vector3();
   const rot = new THREE.Vector3();
   const dir = new THREE.Vector3();
 
-  const segmentProps: any = {
-    type: "dynamic" as RigidBodyProps["type"],
+  const segmentProps: Partial<RigidBodyProps> = {
     canSleep: true,
     colliders: false,
     angularDamping: 4,
@@ -101,7 +112,7 @@ function Band({ maxSpeed = 50, minSpeed = 0, isMobile = false }: BandProps) {
   };
 
   // --- LOAD TEXTURE & MODEL ---
-  const { nodes, materials } = useGLTF(cardGLB) as any;
+  const { nodes, materials } = useGLTF(cardGLB) as unknown as CardGLTFResult;
   const texture = useTexture(lanyardTexture);
   
   // INI BAGIAN PENTING UNTUK GAMBAR HD:
@@ -149,13 +160,13 @@ function Band({ maxSpeed = 50, minSpeed = 0, isMobile = false }: BandProps) {
         ref.current.lerped.lerp(ref.current.translation(), delta * (minSpeed + clampedDistance * (maxSpeed - minSpeed)));
       });
       curve.points[0].copy(j3.current.translation());
-      curve.points[1].copy(j2.current.lerped);
-      curve.points[2].copy(j1.current.lerped);
+      curve.points[1].copy(j2.current.lerped!);
+      curve.points[2].copy(j1.current.lerped!);
       curve.points[3].copy(fixed.current.translation());
       band.current.geometry.setPoints(curve.getPoints(32));
       ang.copy(card.current.angvel());
       rot.copy(card.current.rotation());
-      card.current.setAngvel({ x: ang.x, y: ang.y - rot.y * 0.25, z: ang.z });
+      card.current.setAngvel({ x: ang.x, y: ang.y - rot.y * 0.25, z: ang.z }, true);
     }
   });
 
@@ -188,12 +199,12 @@ function Band({ maxSpeed = 50, minSpeed = 0, isMobile = false }: BandProps) {
             position={[0, -1.2, -0.05]}
             onPointerOver={() => hover(true)}
             onPointerOut={() => hover(false)}
-            onPointerUp={(e: any) => {
-              e.target.releasePointerCapture(e.pointerId);
+            onPointerUp={(e: ThreeEvent<PointerEvent>) => {
+              (e.target as HTMLElement).releasePointerCapture(e.pointerId);
               drag(false);
             }}
-            onPointerDown={(e: any) => {
-              e.target.setPointerCapture(e.pointerId);
+            onPointerDown={(e: ThreeEvent<PointerEvent>) => {
+              (e.target as HTMLElement).setPointerCapture(e.pointerId);
               drag(new THREE.Vector3().copy(e.point).sub(vec.copy(card.current.translation())));
             }}
           >

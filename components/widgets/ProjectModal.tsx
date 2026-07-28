@@ -1,7 +1,7 @@
 "use client";
 
 import { X, ExternalLink, Github } from 'lucide-react';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import Image from 'next/image';
 import type { ProjectDetail } from '@/lib/types';
 
@@ -27,20 +27,46 @@ const IMAGE_DIMENSIONS: Record<string, { width: number; height: number }> = {
 const FALLBACK_DIMENSIONS = { width: 1600, height: 900 };
 
 export default function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
-  // Handle ESC key to close modal
+  const containerRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const previouslyFocused = useRef<HTMLElement | null>(null);
+
+  // Handle ESC to close and Tab to stay trapped inside the modal
   useEffect(() => {
-    const handleEsc = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+        return;
+      }
+      if (e.key !== 'Tab' || !containerRef.current) return;
+
+      const focusable = containerRef.current.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      );
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
     };
-    
+
     if (isOpen) {
-      document.addEventListener('keydown', handleEsc);
+      previouslyFocused.current = document.activeElement as HTMLElement;
+      document.addEventListener('keydown', handleKeyDown);
       document.body.style.overflow = 'hidden';
+      closeButtonRef.current?.focus();
     }
-    
+
     return () => {
-      document.removeEventListener('keydown', handleEsc);
+      document.removeEventListener('keydown', handleKeyDown);
       document.body.style.overflow = 'unset';
+      previouslyFocused.current?.focus();
     };
   }, [isOpen, onClose]);
 
@@ -55,14 +81,21 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
       />
       
       {/* Modal Content */}
-      <div className="relative w-full max-w-5xl max-h-[90vh] overflow-y-auto bg-[#0f0f0f] border border-white/10 rounded-2xl shadow-2xl">
-        
+      <div
+        ref={containerRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="project-modal-title"
+        className="relative w-full max-w-5xl max-h-[90vh] overflow-y-auto bg-[#0f0f0f] border border-white/10 rounded-2xl shadow-2xl"
+      >
+
         {/* Header with Close Button */}
         <div className="sticky top-0 z-10 flex items-center justify-between p-6 border-b border-white/10 bg-[#0f0f0f]/95 backdrop-blur-sm">
-          <h2 className="text-2xl md:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-brand">
+          <h2 id="project-modal-title" className="text-2xl md:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-brand">
             Project Overview
           </h2>
           <button
+            ref={closeButtonRef}
             onClick={onClose}
             className="p-2 rounded-full hover:bg-white/10 transition-colors"
             aria-label="Close modal"

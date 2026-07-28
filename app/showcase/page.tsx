@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ChevronLeft, ChevronRight, Search } from 'lucide-react';
 import Navbar from '@/components/navigation/Navbar';
-import ChatWidget from '@/components/widgets/ChatWidget';
 import ProjectModal from '@/components/widgets/ProjectModal';
+import { useChatWidget } from '@/components/widgets/ChatWidgetProvider';
 import ProjectCard from '@/components/widgets/ProjectCard';
 import StatusBadge from '@/components/ui/StatusBadge';
 import TalkButton from '@/components/ui/TalkButton';
@@ -13,9 +13,10 @@ import { projectsData } from '@/lib/data/projects';
 import type { ProjectDetail } from '@/lib/types';
 
 export default function ShowcasePage() {
-  const [isChatOpen, setIsChatOpen] = useState(false);
+  const { openChat } = useChatWidget();
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState('');
+  const [debouncedQuery, setDebouncedQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedProject, setSelectedProject] = useState<ProjectDetail | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -25,13 +26,22 @@ export default function ShowcasePage() {
     setIsModalOpen(true);
   };
 
+  // Debounce search input so filtering/pagination doesn't jump on every keystroke
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setDebouncedQuery(searchQuery);
+      setCurrentPage(1);
+    }, 300);
+    return () => clearTimeout(timeout);
+  }, [searchQuery]);
+
   // Get unique categories
   const categories = ['All', ...new Set(projectsData.flatMap(project => project.categories))];
 
   // Filter projects based on search query and category
   const filteredProjects = projectsData.filter(project => {
     const matchesCategory = selectedCategory === 'All' || project.categories.includes(selectedCategory);
-    const searchLower = searchQuery.toLowerCase();
+    const searchLower = debouncedQuery.toLowerCase();
     const matchesSearch = (
       project.title.toLowerCase().includes(searchLower) ||
       project.description.toLowerCase().includes(searchLower) ||
@@ -47,22 +57,12 @@ export default function ShowcasePage() {
   const endIndex = startIndex + ITEMS_PER_PAGE;
   const paginatedProjects = filteredProjects.slice(startIndex, endIndex);
 
-  const openChat = () => {
-    setIsChatOpen(true);
-  };
-
   const handlePrevPage = () => {
     setCurrentPage((prev) => Math.max(prev - 1, 1));
   };
 
   const handleNextPage = () => {
     setCurrentPage((prev) => Math.min(prev + 1, totalPages));
-  };
-
-  // Reset to page 1 when search query changes
-  const handleSearchChange = (value: string) => {
-    setSearchQuery(value);
-    setCurrentPage(1);
   };
 
   const handleCategoryChange = (category: string) => {
@@ -102,7 +102,7 @@ export default function ShowcasePage() {
               type="text"
               placeholder="Search projects by title, category, or technology..."
               value={searchQuery}
-              onChange={(e) => handleSearchChange(e.target.value)}
+              onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full pl-12 pr-4 py-3 bg-white/5 border border-white/10 rounded-full text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent transition-all"
             />
           </div>
@@ -212,13 +212,6 @@ export default function ShowcasePage() {
 
       {/* FOOTER */}
       <Footer />
-
-      {/* Chat Widget */}
-      <ChatWidget 
-        isOpen={isChatOpen} 
-        onClose={() => setIsChatOpen(false)} 
-        onOpen={() => setIsChatOpen(true)}
-      />
 
       {/* Project Modal */}
       <ProjectModal 

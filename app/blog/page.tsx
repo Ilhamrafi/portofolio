@@ -1,20 +1,15 @@
 "use client";
 
-import { useState } from 'react';
 import { Coffee, Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Navbar from '@/components/navigation/Navbar';
-import ChatWidget from '@/components/widgets/ChatWidget';
 import StatusBadge from '@/components/ui/StatusBadge';
 import TalkButton from '@/components/ui/TalkButton';
 import Footer from '@/components/layout/Footer';
+import { useChatWidget } from '@/components/widgets/ChatWidgetProvider';
 
 export default function BlogPage() {
-  const [isChatOpen, setIsChatOpen] = useState(false);
-
-  const openChat = () => {
-    setIsChatOpen(true);
-  };
+  const { openChat } = useChatWidget();
 
   return (
     <main className="flex flex-col min-h-screen w-full bg-[#0a0a0a] overflow-x-hidden text-white font-sans selection:bg-white/20">
@@ -119,13 +114,6 @@ export default function BlogPage() {
 
       {/* FOOTER */}
       <Footer />
-
-      {/* Chat Widget */}
-      <ChatWidget 
-        isOpen={isChatOpen} 
-        onClose={() => setIsChatOpen(false)} 
-        onOpen={() => setIsChatOpen(true)}
-      />
 
     </main>
   );

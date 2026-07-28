@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local"; 
 import { Geist_Mono } from "next/font/google";
 import BackToTop from "@/components/ui/BackToTop";
+import { ChatWidgetProvider } from "@/components/widgets/ChatWidgetProvider";
 import "./globals.css";
 
 // 2. Konfigurasi General Sans (Font Utama)
@@ -42,9 +43,11 @@ export default function RootLayout({
         >
           Skip to content
         </a>
-        <div id="main-content">
-          {children}
-        </div>
+        <ChatWidgetProvider>
+          <div id="main-content">
+            {children}
+          </div>
+        </ChatWidgetProvider>
 
         {/* Back to Top Button - Global */}
         <BackToTop />

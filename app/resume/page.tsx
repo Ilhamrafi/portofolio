@@ -4,19 +4,15 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Navbar from '@/components/navigation/Navbar';
-import ChatWidget from '@/components/widgets/ChatWidget';
 import CountUp from '@/components/ui/CountUp';
 import TalkButton from '@/components/ui/TalkButton';
 import Footer from '@/components/layout/Footer';
+import { useChatWidget } from '@/components/widgets/ChatWidgetProvider';
 import { MapPin, Download, Brain, Database, Rocket } from 'lucide-react';
 
 export default function ResumePage() {
-  const [isChatOpen, setIsChatOpen] = useState(false);
+  const { openChat } = useChatWidget();
   const [isImageHovered, setIsImageHovered] = useState(false);
-
-  const openChat = () => {
-    setIsChatOpen(true);
-  };
 
   return (
     <main className="flex flex-col min-h-screen w-full bg-[#0a0a0a] overflow-x-hidden text-white font-sans selection:bg-white/20">
@@ -385,13 +381,6 @@ export default function ResumePage() {
           </motion.div>
         </div>
       </section>
-
-      {/* Chat Widget */}
-      <ChatWidget
-        isOpen={isChatOpen}
-        onClose={() => setIsChatOpen(false)}
-        onOpen={() => setIsChatOpen(true)}
-      />
 
       {/* FOOTER */}
       <Footer />
