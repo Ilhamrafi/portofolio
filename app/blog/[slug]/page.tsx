@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Navbar from '@/components/navigation/Navbar';
 import Breadcrumb from '@/components/ui/Breadcrumb';
-import Socials from '@/components/navigation/Socials';
+import Footer from '@/components/layout/Footer';
 import ChatWidget from '@/components/widgets/ChatWidget';
 import MarkdownContent from '@/components/ui/MarkdownContent';
 import { blogPosts } from '@/lib/data/blogs';
@@ -251,16 +251,7 @@ export default function BlogDetailPage({ params }: { params: Promise<{ slug: str
       </article>
 
       {/* FOOTER */}
-      <footer className="relative z-10 w-full bg-black border-t border-white/10 py-12 mt-12">
-        <div className="max-w-7xl mx-auto px-6 md:px-12">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-            <div className="text-gray-500 text-sm">
-              © {new Date().getFullYear()} Ilhamrafi. All rights reserved.
-            </div>
-            <Socials />
-          </div>
-        </div>
-      </footer>
+      <Footer className="mt-12" />
 
       {/* Chat Widget */}
       <ChatWidget 

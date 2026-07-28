@@ -1,12 +1,14 @@
 "use client";
 
 import { useState } from 'react';
-import { ArrowRight, ChevronLeft, ChevronRight, Search } from 'lucide-react';
-import Image from 'next/image';
+import { ChevronLeft, ChevronRight, Search } from 'lucide-react';
 import Navbar from '@/components/navigation/Navbar';
-import Socials from '@/components/navigation/Socials';
 import ChatWidget from '@/components/widgets/ChatWidget';
 import ProjectModal from '@/components/widgets/ProjectModal';
+import ProjectCard from '@/components/widgets/ProjectCard';
+import StatusBadge from '@/components/ui/StatusBadge';
+import TalkButton from '@/components/ui/TalkButton';
+import Footer from '@/components/layout/Footer';
 import { projectsData } from '@/lib/data/projects';
 import type { ProjectDetail } from '@/lib/types';
 
@@ -78,15 +80,7 @@ export default function ShowcasePage() {
       <section className="relative z-10 w-full py-24 md:py-32">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           <div className="space-y-6 mb-16">
-            <div className="inline-flex items-center gap-2 px-3 py-1 border border-white/10 rounded-full bg-white/5 backdrop-blur-md w-fit">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#F1FFB2] opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#C6F10E]"></span>
-              </span>
-              <span className="text-[10px] md:text-xs font-medium tracking-[0.2em] text-gray-300 uppercase">
-                My Portfolio
-              </span>
-            </div>
+            <StatusBadge label="My Portfolio" />
             
             <div>
               <h1 className="text-5xl md:text-7xl font-bold tracking-tighter mb-4">
@@ -134,70 +128,11 @@ export default function ShowcasePage() {
           {paginatedProjects.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
             {paginatedProjects.map((project) => (
-              <div
+              <ProjectCard
                 key={project.id}
+                project={project}
                 onClick={() => handleProjectClick(project)}
-                className="group relative rounded-2xl overflow-hidden bg-white/5 border border-white/10 hover:border-[#F1FFB2]/50 transition-all duration-500 cursor-pointer"
-              >
-                {/* IMAGE CONTAINER */}
-                <div className="relative h-64 md:h-72 overflow-hidden bg-gradient-to-br from-white/5 to-transparent">
-                  {project.image && !project.image.includes('/api/placeholder') ? (
-                    <Image
-                      src={project.image}
-                      alt={project.title}
-                      fill
-                      sizes="(max-width: 768px) 100vw, 50vw"
-                      className="object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                  ) : (
-                    <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-black flex items-center justify-center">
-                      <div className="text-center">
-                        <div className="text-6xl mb-2">📁</div>
-                        <span className="text-gray-500 text-sm">{project.categories[0]}</span>
-                      </div>
-                    </div>
-                  )}
-                  
-                  {/* OVERLAY GRADIENT */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                </div>
-
-                {/* CONTENT */}
-                <div className="p-6 space-y-4">
-                  {/* CATEGORY BADGES */}
-                  <div className="flex flex-wrap gap-2">
-                    {project.categories.map((cat, idx) => (
-                      <span key={idx} className="inline-flex items-center px-3 py-1 rounded-full bg-white/10 border border-white/20">
-                        <span className="text-xs font-medium text-white/70 uppercase tracking-widest">
-                          {cat}
-                        </span>
-                      </span>
-                    ))}
-                  </div>
-
-                  {/* TITLE */}
-                  <h3 className="text-xl md:text-2xl font-bold group-hover:text-[#F1FFB2] transition-colors duration-300">
-                    {project.title}
-                  </h3>
-
-                  {/* TAGS & ARROW */}
-                  <div className="flex items-end justify-between flex-1 pt-4">
-                    <div className="flex flex-wrap gap-2">
-                      {project.tags.map((tag, idx) => (
-                        <span
-                          key={idx}
-                          className="text-xs px-2 py-1 rounded-md bg-white/5 border border-white/10 text-gray-300"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                    <div aria-label={`View ${project.title}`}>
-                      <ArrowRight size={24} className="-rotate-45 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300 text-white/70 group-hover:text-white" />
-                    </div>
-                  </div>
-                </div>
-              </div>
+              />
             ))}
           </div>
           ) : (
@@ -270,33 +205,13 @@ export default function ShowcasePage() {
             <p className="text-gray-400 text-lg max-w-2xl mx-auto leading-relaxed">
               Let's work together to bring your ideas to life. Feel free to reach out!
             </p>
-            <button
-              onClick={openChat}
-              onKeyDown={(e) => e.key === 'Enter' && openChat()}
-              className="group relative inline-flex items-center gap-3 pl-6 pr-2 py-2 bg-[#1a1a1a] text-white text-lg font-medium rounded-full border border-white/10 transition-all duration-300 active:scale-95 cursor-pointer overflow-hidden hover:border-white/30 focus:outline-none"
-              aria-label="Open chat with AI assistant"
-            >
-              <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-[100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-in-out z-0"></div>
-              <span className="relative z-10">Let's Talk</span>
-              <div className="relative z-10 p-3 bg-white/10 rounded-full group-hover:bg-white/20 transition-colors">
-                <ArrowRight className="w-5 h-5 group-hover:-rotate-45 transition-transform duration-300" />
-              </div>
-            </button>
+            <TalkButton onClick={openChat} />
           </div>
         </div>
       </section>
 
       {/* FOOTER */}
-      <footer className="relative z-10 w-full bg-black border-t border-white/10 py-12">
-        <div className="max-w-7xl mx-auto px-6 md:px-12">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-            <div className="text-gray-500 text-sm">
-              © {new Date().getFullYear()} Ilhamrafi. All rights reserved.
-            </div>
-            <Socials />
-          </div>
-        </div>
-      </footer>
+      <Footer />
 
       {/* Chat Widget */}
       <ChatWidget 

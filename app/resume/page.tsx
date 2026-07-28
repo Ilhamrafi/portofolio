@@ -6,8 +6,9 @@ import Image from 'next/image';
 import Navbar from '@/components/navigation/Navbar';
 import ChatWidget from '@/components/widgets/ChatWidget';
 import CountUp from '@/components/ui/CountUp';
-import Socials from '@/components/navigation/Socials';
-import { MapPin, ArrowRight, Download, Brain, Database, Rocket } from 'lucide-react';
+import TalkButton from '@/components/ui/TalkButton';
+import Footer from '@/components/layout/Footer';
+import { MapPin, Download, Brain, Database, Rocket } from 'lucide-react';
 
 export default function ResumePage() {
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -380,40 +381,20 @@ export default function ResumePage() {
               Interested in collaborating or have a project in mind? 
               I&apos;m always open to discussing new opportunities.
             </p>
-            <button
-              onClick={openChat}
-              onKeyDown={(e) => e.key === 'Enter' && openChat()}
-              className="group relative inline-flex items-center gap-3 pl-6 pr-2 py-2 bg-[#1a1a1a] text-white text-lg font-medium rounded-full border border-white/10 transition-all duration-300 active:scale-95 cursor-pointer overflow-hidden hover:border-white/30 focus:outline-none"
-              aria-label="Open chat with AI assistant"
-            >
-              <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-[100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-in-out z-0"></div>
-              <span className="relative z-10">Let&apos;s Talk</span>
-              <div className="relative z-10 p-3 bg-white/10 rounded-full group-hover:bg-white/20 transition-colors">
-                <ArrowRight className="w-5 h-5 group-hover:-rotate-45 transition-transform duration-300" />
-              </div>
-            </button>
+            <TalkButton onClick={openChat} />
           </motion.div>
         </div>
       </section>
 
       {/* Chat Widget */}
-      <ChatWidget 
-        isOpen={isChatOpen} 
-        onClose={() => setIsChatOpen(false)} 
+      <ChatWidget
+        isOpen={isChatOpen}
+        onClose={() => setIsChatOpen(false)}
         onOpen={() => setIsChatOpen(true)}
       />
 
       {/* FOOTER */}
-      <footer className="relative z-10 w-full bg-black border-t border-white/10 py-12">
-        <div className="max-w-7xl mx-auto px-6 md:px-12">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-            <div className="text-gray-500 text-sm">
-              © {new Date().getFullYear()} Ilhamrafi. All rights reserved.
-            </div>
-            <Socials />
-          </div>
-        </div>
-      </footer>
+      <Footer />
 
     </main>
   );
