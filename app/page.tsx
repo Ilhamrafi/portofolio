@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from 'react';
-import { ArrowRight, ExternalLink, Github } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
+import Image from 'next/image';
 // Import Components
 import Navbar from '@/components/navigation/Navbar';
 import Socials from '@/components/navigation/Socials';
@@ -194,10 +195,12 @@ export default function Home() {
                     {/* IMAGE CONTAINER */}
                     <div className="relative h-48 sm:h-56 md:h-72 overflow-hidden bg-gradient-to-br from-white/5 to-transparent flex-shrink-0">
                       {project.image ? (
-                        <img 
-                          src={project.image} 
+                        <Image
+                          src={project.image}
                           alt={project.title}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          fill
+                          sizes="(max-width: 768px) 100vw, 50vw"
+                          className="object-cover group-hover:scale-105 transition-transform duration-500"
                         />
                       ) : (
                         <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-black flex items-center justify-center">

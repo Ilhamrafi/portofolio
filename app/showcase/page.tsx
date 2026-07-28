@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from 'react';
-import { ExternalLink, Github, ArrowRight, ChevronLeft, ChevronRight, Search } from 'lucide-react';
+import { ArrowRight, ChevronLeft, ChevronRight, Search } from 'lucide-react';
+import Image from 'next/image';
 import Navbar from '@/components/navigation/Navbar';
 import Socials from '@/components/navigation/Socials';
 import ChatWidget from '@/components/widgets/ChatWidget';
@@ -141,10 +142,12 @@ export default function ShowcasePage() {
                 {/* IMAGE CONTAINER */}
                 <div className="relative h-64 md:h-72 overflow-hidden bg-gradient-to-br from-white/5 to-transparent">
                   {project.image && !project.image.includes('/api/placeholder') ? (
-                    <img 
-                      src={project.image} 
+                    <Image
+                      src={project.image}
                       alt={project.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      fill
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      className="object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                   ) : (
                     <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-black flex items-center justify-center">

@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from 'react';
-import { ArrowLeft, Calendar, Clock, Share2, ArrowRight } from 'lucide-react';
+import { use, useState } from 'react';
+import { ArrowLeft, Calendar, Check, Clock, Share2, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Navbar from '@/components/navigation/Navbar';
@@ -10,17 +10,32 @@ import Socials from '@/components/navigation/Socials';
 import ChatWidget from '@/components/widgets/ChatWidget';
 import MarkdownContent from '@/components/ui/MarkdownContent';
 import { blogPosts } from '@/lib/data/blogs';
-import type { BlogPost } from '@/lib/types';
 
-export default function BlogDetailPage({ params }: { params: Promise<{ slug: string }> | { slug: string } }) {
+// Not yet linked from /blog (list is still "Coming Soon") — wire up once real articles are ready.
+export default function BlogDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = use(params);
   const [isChatOpen, setIsChatOpen] = useState(false);
-  
-  // Handle both sync and async params
-  const slug = typeof params === 'object' && 'slug' in params ? params.slug : '';
+  const [shared, setShared] = useState(false);
+
   const post = blogPosts.find(p => p.slug === slug);
 
   const openChat = () => {
     setIsChatOpen(true);
+  };
+
+  const handleShare = async () => {
+    const url = window.location.href;
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: post?.title, url });
+      } catch {
+        // user cancelled the native share sheet
+      }
+      return;
+    }
+    await navigator.clipboard.writeText(url);
+    setShared(true);
+    setTimeout(() => setShared(false), 2000);
   };
 
   if (!post) {
@@ -97,10 +112,10 @@ export default function BlogDetailPage({ params }: { params: Promise<{ slug: str
             <div className="flex flex-col md:flex-row md:items-center gap-6 text-gray-400 text-sm pt-4 border-t border-white/10">
               <div className="flex items-center gap-2 pt-4">
                 <Calendar className="w-4 h-4" />
-                {new Date(post.date).toLocaleDateString('id-ID', { 
-                  year: 'numeric', 
-                  month: 'long', 
-                  day: 'numeric' 
+                {new Date(post.date).toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric'
                 })}
               </div>
               <div className="flex items-center gap-2">
@@ -161,8 +176,12 @@ export default function BlogDetailPage({ params }: { params: Promise<{ slug: str
           >
             <div className="flex items-center gap-3">
               <span className="text-gray-400">Share:</span>
-              <button className="p-2 hover:bg-white/10 rounded-lg transition-colors" aria-label="Share on Twitter">
-                <Share2 className="w-5 h-5" />
+              <button
+                onClick={handleShare}
+                className="p-2 hover:bg-white/10 rounded-lg transition-colors"
+                aria-label={shared ? 'Link copied' : 'Share this article'}
+              >
+                {shared ? <Check className="w-5 h-5 text-[#F1FFB2]" /> : <Share2 className="w-5 h-5" />}
               </button>
             </div>
             <button
@@ -213,7 +232,7 @@ export default function BlogDetailPage({ params }: { params: Promise<{ slug: str
                           </span>
                           <span className="flex items-center gap-1">
                             <Calendar className="w-3 h-3" />
-                            {new Date(relatedPost.date).toLocaleDateString('id-ID', { month: 'short', day: 'numeric' })}
+                            {new Date(relatedPost.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
                           </span>
                         </div>
                       </div>

@@ -2,6 +2,7 @@
 
 import { X, ExternalLink, Github } from 'lucide-react';
 import { useEffect } from 'react';
+import Image from 'next/image';
 import type { ProjectDetail } from '@/lib/types';
 
 interface ProjectModalProps {
@@ -9,6 +10,21 @@ interface ProjectModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
+
+// Intrinsic dimensions of public/assets/showcase/* — needed by next/image so
+// width:100%/height:auto scaling doesn't distort these full-bleed screenshots.
+const IMAGE_DIMENSIONS: Record<string, { width: number; height: number }> = {
+  '/assets/showcase/smartriver.png': { width: 2816, height: 1504 },
+  '/assets/showcase/sweetify.png': { width: 2752, height: 1536 },
+  '/assets/showcase/platvision.png': { width: 1408, height: 768 },
+  '/assets/showcase/Sitepat.jpg': { width: 1920, height: 1080 },
+  '/assets/showcase/Exavator.png': { width: 2816, height: 1536 },
+  '/assets/showcase/Klasifikasi Jamur.png': { width: 2816, height: 1536 },
+  '/assets/showcase/forcasting sumatra.png': { width: 2816, height: 1536 },
+  '/assets/showcase/rockpaperscissors.png': { width: 2816, height: 1536 },
+  '/assets/showcase/portofolio.png': { width: 1885, height: 856 },
+};
+const FALLBACK_DIMENSIONS = { width: 1600, height: 900 };
 
 export default function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
   // Handle ESC key to close modal
@@ -68,21 +84,30 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
           {/* Project Image/Screenshots Section - FULL WIDTH, ABSOLUTELY NO PADDING */}
           {project.screenshots && project.screenshots.length > 0 ? (
             <div className="w-full">
-              {project.screenshots.map((screenshot, idx) => (
-                <div key={idx} className="w-full">
-                  <img 
-                    src={screenshot} 
-                    alt={`${project.title} screenshot ${idx + 1}`}
-                    className="w-full h-auto block"
-                  />
-                </div>
-              ))}
+              {project.screenshots.map((screenshot, idx) => {
+                const dims = IMAGE_DIMENSIONS[screenshot] ?? FALLBACK_DIMENSIONS;
+                return (
+                  <div key={idx} className="w-full">
+                    <Image
+                      src={screenshot}
+                      alt={`${project.title} screenshot ${idx + 1}`}
+                      width={dims.width}
+                      height={dims.height}
+                      sizes="100vw"
+                      className="w-full h-auto block"
+                    />
+                  </div>
+                );
+              })}
             </div>
           ) : (
             <div className="w-full">
-              <img 
-                src={project.image} 
+              <Image
+                src={project.image}
                 alt={project.title}
+                width={(IMAGE_DIMENSIONS[project.image] ?? FALLBACK_DIMENSIONS).width}
+                height={(IMAGE_DIMENSIONS[project.image] ?? FALLBACK_DIMENSIONS).height}
+                sizes="100vw"
                 className="w-full h-auto block"
               />
             </div>
