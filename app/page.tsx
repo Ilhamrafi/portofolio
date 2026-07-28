@@ -21,9 +21,7 @@ export default function Home() {
   
   // Get first 4 projects as featured
   const featuredProjects = projectsData.slice(0, 4);
-  
-  const [hoveredId, setHoveredId] = useState<number | null>(null);
-  
+
   const handleProjectClick = (project: ProjectDetail) => {
     setSelectedProject(project);
     setIsModalOpen(true);
@@ -191,8 +189,6 @@ export default function Home() {
                   <div
                     key={project.id}
                     onClick={() => handleProjectClick(project)}
-                    onMouseEnter={() => setHoveredId(project.id)}
-                    onMouseLeave={() => setHoveredId(null)}
                     className="group relative rounded-xl sm:rounded-2xl overflow-hidden bg-white/5 border border-white/10 hover:border-[#F1FFB2]/50 transition-all duration-500 cursor-pointer flex flex-col"
                   >
                     {/* IMAGE CONTAINER */}

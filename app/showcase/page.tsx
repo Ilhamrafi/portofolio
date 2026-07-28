@@ -10,7 +10,6 @@ import { projectsData } from '@/lib/data/projects';
 import type { ProjectDetail } from '@/lib/types';
 
 export default function ShowcasePage() {
-  const [hoveredId, setHoveredId] = useState<number | null>(null);
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState('');
@@ -137,8 +136,6 @@ export default function ShowcasePage() {
               <div
                 key={project.id}
                 onClick={() => handleProjectClick(project)}
-                onMouseEnter={() => setHoveredId(project.id)}
-                onMouseLeave={() => setHoveredId(null)}
                 className="group relative rounded-2xl overflow-hidden bg-white/5 border border-white/10 hover:border-[#F1FFB2]/50 transition-all duration-500 cursor-pointer"
               >
                 {/* IMAGE CONTAINER */}
